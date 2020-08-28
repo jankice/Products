@@ -1,4 +1,4 @@
-package com.inmy.products.ui.slideshow
+package com.inmy.products.ui.offer
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,20 +10,20 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.inmy.products.R
 
-class SlideshowFragment : Fragment() {
+class OfferFragment : Fragment() {
 
-    private lateinit var slideshowViewModel: SlideshowViewModel
+    private lateinit var offerViewModel: OfferViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        slideshowViewModel =
-            ViewModelProviders.of(this).get(SlideshowViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_slideshow, container, false)
-        val textView: TextView = root.findViewById(R.id.text_slideshow)
-        slideshowViewModel.text.observe(viewLifecycleOwner, Observer {
+        offerViewModel =
+            ViewModelProviders.of(this).get(OfferViewModel::class.java)
+        val root = inflater.inflate(R.layout.fragment_offer, container, false)
+        val textView: TextView = root.findViewById(R.id.text_offer)
+        offerViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
         return root

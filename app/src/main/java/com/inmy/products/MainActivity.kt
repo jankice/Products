@@ -3,7 +3,7 @@ package com.inmy.products
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.inmy.products.ui.login.LoginActivity
+
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -12,7 +12,7 @@ class MainActivity : AppCompatActivity() {
 
         // TODO temp .. redirect to login
 
-        val intent = Intent(this, LoginActivity::class.java)
+        val intent = Intent(this, HomeActivty::class.java)
         startActivity(intent)
 
     }

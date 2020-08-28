@@ -1,4 +1,4 @@
-package com.inmy.products.ui.gallery
+package com.inmy.products.ui.feedback
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,20 +10,20 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.inmy.products.R
 
-class GalleryFragment : Fragment() {
+class FeedbackFragment : Fragment() {
 
-    private lateinit var galleryViewModel: GalleryViewModel
+    private lateinit var slideshowViewModel: FeedbackViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        galleryViewModel =
-            ViewModelProviders.of(this).get(GalleryViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_gallery, container, false)
-        val textView: TextView = root.findViewById(R.id.text_gallery)
-        galleryViewModel.text.observe(viewLifecycleOwner, Observer {
+        slideshowViewModel =
+            ViewModelProviders.of(this).get(FeedbackViewModel::class.java)
+        val root = inflater.inflate(R.layout.fragment_feedback, container, false)
+        val textView: TextView = root.findViewById(R.id.text_feedback)
+        slideshowViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
         return root
