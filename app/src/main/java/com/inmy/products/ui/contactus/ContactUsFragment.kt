@@ -1,11 +1,11 @@
 package com.inmy.products.ui.contactus
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
 import com.inmy.products.R
 
 class ContactUsFragment : Fragment() {
@@ -14,7 +14,7 @@ class ContactUsFragment : Fragment() {
         fun newInstance() = ContactUsFragment()
     }
 
-    private lateinit var viewModel: ContactUsViewModel
+    private lateinit var contactUsViewModel: ContactUsViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,7 +25,7 @@ class ContactUsFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(ContactUsViewModel::class.java)
+        contactUsViewModel = ViewModelProvider(this).get(ContactUsViewModel::class.java)
         // TODO: Use the ViewModel
     }
 

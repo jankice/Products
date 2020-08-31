@@ -6,7 +6,7 @@ apply plugin: 'com.google.gms.google-services'
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
-
+    //buildConfigField "String", "BASE_API", "192.168.1.3:8000"
     defaultConfig {
         applicationId "com.inmy.products"
         minSdkVersion 21
@@ -21,7 +21,21 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+         //   buildConfigField("String", "BUILD_TIME", "\"${minutesSinceEpoch}\"")
+          //  resValue("string", "build_time", "${minutesSinceEpoch}")
+            buildConfigField ("String", "BASE_API", "192.168.1.3:8000")
         }
+
+            debug {
+                // Use static values for incremental builds to ensure that
+                // resource files and BuildConfig aren't rebuilt with each run.
+                // If these rebuild dynamically, they can interfere with
+                // Apply Changes as well as Gradle UP-TO-DATE checks.
+              //  buildConfigField("String", "BUILD_TIME", "\"0\"")
+                //resValue("string", "build_time", "0")
+                buildConfigField ("String", "BASE_API", "192.168.1.3:8000")
+            }
+
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -46,10 +60,23 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.0'
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.0'
     implementation 'androidx.annotation:annotation:1.1.0'
-    implementation 'com.google.firebase:firebase-auth:19.3.1'
+    implementation 'com.google.firebase:firebase-auth:19.3.2'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    //Test
+    testImplementation 'junit:junit:4.13'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+    //recyclerview
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+
+    //Glide
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+
+    //retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.7.2'
 
 }
