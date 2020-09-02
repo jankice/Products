@@ -3,6 +3,12 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.google.gms.google-services'
 
+def configPropertiesFile = rootProject.file("config.properties")
+def configProperties = new Properties()
+configProperties.load(new FileInputStream(configPropertiesFile))
+ext {
+    base_api = configProperties["base_api"]
+}
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
@@ -23,17 +29,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
          //   buildConfigField("String", "BUILD_TIME", "\"${minutesSinceEpoch}\"")
           //  resValue("string", "build_time", "${minutesSinceEpoch}")
-            buildConfigField ("String", "BASE_API", "192.168.1.3:8000")
+            buildConfigField ("String", "BASE_API", "\"${base_api}\"")
         }
 
             debug {
-                // Use static values for incremental builds to ensure that
-                // resource files and BuildConfig aren't rebuilt with each run.
-                // If these rebuild dynamically, they can interfere with
-                // Apply Changes as well as Gradle UP-TO-DATE checks.
-              //  buildConfigField("String", "BUILD_TIME", "\"0\"")
                 //resValue("string", "build_time", "0")
-                buildConfigField ("String", "BASE_API", "192.168.1.3:8000")
+                buildConfigField ("String", "BASE_API", "\"${base_api}\"")
             }
 
     }

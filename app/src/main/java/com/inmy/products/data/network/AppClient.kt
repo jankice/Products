@@ -7,7 +7,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
-const val BASE_URL = "http://192.168.1.3:8000/";
+const val BASE_URL = "http://" + BuildConfig.BASE_API +"/";
 
 class AppClient {
     companion object{
