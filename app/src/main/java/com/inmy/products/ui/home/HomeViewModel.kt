@@ -22,11 +22,4 @@ class HomeViewModel : ViewModel() {
     fun fetchAllPosts(){
         postModelListLiveData = homeRepository?.fetchAllPosts()
     }
-
-    //TODO: Move to a util class
-    fun showToast(msg: String, context: Context?) {
-
-        Toast.makeText(context,msg,Toast.LENGTH_LONG).show()
-
-    }
 }

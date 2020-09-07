@@ -4,7 +4,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.inmy.products.R
+import com.inmy.products.data.holder.IBindView
 import com.inmy.products.data.holder.ProductListViewHolder
+import com.inmy.products.data.holder.ProductListViewHolderFooter
+import com.inmy.products.data.holder.ProductListViewHolderHeader
 import com.inmy.products.data.model.ProductModel
 import com.inmy.products.ui.home.HomeFragment
 
@@ -13,24 +16,49 @@ class ProductListAdapter(private val cellClickListener: HomeFragment) : Recycler
         fun onCellClickListener(productModel: ProductModel)
     }
 
+    val FOOTER_TYPE : Int = 1
+    val HEADER_TYPE : Int = 2
+
     private var listOfProducts = listOf<ProductModel>()
 
+    override fun getItemViewType(position: Int): Int {
+         if (position == listOfProducts.size -1) {
+             return FOOTER_TYPE
+         }
+//         else if(position == 0){
+//            return HEADER_TYPE
+//         }
+        return 0
+
+    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return ProductListViewHolder(
-            LayoutInflater.from(parent.context).inflate(
-                R.layout.item_product,
-                parent,
-                false
+
+        if (viewType == FOOTER_TYPE){
+            return ProductListViewHolderFooter(LayoutInflater.from(parent.context).inflate(R.layout.item_product_footer,
+            parent,false))
+        }else if(viewType == HEADER_TYPE){
+            return ProductListViewHolderHeader(LayoutInflater.from(parent.context).inflate(R.layout.item_product_header,
+                parent,false))
+        }
+        else{
+            return ProductListViewHolder(
+                LayoutInflater.from(parent.context).inflate(
+                    R.layout.item_product,
+                    parent,
+                    false
+                )
             )
-        )
+        }
+
     }
 
     override fun getItemCount(): Int = listOfProducts.size
 
     override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int) {
-        val productViewHolder = viewHolder as ProductListViewHolder
+        val productViewHolder = viewHolder as IBindView
         productViewHolder.bindView(listOfProducts[position])
-        productViewHolder.itemView.setOnClickListener {
+
+        viewHolder.itemView.setOnClickListener {
             cellClickListener.onCellClickListener(listOfProducts[position])
         }
 
@@ -40,6 +68,4 @@ class ProductListAdapter(private val cellClickListener: HomeFragment) : Recycler
         this.listOfProducts = listOfProducts
         notifyDataSetChanged()
     }
-
-
 }

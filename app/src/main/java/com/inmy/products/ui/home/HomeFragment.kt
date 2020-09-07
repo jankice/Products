@@ -1,19 +1,23 @@
 package com.inmy.products.ui.home
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import android.widget.Button
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.inmy.products.Utils
+import com.inmy.products.HomeActivty
 import com.inmy.products.R
 import com.inmy.products.data.Decoration.GridItemDecoration
 import com.inmy.products.data.adapter.ProductListAdapter
 import com.inmy.products.data.model.ProductModel
+import com.inmy.products.ui.productdetail.ProductDetailActivity
 
 class HomeFragment : Fragment(), ProductListAdapter.CellClickListener {
 
@@ -22,7 +26,10 @@ class HomeFragment : Fragment(), ProductListAdapter.CellClickListener {
     }
 
     private lateinit var homeViewModel: HomeViewModel
+    private val utils: Utils = Utils()
     private lateinit var recyclerViewProducts : RecyclerView
+    private lateinit var nextButton : Button
+    private lateinit var prevButton : Button
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,7 +38,7 @@ class HomeFragment : Fragment(), ProductListAdapter.CellClickListener {
         homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_home, container, false)
 
-         recyclerViewProducts = root.findViewById(R.id.productRecycleView)
+        recyclerViewProducts = root.findViewById(R.id.productRecycleView)
 
         initRecycleView()
 
@@ -57,7 +64,7 @@ class HomeFragment : Fragment(), ProductListAdapter.CellClickListener {
                 recyclerViewProducts.visibility = View.VISIBLE
                 productListAdapter.setProductList(it as ArrayList<ProductModel>)
             } else {
-                homeViewModel.showToast("Something went wrong",context)
+                utils.showToast("Something went wrong",context)
             }
 
         })
@@ -65,7 +72,11 @@ class HomeFragment : Fragment(), ProductListAdapter.CellClickListener {
     }
 
     override fun onCellClickListener(productModel: ProductModel) {
-        homeViewModel.showToast(productModel.productTitle,context)
+        utils.showToast(productModel.productTitle,context)
+
+        val intent = Intent(context, ProductDetailActivity::class.java)
+        intent.putExtra(utils.REF_PRODUCT_DETAIL,productModel)
+        startActivity(intent)
     }
 }
 

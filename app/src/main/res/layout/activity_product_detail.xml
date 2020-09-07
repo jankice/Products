@@ -4,14 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="@dimen/item_margin"
     tools:context=".ui.productdetail.ProductDetailActivity">
 
     <ImageView
         android:id="@+id/imageProductDetail"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
         android:contentDescription="@string/app_name"
-        android:scaleType="fitXY"
+        android:scaleType="centerCrop"
+
         android:src="@drawable/ic_launcher_foreground"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -38,6 +40,12 @@
         app:layout_constraintTop_toBottomOf="@id/textProductTitleDetail"
         tools:text="warranty: 100 days" />
 
-
+<Button
+    android:id="@+id/buttonProductAddtoCart"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="@string/action_add_to_cart"
+    android:layout_marginBottom="@dimen/nav_header_vertical_spacing"
+    app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

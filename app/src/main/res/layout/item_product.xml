@@ -8,8 +8,8 @@
     android:padding="@dimen/item_margin">
     <ImageView
         android:id="@+id/imageProduct"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
         android:contentDescription="@string/app_name"
         android:scaleType="fitXY"
         android:src="@drawable/ic_launcher_foreground"
