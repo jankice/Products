@@ -12,7 +12,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.inmy.products.Utils
-import com.inmy.products.HomeActivty
 import com.inmy.products.R
 import com.inmy.products.data.Decoration.GridItemDecoration
 import com.inmy.products.data.adapter.ProductListAdapter
@@ -28,8 +27,8 @@ class HomeFragment : Fragment(), ProductListAdapter.CellClickListener {
     private lateinit var homeViewModel: HomeViewModel
     private val utils: Utils = Utils()
     private lateinit var recyclerViewProducts : RecyclerView
-    private lateinit var nextButton : Button
-    private lateinit var prevButton : Button
+
+    var page: Int = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,9 +46,6 @@ class HomeFragment : Fragment(), ProductListAdapter.CellClickListener {
 
 
     private fun initRecycleView() {
-
-        homeViewModel.fetchAllPosts()
-
         recyclerViewProducts.layoutManager = GridLayoutManager(context,2)
 
         //This will for default android divider
@@ -58,10 +54,8 @@ class HomeFragment : Fragment(), ProductListAdapter.CellClickListener {
         val productListAdapter = ProductListAdapter(this)
         recyclerViewProducts.adapter = productListAdapter
 
-
         homeViewModel.postModelListLiveData?.observe(viewLifecycleOwner, Observer {
             if (it != null) {
-                recyclerViewProducts.visibility = View.VISIBLE
                 productListAdapter.setProductList(it as ArrayList<ProductModel>)
             } else {
                 utils.showToast("Something went wrong",context)
@@ -77,6 +71,15 @@ class HomeFragment : Fragment(), ProductListAdapter.CellClickListener {
         val intent = Intent(context, ProductDetailActivity::class.java)
         intent.putExtra(utils.REF_PRODUCT_DETAIL,productModel)
         startActivity(intent)
+    }
+
+    override fun onNextClicked() {
+        homeViewModel.nextClicked()
+
+    }
+
+    override fun onPrevClicked() {
+        homeViewModel.prevClicked()
     }
 }
 

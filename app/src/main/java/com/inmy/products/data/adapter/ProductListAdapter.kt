@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.inmy.products.R
-import com.inmy.products.data.holder.IBindView
 import com.inmy.products.data.holder.ProductListViewHolder
 import com.inmy.products.data.holder.ProductListViewHolderFooter
 import com.inmy.products.data.holder.ProductListViewHolderHeader
@@ -14,6 +13,8 @@ import com.inmy.products.ui.home.HomeFragment
 class ProductListAdapter(private val cellClickListener: HomeFragment) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     interface CellClickListener {
         fun onCellClickListener(productModel: ProductModel)
+        fun onNextClicked()
+        fun onPrevClicked()
     }
 
     val FOOTER_TYPE : Int = 1
@@ -34,11 +35,19 @@ class ProductListAdapter(private val cellClickListener: HomeFragment) : Recycler
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
         if (viewType == FOOTER_TYPE){
-            return ProductListViewHolderFooter(LayoutInflater.from(parent.context).inflate(R.layout.item_product_footer,
-            parent,false))
+            return ProductListViewHolderFooter(
+                LayoutInflater.from(parent.context).inflate(
+                    R.layout.item_product_footer,
+                    parent, false
+                )
+            )
         }else if(viewType == HEADER_TYPE){
-            return ProductListViewHolderHeader(LayoutInflater.from(parent.context).inflate(R.layout.item_product_header,
-                parent,false))
+            return ProductListViewHolderHeader(
+                LayoutInflater.from(parent.context).inflate(
+                    R.layout.item_product_header,
+                    parent, false
+                )
+            )
         }
         else{
             return ProductListViewHolder(
@@ -55,12 +64,19 @@ class ProductListAdapter(private val cellClickListener: HomeFragment) : Recycler
     override fun getItemCount(): Int = listOfProducts.size
 
     override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int) {
-        val productViewHolder = viewHolder as IBindView
-        productViewHolder.bindView(listOfProducts[position])
+        try {
+            if (viewHolder is ProductListViewHolder) {
+                val vh: ProductListViewHolder = viewHolder as ProductListViewHolder
+                vh.bindView(listOfProducts[position],cellClickListener)
 
-        viewHolder.itemView.setOnClickListener {
-            cellClickListener.onCellClickListener(listOfProducts[position])
+            } else if (viewHolder is ProductListViewHolderFooter) {
+                val vh: ProductListViewHolderFooter = viewHolder as ProductListViewHolderFooter
+                vh.bindViewFooter(listOfProducts[position],cellClickListener)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
+
 
     }
 

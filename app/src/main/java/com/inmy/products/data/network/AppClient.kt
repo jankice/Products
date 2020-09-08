@@ -2,6 +2,7 @@ package com.inmy.products.data.network
 
 import com.google.gson.GsonBuilder
 import com.inmy.products.BuildConfig
+import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -25,6 +26,7 @@ class AppClient {
                     .baseUrl(BASE_URL)
                     .client(okHttpClient)
                     .addConverterFactory(GsonConverterFactory.create(gson))
+                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .build()
             }
             return retrofit!!
