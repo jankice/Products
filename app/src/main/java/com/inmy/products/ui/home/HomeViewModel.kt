@@ -3,7 +3,6 @@ package com.inmy.products.ui.home
 import android.annotation.SuppressLint
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import com.inmy.products.data.model.HomeRepository
 import com.inmy.products.data.model.ProductModel
@@ -15,19 +14,29 @@ class HomeViewModel : ViewModel() {
     private var homeRepository: HomeRepository?=null
     var postModelListLiveData : MutableLiveData<List<ProductModel>>?=null
     var pageNo : Int = 0
+    private var _result = MutableLiveData<String>().apply { value = "0" }
+    val result: LiveData<String>
+        get() = _result
 
     init {
         homeRepository = HomeRepository()
         postModelListLiveData = MutableLiveData()
         pageNo = pagination("0",pageNo)
-        fetchAllPosts(pageNo)
+
+        fetchAllPosts(pageNo,"")
+    }
+
+
+    fun update(result: String){
+        _result.value = result
+        fetchAllPosts(pageNo,result)
     }
 
     @SuppressLint("CheckResult")
-    fun fetchAllPosts(page : Int){
-        homeRepository?.fetchAllPosts(page)?.subscribeOn(Schedulers.io())
+    fun fetchAllPosts(page: Int, result: String){
+        homeRepository?.fetchAllPosts(page,result)?.subscribeOn(Schedulers.io())
             ?.observeOn(AndroidSchedulers.mainThread())?.subscribe( {
-            postModelListLiveData?.value = it
+                postModelListLiveData?.value = it
         },
             {
                     // todo handle
@@ -53,14 +62,14 @@ class HomeViewModel : ViewModel() {
 
         val pageCurr: Int = pagination("NEXT",pageNo)
         pageNo = pageCurr
-        fetchAllPosts(pageCurr)
+        _result.value?.let { fetchAllPosts(pageCurr, it) }
     }
 
     fun prevClicked() {
 
         val pageCurr: Int = pagination("PREV",pageNo)
         pageNo = pageCurr
-        fetchAllPosts(pageCurr)
+        _result.value?.let { fetchAllPosts(pageCurr, it) }
     }
 
 }

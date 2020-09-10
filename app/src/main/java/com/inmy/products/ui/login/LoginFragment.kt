@@ -21,6 +21,7 @@ import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthProvider
 import com.google.firebase.auth.PhoneAuthProvider.ForceResendingToken
 import com.google.firebase.auth.PhoneAuthProvider.OnVerificationStateChangedCallbacks
+import com.inmy.products.HomeActivty
 
 import com.inmy.products.MainActivity
 import com.inmy.products.R
@@ -136,7 +137,7 @@ class LoginFragment : Fragment(){
 
                         Log.d(TAG, "signInWithCredential:success")
                         val user = task.result!!.user
-                        startActivity(Intent(context, MainActivity::class.java))
+                        startActivity(Intent(context, HomeActivty::class.java))
                            // finish()
                     } else {
                         Log.w(
@@ -187,7 +188,7 @@ class LoginFragment : Fragment(){
         super.onStart()
         val currentUser = loginViewModel.mAuth!!.currentUser
         if (currentUser != null) {
-            startActivity(Intent(context, MainActivity::class.java))
+            startActivity(Intent(context, HomeActivty::class.java))
            // finish()
         }
     }

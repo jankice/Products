@@ -1,5 +1,6 @@
 package com.inmy.products.data.model
 
+import androidx.lifecycle.LiveData
 import io.reactivex.Observable
 import com.inmy.products.data.network.ApiInterface
 import com.inmy.products.data.network.AppClient
@@ -13,8 +14,8 @@ class HomeRepository {
         apiInterface = AppClient.getApiClient().create(ApiInterface::class.java)
     }
 
-    fun fetchAllPosts(page : Int):Observable<List<ProductModel>>?{
-           return apiInterface?.fetchAllPosts(page,"")
+    fun fetchAllPosts(page: Int, result: String):Observable<List<ProductModel>>?{
+           return apiInterface?.fetchAllPosts(page,result)
 
 //        apiInterface?.fetchAllPosts(page,"")?.enqueue(object : Callback<List<ProductModel>> {
 //
