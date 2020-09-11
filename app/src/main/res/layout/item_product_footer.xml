@@ -1,35 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_alignParentBottom="true"
+    android:gravity="right"
+    android:layout_gravity="right"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
-<!--    <include layout="@layout/item_product"-->
-<!--        />-->
-
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginBottom="@dimen/fab_margin"
-        >
+
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/btnPrevHome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/title_previous"
-            android:drawableLeft="@drawable/ic_previous"/>
+            android:drawableLeft="@drawable/ic_previous"
+            android:text="@string/title_previous" />
 
         <Button
             android:id="@+id/btnNextHome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/title_next"
-            android:drawableRight="@drawable/ic_next"/>
+            android:drawableRight="@drawable/ic_next"
+            android:text="@string/title_next" />
 
     </LinearLayout>
 

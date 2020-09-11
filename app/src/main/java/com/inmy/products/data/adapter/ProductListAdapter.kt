@@ -22,8 +22,11 @@ class ProductListAdapter(private val cellClickListener: HomeFragment) : Recycler
 
     private var listOfProducts = listOf<ProductModel>()
 
+
     override fun getItemViewType(position: Int): Int {
-         if (position == listOfProducts.size ) {
+
+         if (position ==  listOfProducts.size) {
+
              return FOOTER_TYPE
          }
 //         else if(position == 0){
@@ -61,7 +64,7 @@ class ProductListAdapter(private val cellClickListener: HomeFragment) : Recycler
 
     }
 
-    override fun getItemCount(): Int = listOfProducts.size
+    override fun getItemCount(): Int = listOfProducts.size + 1
 
     override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int) {
         try {
@@ -81,6 +84,7 @@ class ProductListAdapter(private val cellClickListener: HomeFragment) : Recycler
     }
 
     fun setProductList(listOfProducts: List<ProductModel>) {
+
         this.listOfProducts = listOfProducts
         notifyDataSetChanged()
     }

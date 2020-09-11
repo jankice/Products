@@ -12,11 +12,6 @@ import kotlinx.android.synthetic.main.item_product_footer.view.*
 class ProductListViewHolderFooter(itemView: View) : RecyclerView.ViewHolder(itemView){
      fun bindViewFooter(productModel: ProductModel, cellClickListener: HomeFragment) {
 
-         itemView.textProductTitle.text = productModel.productTitle
-         itemView.textProductDetailSort.text = "Views: " + productModel.productDetailSort
-         itemView.textNumberItem.text =""+ productModel.productCart
-
-         Glide.with(itemView.context).load(productModel.productImageUrl!!).into(itemView.imageProduct)
 
          itemView.btnNextHome.setOnClickListener {
              Log.d("next","clicked")
