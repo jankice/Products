@@ -23,7 +23,7 @@ class ProductListAdapter(private val cellClickListener: HomeFragment) : Recycler
     private var listOfProducts = listOf<ProductModel>()
 
     override fun getItemViewType(position: Int): Int {
-         if (position == listOfProducts.size -1) {
+         if (position == listOfProducts.size ) {
              return FOOTER_TYPE
          }
 //         else if(position == 0){

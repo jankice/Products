@@ -43,4 +43,10 @@ class LoginViewModel : ViewModel() {
         }
 
     }
+
+     fun verifyPhoneNumberWithCode(verificationId: String?, code: String) : PhoneAuthCredential{
+        val credential = PhoneAuthProvider.getCredential(verificationId!!, code)
+
+         return credential
+    }
 }

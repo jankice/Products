@@ -5,7 +5,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_centerHorizontal="true"
-    android:padding="@dimen/item_margin">
+    android:background="@drawable/item_border"
+    android:padding="@dimen/item_margin"
+    android:layout_margin="@dimen/item_margin">
     <ImageView
         android:id="@+id/imageProduct"
         android:layout_width="130dp"
@@ -72,4 +74,6 @@
             android:src="@drawable/ic_baseline_add_24"/>
 
     </LinearLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

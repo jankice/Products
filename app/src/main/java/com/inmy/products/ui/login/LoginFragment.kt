@@ -116,7 +116,9 @@ class LoginFragment : Fragment(){
                 mVerificationField!!.error = "Cannot be empty."
                 //return
             }
-            verifyPhoneNumberWithCode(mVerificationId, code)
+            val credential = loginViewModel.verifyPhoneNumberWithCode(mVerificationId, code)
+            signInWithPhoneAuthCredential(credential)
+
         }
         mResendButton?.setOnClickListener{
             resendVerificationCode(
@@ -163,10 +165,7 @@ class LoginFragment : Fragment(){
         ) // OnVerificationStateChangedCallbacks
     }
 
-    private fun verifyPhoneNumberWithCode(verificationId: String?, code: String) {
-        val credential = PhoneAuthProvider.getCredential(verificationId!!, code)
-        signInWithPhoneAuthCredential(credential)
-    }
+
 
     private fun resendVerificationCode(
         phoneNumber: String,
