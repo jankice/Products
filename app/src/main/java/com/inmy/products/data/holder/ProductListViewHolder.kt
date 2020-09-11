@@ -16,8 +16,16 @@ class ProductListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
 
         Glide.with(itemView.context).load(productModel.productImageUrl!!).into(itemView.imageProduct)
 
-         itemView.setOnClickListener{
+         itemView.imageProduct.setOnClickListener{
              cellClickListener.onCellClickListener(productModel)
+         }
+
+         itemView.buttonRemove.setOnClickListener {
+             cellClickListener.onRemoveClicked()
+         }
+
+         itemView.buttonAdd.setOnClickListener {
+             cellClickListener.onAddClicked()
          }
 
     }

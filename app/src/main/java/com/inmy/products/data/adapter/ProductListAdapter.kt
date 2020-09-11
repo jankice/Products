@@ -15,6 +15,8 @@ class ProductListAdapter(private val cellClickListener: HomeFragment) : Recycler
         fun onCellClickListener(productModel: ProductModel)
         fun onNextClicked()
         fun onPrevClicked()
+        fun onAddClicked()
+        fun onRemoveClicked()
     }
 
     val FOOTER_TYPE : Int = 1

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.inmy.products.Utils
 import com.inmy.products.data.model.HomeRepository
 import com.inmy.products.data.model.ProductModel
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -14,6 +15,8 @@ class HomeViewModel : ViewModel() {
     private var homeRepository: HomeRepository?=null
     var postModelListLiveData : MutableLiveData<List<ProductModel>>?=null
     var pageNo : Int = 0
+    var cartVal: Int = 0
+    val utils: Utils   = Utils()
     private var _result = MutableLiveData<String>().apply { value = "0" }
     val result: LiveData<String>
         get() = _result
@@ -22,7 +25,6 @@ class HomeViewModel : ViewModel() {
         homeRepository = HomeRepository()
         postModelListLiveData = MutableLiveData()
         pageNo = pagination("0",pageNo)
-
         fetchAllPosts(pageNo,"")
     }
 
@@ -52,8 +54,6 @@ class HomeViewModel : ViewModel() {
             page ++
         }else if(s.equals("PREV") && page > 0){
             page --
-        }else{
-
         }
         return page;
     }
@@ -70,6 +70,18 @@ class HomeViewModel : ViewModel() {
         val pageCurr: Int = pagination("PREV",pageNo)
         pageNo = pageCurr
         _result.value?.let { fetchAllPosts(pageCurr, it) }
+    }
+
+    fun addClicked(){
+        val addCart = utils.count(1,cartVal)
+        cartVal = addCart
+
+    }
+
+    fun removeClicked(){
+        val removeCart = utils.count(0,cartVal)
+        cartVal = removeCart
+
     }
 
 }

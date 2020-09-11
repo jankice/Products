@@ -42,6 +42,37 @@ class HomeFragment : Fragment(), ProductListAdapter.CellClickListener {
         recyclerViewProducts = root.findViewById(R.id.productRecycleView)
         searchViewHome = root.findViewById(R.id.searchViewHome)
 
+
+        handleSearchListener()
+        initRecycleView()
+
+        return root;
+    }
+
+
+
+    private fun initRecycleView() {
+        recyclerViewProducts.layoutManager = GridLayoutManager(context, 2)
+
+        //This will for default android divider
+      //  recyclerViewProducts.addItemDecoration(GridItemDecoration(10, 2))
+
+        val productListAdapter = ProductListAdapter(this)
+        recyclerViewProducts.adapter = productListAdapter
+
+
+        homeViewModel.postModelListLiveData?.observe(viewLifecycleOwner, Observer {
+            if (it != null) {
+                productListAdapter.setProductList(it as ArrayList<ProductModel>)
+            } else {
+                utils.showToast("Something went wrong", context)
+            }
+
+        })
+
+    }
+
+    private fun handleSearchListener() {
         searchViewHome.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
             androidx.appcompat.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
@@ -67,34 +98,7 @@ class HomeFragment : Fragment(), ProductListAdapter.CellClickListener {
                 // search was opened
             }
         })
-
-        initRecycleView()
-
-        return root;
     }
-
-
-    private fun initRecycleView() {
-        recyclerViewProducts.layoutManager = GridLayoutManager(context, 2)
-
-        //This will for default android divider
-      //  recyclerViewProducts.addItemDecoration(GridItemDecoration(10, 2))
-
-        val productListAdapter = ProductListAdapter(this)
-        recyclerViewProducts.adapter = productListAdapter
-
-
-        homeViewModel.postModelListLiveData?.observe(viewLifecycleOwner, Observer {
-            if (it != null) {
-                productListAdapter.setProductList(it as ArrayList<ProductModel>)
-            } else {
-                utils.showToast("Something went wrong", context)
-            }
-
-        })
-
-    }
-
     override fun onCellClickListener(productModel: ProductModel) {
         utils.showToast(productModel.productTitle, context)
 
@@ -110,6 +114,14 @@ class HomeFragment : Fragment(), ProductListAdapter.CellClickListener {
 
     override fun onPrevClicked() {
         homeViewModel.prevClicked()
+    }
+
+    override fun onAddClicked() {
+      homeViewModel.addClicked()
+    }
+
+    override fun onRemoveClicked() {
+       homeViewModel.removeClicked()
     }
 }
 
