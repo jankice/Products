@@ -39,13 +39,12 @@ class Utils  : Serializable{
             editor.clear()
             editor.apply()
         }
-
-
     }
 
-    fun getValuesFromPreference(context: Context?, key: String): String{
+    fun getValuesFromPreference(sharedPreferences: SharedPreferences, key: String): String{
 
-        val value = ""
+        var value = "0"
+        value = sharedPreferences.getString(key,value)!!
         return value
     }
 

@@ -1,6 +1,8 @@
 package com.inmy.products.ui.home
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.SharedPreferences
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -72,16 +74,32 @@ class HomeViewModel : ViewModel() {
         _result.value?.let { fetchAllPosts(pageCurr, it) }
     }
 
-    fun addClicked(){
+    fun addClicked(context: Context,productId: String): Int{
+
+        cartVal = checkValuesFromPreference(context,productId)
         val addCart = utils.count(1,cartVal)
         cartVal = addCart
+        utils.valueToPreference(context,productId,cartVal.toString(),"SAVE")
+        return cartVal
 
     }
 
-    fun removeClicked(){
+    fun removeClicked(context: Context,productId: String): Int{
+        cartVal = checkValuesFromPreference(context,productId)
         val removeCart = utils.count(0,cartVal)
         cartVal = removeCart
+        utils.valueToPreference(context,productId,cartVal.toString(),"SAVE")
+        return cartVal
 
+    }
+
+    fun checkValuesFromPreference(context: Context,productId: String): Int{
+
+        val sharedPreferences: SharedPreferences = context.getSharedPreferences(utils.PREFERENCE_FILE_NAME,
+            Context.MODE_PRIVATE)
+        val value = utils.getValuesFromPreference(sharedPreferences,productId)
+
+        return value.toInt()
     }
 
 }

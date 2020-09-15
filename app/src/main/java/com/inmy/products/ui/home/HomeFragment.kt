@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.inmy.products.R
 import com.inmy.products.Utils
-import com.inmy.products.data.Decoration.GridItemDecoration
 import com.inmy.products.data.adapter.ProductListAdapter
 import com.inmy.products.data.model.ProductModel
 import com.inmy.products.ui.productdetail.ProductDetailActivity
@@ -116,12 +115,16 @@ class HomeFragment : Fragment(), ProductListAdapter.CellClickListener {
         homeViewModel.prevClicked()
     }
 
-    override fun onAddClicked() {
-      homeViewModel.addClicked()
+    override fun onAddClicked(productId: String): Int {
+      val cart = homeViewModel.addClicked(requireContext(),productId)
+
+        return cart
     }
 
-    override fun onRemoveClicked() {
-       homeViewModel.removeClicked()
+    override fun onRemoveClicked(productId: String): Int {
+       val cart = homeViewModel.removeClicked(requireContext(),productId)
+
+        return cart
     }
 }
 
