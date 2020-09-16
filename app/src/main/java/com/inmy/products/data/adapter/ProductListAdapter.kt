@@ -11,7 +11,7 @@ import com.inmy.products.data.holder.ProductListViewHolderHeader
 import com.inmy.products.data.model.ProductModel
 import com.inmy.products.ui.home.HomeFragment
 
-class ProductListAdapter(context: Context,private val cellClickListener: HomeFragment) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ProductListAdapter(context: Context, private val cellClickListener: HomeFragment) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     interface CellClickListener {
         fun onCellClickListener(productModel: ProductModel)
@@ -58,7 +58,8 @@ class ProductListAdapter(context: Context,private val cellClickListener: HomeFra
             )
         }
         else{
-            return ProductListViewHolder(context,
+            return ProductListViewHolder(
+                context,
                 LayoutInflater.from(parent.context).inflate(
                     R.layout.item_product,
                     parent,
@@ -75,11 +76,11 @@ class ProductListAdapter(context: Context,private val cellClickListener: HomeFra
         try {
             if (viewHolder is ProductListViewHolder) {
                 val vh: ProductListViewHolder = viewHolder as ProductListViewHolder
-                vh.bindView(listOfProducts[position],cellClickListener)
+                vh.bindView(listOfProducts[position], cellClickListener)
 
             } else if (viewHolder is ProductListViewHolderFooter) {
                 val vh: ProductListViewHolderFooter = viewHolder as ProductListViewHolderFooter
-                vh.bindViewFooter(listOfProducts[position],cellClickListener)
+                vh.bindViewFooter(listOfProducts[position], cellClickListener)
             }
         } catch (e: Exception) {
             e.printStackTrace()

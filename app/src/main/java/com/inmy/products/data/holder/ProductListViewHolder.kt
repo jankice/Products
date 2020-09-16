@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.inmy.products.R
 import com.inmy.products.Utils
 import com.inmy.products.data.model.ProductModel
 import com.inmy.products.ui.home.HomeFragment
@@ -15,10 +16,14 @@ class ProductListViewHolder(context: Context,itemView: View) : RecyclerView.View
     val utils: Utils = Utils()
     var sharedPreferences: SharedPreferences = context.getSharedPreferences(utils.PREFERENCE_FILE_NAME,
         Context.MODE_PRIVATE)
+    var context = context
 
     fun bindView(productModel: ProductModel, cellClickListener: HomeFragment) {
         itemView.textProductTitle.text = productModel.productTitle
         itemView.textProductDetailSort.text = productModel.productDetailSort
+
+
+        itemView.textViewProductPrice.text = context.getString(R.string.title_price) + ": " + productModel.price
 
         val cart = utils.getValuesFromPreference(sharedPreferences,productModel.productId)
         itemView.textNumberItem.text = cart

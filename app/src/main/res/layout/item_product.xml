@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_centerHorizontal="true"
     android:background="@drawable/item_border"
-    android:padding="@dimen/item_margin"
-    android:layout_margin="@dimen/item_margin">
+    android:layout_margin="@dimen/item_margin_2">
     <ImageView
         android:id="@+id/imageProduct"
-        android:layout_width="130dp"
-        android:layout_height="130dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:contentDescription="@string/app_name"
-        android:scaleType="fitXY"
+        android:scaleType="centerInside"
         android:src="@drawable/ic_launcher_foreground"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="MissingConstraints" />
+         />
 
     <TextView
         android:id="@+id/textProductTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@android:color/black"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="@id/imageProduct"
+        android:textSize="@dimen/title_textSize"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/imageProduct"
         tools:text="TubeLight" />
 
@@ -35,8 +35,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:textColor="@android:color/black"
-        android:textSize="14sp"
-        app:layout_constraintStart_toStartOf="@id/textProductTitle"
+        android:textSize="@dimen/detail_textSize"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textProductTitle"
         tools:text="warranty: 100 days" />
 
@@ -46,34 +46,46 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-
-        app:layout_constraintStart_toStartOf="@id/textProductDetailSort"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textProductDetailSort">
 
         <ImageButton
             android:id="@+id/buttonRemove"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/white"
-
+            android:background="@drawable/item_border_small"
             android:src="@drawable/ic_outline_remove_24"/>
 
         <TextView
             android:id="@+id/textNumberItem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="5dp"
+            android:background="@color/colorPrimaryLight"
+            android:textSize="@dimen/detail_small_textSize"
+            android:padding="@dimen/item_padding"
+            android:textColor="@color/black"
+            android:layout_margin="@dimen/item_margin_3"
             android:text="0"/>
 
         <ImageButton
             android:id="@+id/buttonAdd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/white"
+            android:background="@drawable/item_border_small"
             android:src="@drawable/ic_baseline_add_24"/>
 
     </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/textViewProductPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/linerCartItem"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginStart="@dimen/item_margin"
+        android:text="@string/title_price"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

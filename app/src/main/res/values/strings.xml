@@ -19,6 +19,9 @@
     <string name="title_filter">Filter</string>
     <string name="title_previous">Previous</string>
     <string name="title_next">Next</string>
+    <string name="title_price">Price</string>
+    <string name="title_search">Search</string>
+
     <string name="hint_phone">Enter Phone here</string>
     <string name="hint_verification">Verification code</string>
 
