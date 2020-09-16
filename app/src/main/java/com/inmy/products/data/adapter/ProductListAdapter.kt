@@ -1,5 +1,6 @@
 package com.inmy.products.data.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -10,7 +11,8 @@ import com.inmy.products.data.holder.ProductListViewHolderHeader
 import com.inmy.products.data.model.ProductModel
 import com.inmy.products.ui.home.HomeFragment
 
-class ProductListAdapter(private val cellClickListener: HomeFragment) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ProductListAdapter(context: Context,private val cellClickListener: HomeFragment) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
     interface CellClickListener {
         fun onCellClickListener(productModel: ProductModel)
         fun onNextClicked()
@@ -21,6 +23,7 @@ class ProductListAdapter(private val cellClickListener: HomeFragment) : Recycler
 
     val FOOTER_TYPE : Int = 1
     val HEADER_TYPE : Int = 2
+    var context : Context = context
 
     private var listOfProducts = listOf<ProductModel>()
 
@@ -55,7 +58,7 @@ class ProductListAdapter(private val cellClickListener: HomeFragment) : Recycler
             )
         }
         else{
-            return ProductListViewHolder(
+            return ProductListViewHolder(context,
                 LayoutInflater.from(parent.context).inflate(
                     R.layout.item_product,
                     parent,

@@ -3,12 +3,15 @@ package com.inmy.products
 import android.content.Context
 import android.content.SharedPreferences
 import android.widget.Toast
+
 import java.io.Serializable
 
-class Utils  : Serializable{
+class Utils()  : Serializable{
+
 
     val REF_PRODUCT_DETAIL = "101"
     val PREFERENCE_FILE_NAME = "productPreference"
+
 
     fun showToast(msg: String, context: Context?) {
         Toast.makeText(context,msg, Toast.LENGTH_LONG).show()
@@ -25,8 +28,7 @@ class Utils  : Serializable{
     }
 
     fun valueToPreference(context: Context?, key: String, value: String, task: String){
-        val sharedPreferences: SharedPreferences = context!!.getSharedPreferences(PREFERENCE_FILE_NAME,Context.MODE_PRIVATE)
-
+        var sharedPreferences: SharedPreferences = context!!.getSharedPreferences(PREFERENCE_FILE_NAME,Context.MODE_PRIVATE)
         if(task == "SAVE"){
             val editor: SharedPreferences.Editor =  sharedPreferences.edit()
 

@@ -27,6 +27,7 @@ class HomeViewModel : ViewModel() {
         homeRepository = HomeRepository()
         postModelListLiveData = MutableLiveData()
         pageNo = pagination("0",pageNo)
+
         fetchAllPosts(pageNo,"")
     }
 

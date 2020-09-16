@@ -1,5 +1,7 @@
 package com.inmy.products.data.holder
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -8,12 +10,18 @@ import com.inmy.products.data.model.ProductModel
 import com.inmy.products.ui.home.HomeFragment
 import kotlinx.android.synthetic.main.item_product.view.*
 
-class ProductListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+class ProductListViewHolder(context: Context,itemView: View) : RecyclerView.ViewHolder(itemView){
+
+    val utils: Utils = Utils()
+    var sharedPreferences: SharedPreferences = context.getSharedPreferences(utils.PREFERENCE_FILE_NAME,
+        Context.MODE_PRIVATE)
 
     fun bindView(productModel: ProductModel, cellClickListener: HomeFragment) {
         itemView.textProductTitle.text = productModel.productTitle
-        itemView.textProductDetailSort.text = "Views: " + productModel.productDetailSort
-        itemView.textNumberItem.text =""+ productModel.productCart
+        itemView.textProductDetailSort.text = productModel.productDetailSort
+
+        val cart = utils.getValuesFromPreference(sharedPreferences,productModel.productId)
+        itemView.textNumberItem.text = cart
 
         Glide.with(itemView.context).load(productModel.productImageUrl!!).into(itemView.imageProduct)
 
@@ -22,12 +30,12 @@ class ProductListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
          }
 
          itemView.buttonRemove.setOnClickListener {
-             val cart = cellClickListener.onRemoveClicked(productModel.productId.toString())
+             val cart = cellClickListener.onRemoveClicked(productModel.productId)
              itemView.textNumberItem.text = cart.toString()
          }
 
          itemView.buttonAdd.setOnClickListener {
-             val cart = cellClickListener.onAddClicked(productModel.productId.toString())
+             val cart = cellClickListener.onAddClicked(productModel.productId)
              itemView.textNumberItem.text = cart.toString()
          }
 

@@ -139,7 +139,7 @@ class LoginFragment : Fragment(){
 
                         Log.d(TAG, "signInWithCredential:success")
                         val user = task.result!!.user
-                        startActivity(Intent(context, HomeActivty::class.java))
+                        startActivity(Intent(context, MainActivity::class.java))
                            // finish()
                     } else {
                         Log.w(
@@ -187,7 +187,10 @@ class LoginFragment : Fragment(){
         super.onStart()
         val currentUser = loginViewModel.mAuth!!.currentUser
         if (currentUser != null) {
-            startActivity(Intent(context, HomeActivty::class.java))
+            val intent : Intent = Intent(context, MainActivity::class.java)
+            intent.putExtra("",currentUser)
+            startActivity( intent)
+
            // finish()
         }
     }

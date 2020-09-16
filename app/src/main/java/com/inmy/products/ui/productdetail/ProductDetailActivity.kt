@@ -2,7 +2,6 @@ package com.inmy.products.ui.productdetail
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
@@ -10,8 +9,6 @@ import com.bumptech.glide.Glide
 import com.inmy.products.R
 import com.inmy.products.Utils
 import com.inmy.products.data.model.ProductModel
-import com.inmy.products.ui.home.HomeViewModel
-import kotlinx.android.synthetic.main.item_product.view.*
 
 class ProductDetailActivity : AppCompatActivity() {
 
