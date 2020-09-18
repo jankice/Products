@@ -3,6 +3,7 @@ package com.inmy.products.ui.home
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -19,7 +20,7 @@ class HomeViewModel : ViewModel() {
     var pageNo : Int = 0
     var cartVal: Int = 0
     val utils: Utils   = Utils()
-    private var _result = MutableLiveData<String>().apply { value = "0" }
+    private var _result = MutableLiveData<String>().apply { value = "" }
     val result: LiveData<String>
         get() = _result
 
@@ -44,7 +45,7 @@ class HomeViewModel : ViewModel() {
                 postModelListLiveData?.value = it
         },
             {
-                    // todo handle
+                   Log.d("Error",it.message,it)
             }
         )
     }

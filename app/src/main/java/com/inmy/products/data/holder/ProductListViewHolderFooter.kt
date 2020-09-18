@@ -10,7 +10,8 @@ import kotlinx.android.synthetic.main.item_product.view.*
 import kotlinx.android.synthetic.main.item_product_footer.view.*
 
 class ProductListViewHolderFooter(itemView: View) : RecyclerView.ViewHolder(itemView){
-     fun bindViewFooter(productModel: ProductModel, cellClickListener: HomeFragment) {
+  //  super(itemView)
+    fun bindViewFooter(cellClickListener: HomeFragment) {
 
 
          itemView.btnNextHome.setOnClickListener {

@@ -1,17 +1,17 @@
 package com.inmy.products.data.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.inmy.products.R
 import com.inmy.products.data.holder.ProductListViewHolder
 import com.inmy.products.data.holder.ProductListViewHolderFooter
-import com.inmy.products.data.holder.ProductListViewHolderHeader
 import com.inmy.products.data.model.ProductModel
 import com.inmy.products.ui.home.HomeFragment
 
-class ProductListAdapter(context: Context, private val cellClickListener: HomeFragment) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+class ProductListAdapter(private val cellClickListener: HomeFragment) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     interface CellClickListener {
         fun onCellClickListener(productModel: ProductModel)
@@ -23,64 +23,59 @@ class ProductListAdapter(context: Context, private val cellClickListener: HomeFr
 
     val FOOTER_TYPE : Int = 1
     val HEADER_TYPE : Int = 2
-    var context : Context = context
 
     private var listOfProducts = listOf<ProductModel>()
 
 
     override fun getItemViewType(position: Int): Int {
 
-         if (position ==  listOfProducts.size) {
+        if (position == listOfProducts.size) {
+            // This is where we'll add footer.
+            return FOOTER_TYPE;
+        }
 
-             return FOOTER_TYPE
-         }
-//         else if(position == 0){
-//            return HEADER_TYPE
-//         }
-        return 0
+        return super.getItemViewType(position);
 
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
-        if (viewType == FOOTER_TYPE){
-            return ProductListViewHolderFooter(
-                LayoutInflater.from(parent.context).inflate(
-                    R.layout.item_product_footer,
-                    parent, false
-                )
+
+        val v: View
+
+        if (viewType == FOOTER_TYPE) {
+            v = LayoutInflater.from(parent.context).inflate(
+                R.layout.item_product_footer,
+                parent,
+                false
             )
-        }else if(viewType == HEADER_TYPE){
-            return ProductListViewHolderHeader(
-                LayoutInflater.from(parent.context).inflate(
-                    R.layout.item_product_header,
-                    parent, false
-                )
-            )
+            return ProductListViewHolderFooter(v)
         }
-        else{
-            return ProductListViewHolder(
-                context,
-                LayoutInflater.from(parent.context).inflate(
-                    R.layout.item_product,
-                    parent,
-                    false
-                )
-            )
-        }
+
+        v = LayoutInflater.from(parent.context).inflate(R.layout.item_product, parent, false)
+
+        return ProductListViewHolder(parent.context,v)
 
     }
 
-    override fun getItemCount(): Int = listOfProducts.size + 1
+
+
+    override fun getItemCount(): Int {
+
+        if (listOfProducts.size == 0) {
+            return 1;
+        }
+
+        return listOfProducts.size + 1;
+    }
 
     override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int) {
         try {
             if (viewHolder is ProductListViewHolder) {
                 val vh: ProductListViewHolder = viewHolder as ProductListViewHolder
-                vh.bindView(listOfProducts[position], cellClickListener)
-
+                vh.bindView(listOfProducts[position],cellClickListener)
             } else if (viewHolder is ProductListViewHolderFooter) {
                 val vh: ProductListViewHolderFooter = viewHolder as ProductListViewHolderFooter
-                vh.bindViewFooter(listOfProducts[position], cellClickListener)
+                vh.bindViewFooter(cellClickListener)
             }
         } catch (e: Exception) {
             e.printStackTrace()

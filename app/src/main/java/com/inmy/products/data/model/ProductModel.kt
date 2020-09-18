@@ -14,5 +14,5 @@ data class ProductModel  (
     var productPicture: Int?,
     @SerializedName ("ImageUrl") var productImageUrl: String?,
     @SerializedName("Description_Long") var productDetailLing : String,
-    @SerializedName("Price") var price : Int
+    @SerializedName("Price") var price : Int,
 ) : Parcelable

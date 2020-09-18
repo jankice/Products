@@ -56,7 +56,7 @@ class HomeFragment : Fragment(), ProductListAdapter.CellClickListener {
         //This will for default android divider
       //  recyclerViewProducts.addItemDecoration(GridItemDecoration(10, 2))
 
-        val productListAdapter = ProductListAdapter(requireContext(),this)
+        val productListAdapter = ProductListAdapter(this)
         recyclerViewProducts.adapter = productListAdapter
 
 

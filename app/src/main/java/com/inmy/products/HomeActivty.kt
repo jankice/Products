@@ -21,8 +21,8 @@ import java.lang.String
 class HomeActivty : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
-    lateinit var textCartItemCount: TextView
-    var mCartItemCount = 10
+//    lateinit var textCartItemCount: TextView
+//    var mCartItemCount = 10
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,18 +66,18 @@ class HomeActivty : AppCompatActivity() {
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
-    private fun setupBadge() {
-        if (textCartItemCount != null) {
-            if (mCartItemCount === 0) {
-                if (textCartItemCount!!.getVisibility() !== View.GONE) {
-                    textCartItemCount.setVisibility(View.GONE)
-                }
-            } else {
-                textCartItemCount.setText(String.valueOf(Math.min(mCartItemCount, 99)))
-                if (textCartItemCount.getVisibility() !== View.VISIBLE) {
-                    textCartItemCount.setVisibility(View.VISIBLE)
-                }
-            }
-        }
-    }
+//    private fun setupBadge() {
+//        if (textCartItemCount != null) {
+//            if (mCartItemCount === 0) {
+//                if (textCartItemCount!!.getVisibility() !== View.GONE) {
+//                    textCartItemCount.setVisibility(View.GONE)
+//                }
+//            } else {
+//                textCartItemCount.setText(String.valueOf(Math.min(mCartItemCount, 99)))
+//                if (textCartItemCount.getVisibility() !== View.VISIBLE) {
+//                    textCartItemCount.setVisibility(View.VISIBLE)
+//                }
+//            }
+//        }
+//    }
 }

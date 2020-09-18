@@ -2,6 +2,7 @@ package com.inmy.products.data.holder
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -10,13 +11,13 @@ import com.inmy.products.Utils
 import com.inmy.products.data.model.ProductModel
 import com.inmy.products.ui.home.HomeFragment
 import kotlinx.android.synthetic.main.item_product.view.*
+import kotlinx.android.synthetic.main.item_product_footer.view.*
 
-class ProductListViewHolder(context: Context,itemView: View) : RecyclerView.ViewHolder(itemView){
+class ProductListViewHolder(var context: Context, itemView: View) : RecyclerView.ViewHolder(itemView){
 
     val utils: Utils = Utils()
     var sharedPreferences: SharedPreferences = context.getSharedPreferences(utils.PREFERENCE_FILE_NAME,
         Context.MODE_PRIVATE)
-    var context = context
 
     fun bindView(productModel: ProductModel, cellClickListener: HomeFragment) {
         itemView.textProductTitle.text = productModel.productTitle
@@ -43,6 +44,7 @@ class ProductListViewHolder(context: Context,itemView: View) : RecyclerView.View
              val cart = cellClickListener.onAddClicked(productModel.productId)
              itemView.textNumberItem.text = cart.toString()
          }
+
 
     }
 
