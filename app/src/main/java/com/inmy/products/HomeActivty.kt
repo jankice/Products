@@ -2,6 +2,7 @@ package com.inmy.products
 
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -21,8 +22,8 @@ import java.lang.String
 class HomeActivty : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
-//    lateinit var textCartItemCount: TextView
-//    var mCartItemCount = 10
+    lateinit var textCartItemCount: TextView
+    var mCartItemCount = 10
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,9 +57,31 @@ class HomeActivty : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.home_activty, menu)
+        getMenuInflater().inflate(R.menu.home_activty, menu)
+        val menuItem: MenuItem = menu.findItem(R.id.action_cart)
+        val actionView: View = menuItem.getActionView()
 
+        textCartItemCount = actionView.findViewById(R.id.cart_badge) as TextView
+
+        setupBadge()
+
+        actionView.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(v: View?) {
+                onOptionsItemSelected(menuItem)
+            }
+        })
         return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.getItemId()) {
+           R.id.action_cart -> {
+
+                // Do something
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -66,18 +89,18 @@ class HomeActivty : AppCompatActivity() {
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
-//    private fun setupBadge() {
-//        if (textCartItemCount != null) {
-//            if (mCartItemCount === 0) {
-//                if (textCartItemCount!!.getVisibility() !== View.GONE) {
-//                    textCartItemCount.setVisibility(View.GONE)
-//                }
-//            } else {
-//                textCartItemCount.setText(String.valueOf(Math.min(mCartItemCount, 99)))
-//                if (textCartItemCount.getVisibility() !== View.VISIBLE) {
-//                    textCartItemCount.setVisibility(View.VISIBLE)
-//                }
-//            }
-//        }
-//    }
+    private fun setupBadge() {
+        if (textCartItemCount != null) {
+            if (mCartItemCount === 0) {
+                if (textCartItemCount!!.getVisibility() !== View.GONE) {
+                    textCartItemCount.setVisibility(View.GONE)
+                }
+            } else {
+                textCartItemCount.setText(String.valueOf(Math.min(mCartItemCount, 99)))
+                if (textCartItemCount.getVisibility() !== View.VISIBLE) {
+                    textCartItemCount.setVisibility(View.VISIBLE)
+                }
+            }
+        }
+    }
 }

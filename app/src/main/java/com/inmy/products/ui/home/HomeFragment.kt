@@ -1,5 +1,6 @@
 package com.inmy.products.ui.home
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,16 +9,20 @@ import android.view.View.OnAttachStateChangeListener
 import android.view.ViewGroup
 import android.widget.SearchView
 import android.widget.Toast
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.inmy.products.R
 import com.inmy.products.Utils
 import com.inmy.products.data.adapter.ProductListAdapter
 import com.inmy.products.data.model.ProductModel
+import com.inmy.products.databinding.FragmentHomeBinding
 import com.inmy.products.ui.productdetail.ProductDetailActivity
+import kotlinx.android.synthetic.main.fragment_home.*
 
 
 class HomeFragment : Fragment(), ProductListAdapter.CellClickListener {
@@ -28,36 +33,40 @@ class HomeFragment : Fragment(), ProductListAdapter.CellClickListener {
 
     private lateinit var homeViewModel: HomeViewModel
     private val utils: Utils = Utils()
-    private lateinit var recyclerViewProducts : RecyclerView
-    private lateinit var searchViewHome: androidx.appcompat.widget.SearchView
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_home, container, false)
+        var binding: FragmentHomeBinding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
 
-        recyclerViewProducts = root.findViewById(R.id.productRecycleView)
-        searchViewHome = root.findViewById(R.id.searchViewHome)
+        homeViewModel = activity?.run {
+            ViewModelProvider(this)[HomeViewModel::class.java]
+        } ?: throw Exception("Invalid Activity")
+
+        binding.homeViewModel = homeViewModel
 
 
+
+
+
+        return binding.root;
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
         handleSearchListener()
         initRecycleView()
-
-        return root;
     }
 
 
-
     private fun initRecycleView() {
-        recyclerViewProducts.layoutManager = GridLayoutManager(context, 2)
-
-        //This will for default android divider
-      //  recyclerViewProducts.addItemDecoration(GridItemDecoration(10, 2))
+        productRecycleView.layoutManager = GridLayoutManager(context, 2)
 
         val productListAdapter = ProductListAdapter(this)
-        recyclerViewProducts.adapter = productListAdapter
+        productRecycleView.adapter = productListAdapter
 
 
         homeViewModel.postModelListLiveData?.observe(viewLifecycleOwner, Observer {
@@ -108,7 +117,6 @@ class HomeFragment : Fragment(), ProductListAdapter.CellClickListener {
 
     override fun onNextClicked() {
         homeViewModel.nextClicked()
-
     }
 
     override fun onPrevClicked() {
@@ -116,13 +124,13 @@ class HomeFragment : Fragment(), ProductListAdapter.CellClickListener {
     }
 
     override fun onAddClicked(productId: String): Int {
-      val cart = homeViewModel.addClicked(requireContext(),productId)
+      val cart = homeViewModel.addClicked(requireContext(), productId)
 
         return cart
     }
 
     override fun onRemoveClicked(productId: String): Int {
-       val cart = homeViewModel.removeClicked(requireContext(),productId)
+       val cart = homeViewModel.removeClicked(requireContext(), productId)
 
         return cart
     }

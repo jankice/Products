@@ -7,6 +7,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.inmy.products.R
 import com.inmy.products.Utils
 import com.inmy.products.data.model.HomeRepository
 import com.inmy.products.data.model.ProductModel
