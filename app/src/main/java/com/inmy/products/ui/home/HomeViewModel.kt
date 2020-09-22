@@ -7,17 +7,21 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.inmy.products.R
+import com.inmy.products.Resources
 import com.inmy.products.Utils
 import com.inmy.products.data.model.HomeRepository
 import com.inmy.products.data.model.ProductModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 
 class HomeViewModel : ViewModel() {
-    // TODO: Implement the ViewModel
+
     private var homeRepository: HomeRepository?=null
-    var postModelListLiveData : MutableLiveData<List<ProductModel>>?=null
+    var postModelListLiveData : MutableLiveData<Resources<List<ProductModel>>>?=null
     var pageNo : Int = 0
     var cartVal: Int = 0
     val utils: Utils   = Utils()
@@ -39,18 +43,29 @@ class HomeViewModel : ViewModel() {
         fetchAllPosts(pageNo,result)
     }
 
-    @SuppressLint("CheckResult")
-    fun fetchAllPosts(page: Int, result: String){
-        homeRepository?.fetchAllPosts(page,result)?.subscribeOn(Schedulers.io())
-            ?.observeOn(AndroidSchedulers.mainThread())?.subscribe( {
-                postModelListLiveData?.value = it
-        },
-            {
-                   Log.d("Error",it.message,it)
+//    @SuppressLint("CheckResult")
+//    fun<T> fetchAllPosts(page: Int, result: String) : Resources<T>{
+//        homeRepository?.fetchAllPosts(page,result)?.subscribeOn(Schedulers.io())
+//            ?.observeOn(AndroidSchedulers.mainThread())?.subscribe( {
+//                postModelListLiveData?.value = it
+//        },
+//            {
+//                   Log.d("Error",it.message,it)
+//
+//            }
+//        )
+//
+//        return
+//    }
+    fun fetchAllPosts(page: Int, query: String) {
+        viewModelScope.launch {
+            async {
+                var result = homeRepository?.fetchAllPosts(page, query )
+                postModelListLiveData?.value =result
             }
-        )
+            postModelListLiveData?.value = Resources.loading()
+        }
     }
-
     fun pagination(s: String, old: Int): Int {
 
         var page : Int = old;

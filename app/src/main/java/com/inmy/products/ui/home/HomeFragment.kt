@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.inmy.products.R
+import com.inmy.products.Resources
 import com.inmy.products.Utils
 import com.inmy.products.data.adapter.ProductListAdapter
 import com.inmy.products.data.model.ProductModel
@@ -70,11 +71,24 @@ class HomeFragment : Fragment(), ProductListAdapter.CellClickListener {
 
 
         homeViewModel.postModelListLiveData?.observe(viewLifecycleOwner, Observer {
-            if (it != null) {
-                productListAdapter.setProductList(it as ArrayList<ProductModel>)
-            } else {
-                utils.showToast("Something went wrong", context)
+            when (it.status) {
+                Resources.Status.SUCCESS -> {
+
+                    if (!it.data.isNullOrEmpty()){
+                        productListAdapter.setProductList(it.data as ArrayList<ProductModel>)
+                    }
+                }
+                Resources.Status.FAILURE ->
+                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG).show()
+
+                Resources.Status.LOADING ->
+                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG).show()
             }
+//            if (it != null) {
+//                productListAdapter.setProductList(it.data as ArrayList<ProductModel>)
+//            } else {
+//                utils.showToast("Something went wrong", context)
+//            }
 
         })
 

@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
@@ -25,6 +26,10 @@ import com.inmy.products.HomeActivty
 
 import com.inmy.products.MainActivity
 import com.inmy.products.R
+import com.inmy.products.databinding.FragmentHomeBinding
+import com.inmy.products.databinding.FragmentLoginBinding
+import com.inmy.products.ui.home.HomeViewModel
+import kotlinx.android.synthetic.main.fragment_login.*
 import java.util.concurrent.TimeUnit
 
 
@@ -34,13 +39,6 @@ class LoginFragment : Fragment(){
         const val TAG = "PhoneAuthActivity"
         fun newInstance() = LoginFragment()
     }
-
-    var mPhoneNumberField: EditText? = null
-    var mVerificationField:EditText? = null
-    var mStartButton: Button? = null
-    var mVerifyButton:Button? = null
-    var mResendButton:Button? = null
-
 
     private var mResendToken: ForceResendingToken? = null
     private var mCallbacks: OnVerificationStateChangedCallbacks? = null
@@ -53,29 +51,25 @@ class LoginFragment : Fragment(){
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        loginViewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_login, container, false)
-
-        mPhoneNumberField = root.findViewById(R.id.field_phone_number)
-        mVerificationField = root.findViewById(R.id.field_verification_code)
-
-        mStartButton = root.findViewById(R.id.button_start_verification)
-        mVerifyButton = root.findViewById(R.id.button_verify_phone)
-        mResendButton = root.findViewById(R.id.button_resend)
-
-//        loginViewModel.registerValidationCallback ({
-//
-//        },{
-//
-//        },{
-//
-//        })
+        var binding: FragmentLoginBinding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false)
 
 
+        loginViewModel = activity?.run {
+            ViewModelProvider(this)[LoginViewModel::class.java]
+        } ?: throw Exception("Invalid Activity")
+
+        binding.loginViewModel = loginViewModel
+
+        return binding.root;
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
         mCallbacks = object : OnVerificationStateChangedCallbacks() {
             override fun onVerificationCompleted(credential: PhoneAuthCredential) {
                 Log.d(
-                   TAG,
+                    TAG,
                     "onVerificationCompleted:$credential"
                 )
                 signInWithPhoneAuthCredential(credential)
@@ -84,12 +78,14 @@ class LoginFragment : Fragment(){
             override fun onVerificationFailed(e: FirebaseException) {
 
                 if (e is FirebaseAuthInvalidCredentialsException) {
-                    mPhoneNumberField!!.error = "Invalid phone number."
+                    field_phone_number!!.error = "Invalid phone number."
                 } else if (e is FirebaseTooManyRequestsException) {
-                    Snackbar.make(
-                        root.findViewById(android.R.id.content), "Quota exceeded.",
-                        Snackbar.LENGTH_SHORT
-                    ).show()
+//                    Snackbar.make(
+//                        root.findViewById(android.R.id.content), "Quota exceeded.",
+//                        Snackbar.LENGTH_SHORT
+//                    ).show()
+                    e.printStackTrace()
+                    //todo show dialog message for exceeded quota
                 }
             }
 
@@ -103,30 +99,28 @@ class LoginFragment : Fragment(){
             }
         }
 
-        mStartButton?.setOnClickListener{
-            loginViewModel.validatePhoneNumber(mPhoneNumberField!!.text.toString()){
+        button_start_verification?.setOnClickListener{
+            loginViewModel.validatePhoneNumber(field_phone_number!!.text.toString()){
                 startPhoneNumberVerification(it)
             }
         }
 
-        mVerifyButton?.setOnClickListener{
-            val code = mVerificationField!!.text.toString()
+        button_verify_phone?.setOnClickListener{
+            val code = field_verification_code!!.text.toString()
 
             if (TextUtils.isEmpty(code)) {
-                mVerificationField!!.error = "Cannot be empty."
+                field_verification_code!!.error = "Cannot be empty."
                 //return
             }
             val credential = loginViewModel.verifyPhoneNumberWithCode(mVerificationId, code)
             signInWithPhoneAuthCredential(credential)
 
         }
-        mResendButton?.setOnClickListener{
+        button_resend?.setOnClickListener{
             resendVerificationCode(
-                mPhoneNumberField!!.text.toString(),
+                field_phone_number!!.text.toString(),
                 mResendToken)
         }
-
-        return root
     }
 
     private fun signInWithPhoneAuthCredential(credential: PhoneAuthCredential) {
@@ -148,7 +142,7 @@ class LoginFragment : Fragment(){
                             task.exception
                         )
                         if (task.exception is FirebaseAuthInvalidCredentialsException) {
-                            mVerificationField!!.error = "Invalid code."
+                            field_verification_code!!.error = "Invalid code."
                         }
                     }
                 }
