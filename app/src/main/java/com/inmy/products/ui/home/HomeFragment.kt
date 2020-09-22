@@ -84,11 +84,6 @@ class HomeFragment : Fragment(), ProductListAdapter.CellClickListener {
                 Resources.Status.LOADING ->
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG).show()
             }
-//            if (it != null) {
-//                productListAdapter.setProductList(it.data as ArrayList<ProductModel>)
-//            } else {
-//                utils.showToast("Something went wrong", context)
-//            }
 
         })
 
