@@ -51,7 +51,7 @@ class LoginFragment : Fragment(){
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        var binding: FragmentLoginBinding =
+        val binding: FragmentLoginBinding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false)
 
 
@@ -61,7 +61,7 @@ class LoginFragment : Fragment(){
 
         binding.loginViewModel = loginViewModel
 
-        return binding.root;
+        return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -80,10 +80,6 @@ class LoginFragment : Fragment(){
                 if (e is FirebaseAuthInvalidCredentialsException) {
                     field_phone_number!!.error = "Invalid phone number."
                 } else if (e is FirebaseTooManyRequestsException) {
-//                    Snackbar.make(
-//                        root.findViewById(android.R.id.content), "Quota exceeded.",
-//                        Snackbar.LENGTH_SHORT
-//                    ).show()
                     e.printStackTrace()
                     //todo show dialog message for exceeded quota
                 }

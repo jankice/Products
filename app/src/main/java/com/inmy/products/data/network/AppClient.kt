@@ -9,7 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory
 import java.util.concurrent.TimeUnit
 
-const val BASE_URL = "http://" + BuildConfig.BASE_API +"/";
+const val BASE_URL = "http://" + BuildConfig.BASE_API +"/"
 
 class AppClient {
     companion object{
@@ -19,8 +19,8 @@ class AppClient {
                 .setLenient()
                 .create()
             val okHttpClient = OkHttpClient.Builder()
-                .readTimeout(100, TimeUnit.SECONDS)
-                .connectTimeout(100, TimeUnit.SECONDS)
+                .readTimeout(60, TimeUnit.SECONDS)
+                .connectTimeout(60, TimeUnit.SECONDS)
                 .build()
             if (retrofit == null) {
                 retrofit = Retrofit.Builder()

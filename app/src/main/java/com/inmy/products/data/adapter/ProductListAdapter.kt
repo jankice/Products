@@ -31,10 +31,10 @@ class ProductListAdapter(private val cellClickListener: HomeFragment) : Recycler
 
         if (position == listOfProducts.size) {
             // This is where we'll add footer.
-            return FOOTER_TYPE;
+            return FOOTER_TYPE
         }
 
-        return super.getItemViewType(position);
+        return super.getItemViewType(position)
 
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -62,19 +62,19 @@ class ProductListAdapter(private val cellClickListener: HomeFragment) : Recycler
     override fun getItemCount(): Int {
 
         if (listOfProducts.size == 0) {
-            return 1;
+            return 1
         }
 
-        return listOfProducts.size + 1;
+        return listOfProducts.size + 1
     }
 
     override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int) {
         try {
             if (viewHolder is ProductListViewHolder) {
-                val vh: ProductListViewHolder = viewHolder as ProductListViewHolder
+                val vh: ProductListViewHolder = viewHolder
                 vh.bindView(listOfProducts[position],cellClickListener)
             } else if (viewHolder is ProductListViewHolderFooter) {
-                val vh: ProductListViewHolderFooter = viewHolder as ProductListViewHolderFooter
+                val vh: ProductListViewHolderFooter = viewHolder
                 vh.bindViewFooter(cellClickListener)
             }
         } catch (e: Exception) {

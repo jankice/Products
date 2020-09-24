@@ -13,12 +13,12 @@ class LoginViewModel : ViewModel() {
     var mAuth: FirebaseAuth? = null
     var callbackHolder : callBack? = null
     init {
-        mAuth = FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance()
     }
 
     fun validatePhoneNumber(phoneNumber: String, callback: (String) -> Unit) : Boolean {
         if (!isEmpty(phoneNumber)){
-            callback!!(phoneNumber)
+            callback(phoneNumber)
             return true
         }
         return false
@@ -36,10 +36,6 @@ class LoginViewModel : ViewModel() {
 
         override fun onVerificationFailed(p0: FirebaseException) {
             failure(p0)
-        }
-
-        override fun onCodeSent(p0: String, p1: PhoneAuthProvider.ForceResendingToken) {
-            super.onCodeSent(p0, p1)
         }
 
     }

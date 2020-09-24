@@ -3,8 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_alignParentBottom="true"
-    android:gravity="right"
-    android:layout_gravity="right"
+    android:gravity="end"
+    android:layout_gravity="end"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
@@ -18,14 +18,14 @@
             android:id="@+id/btnPrevHome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/ic_previous"
+            android:drawableStart="@drawable/ic_previous"
             android:text="@string/title_previous" />
 
         <Button
             android:id="@+id/btnNextHome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableRight="@drawable/ic_next"
+            android:drawableEnd="@drawable/ic_next"
             android:text="@string/title_next" />
 
     </LinearLayout>

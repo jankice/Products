@@ -6,7 +6,7 @@ import android.widget.Toast
 
 import java.io.Serializable
 
-class Utils()  : Serializable{
+class Utils : Serializable{
 
 
     val REF_PRODUCT_DETAIL = "101"
@@ -28,13 +28,13 @@ class Utils()  : Serializable{
     }
 
     fun valueToPreference(context: Context?, key: String, value: String, task: String){
-        var sharedPreferences: SharedPreferences = context!!.getSharedPreferences(PREFERENCE_FILE_NAME,Context.MODE_PRIVATE)
+        val sharedPreferences: SharedPreferences = context!!.getSharedPreferences(PREFERENCE_FILE_NAME,Context.MODE_PRIVATE)
         if(task == "SAVE"){
             val editor: SharedPreferences.Editor =  sharedPreferences.edit()
 
             editor.putString(key,value)
             editor.apply()
-            editor.commit()
+            //editor.apply()
         }
         else if(task == "CLEAR"){
             val editor = sharedPreferences.edit()

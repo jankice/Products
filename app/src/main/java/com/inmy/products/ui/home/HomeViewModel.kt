@@ -68,14 +68,14 @@ class HomeViewModel : ViewModel() {
     }
     fun pagination(s: String, old: Int): Int {
 
-        var page : Int = old;
+        var page : Int = old
 
         if(s.equals("NEXT")){
             page ++
         }else if(s.equals("PREV") && page > 0){
             page --
         }
-        return page;
+        return page
     }
 
     fun nextClicked() {

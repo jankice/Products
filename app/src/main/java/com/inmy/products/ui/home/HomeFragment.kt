@@ -53,7 +53,7 @@ class HomeFragment : Fragment(), ProductListAdapter.CellClickListener {
 
 
 
-        return binding.root;
+        return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

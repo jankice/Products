@@ -2,5 +2,4 @@ package com.inmy
 
 import android.app.Application
 
-class Products : Application() {
-}
+class Products : Application()

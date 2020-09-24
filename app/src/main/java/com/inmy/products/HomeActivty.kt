@@ -57,9 +57,9 @@ class HomeActivty : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.home_activty, menu)
+        menuInflater.inflate(R.menu.home_activty, menu)
         val menuItem: MenuItem = menu.findItem(R.id.action_cart)
-        val actionView: View = menuItem.getActionView()
+        val actionView: View = menuItem.actionView
 
         textCartItemCount = actionView.findViewById(R.id.cart_badge) as TextView
 
@@ -74,7 +74,7 @@ class HomeActivty : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.getItemId()) {
+        when (item.itemId) {
            R.id.action_cart -> {
 
                 // Do something
@@ -92,13 +92,13 @@ class HomeActivty : AppCompatActivity() {
     private fun setupBadge() {
         if (textCartItemCount != null) {
             if (mCartItemCount === 0) {
-                if (textCartItemCount!!.getVisibility() !== View.GONE) {
-                    textCartItemCount.setVisibility(View.GONE)
+                if (textCartItemCount.visibility !== View.GONE) {
+                    textCartItemCount.visibility = View.GONE
                 }
             } else {
-                textCartItemCount.setText(String.valueOf(Math.min(mCartItemCount, 99)))
-                if (textCartItemCount.getVisibility() !== View.VISIBLE) {
-                    textCartItemCount.setVisibility(View.VISIBLE)
+                textCartItemCount.text = String.valueOf(Math.min(mCartItemCount, 99))
+                if (textCartItemCount.visibility !== View.VISIBLE) {
+                    textCartItemCount.visibility = View.VISIBLE
                 }
             }
         }
