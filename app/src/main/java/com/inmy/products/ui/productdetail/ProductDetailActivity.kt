@@ -1,18 +1,14 @@
 package com.inmy.products.ui.productdetail
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.ImageView
-import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.inmy.products.R
 import com.inmy.products.Utils
 import com.inmy.products.data.model.ProductModel
 import com.inmy.products.databinding.ActivityProductDetailBinding
-import com.inmy.products.databinding.FragmentHomeBinding
 import kotlinx.android.synthetic.main.activity_product_detail.*
 
 class ProductDetailActivity : AppCompatActivity() {
@@ -23,7 +19,7 @@ class ProductDetailActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        var binding: ActivityProductDetailBinding =
+        val binding: ActivityProductDetailBinding =
             DataBindingUtil.setContentView(this,R.layout.activity_product_detail)
 
         binding.lifecycleOwner = this

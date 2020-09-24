@@ -7,28 +7,19 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.FirebaseException
 import com.google.firebase.FirebaseTooManyRequestsException
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthProvider
 import com.google.firebase.auth.PhoneAuthProvider.ForceResendingToken
 import com.google.firebase.auth.PhoneAuthProvider.OnVerificationStateChangedCallbacks
-import com.inmy.products.HomeActivty
-
 import com.inmy.products.MainActivity
 import com.inmy.products.R
-import com.inmy.products.databinding.FragmentHomeBinding
 import com.inmy.products.databinding.FragmentLoginBinding
-import com.inmy.products.ui.home.HomeViewModel
 import kotlinx.android.synthetic.main.fragment_login.*
 import java.util.concurrent.TimeUnit
 
@@ -177,7 +168,7 @@ class LoginFragment : Fragment(){
         super.onStart()
         val currentUser = loginViewModel.mAuth!!.currentUser
         if (currentUser != null) {
-            val intent : Intent = Intent(context, MainActivity::class.java)
+            val intent = Intent(context, MainActivity::class.java)
             intent.putExtra("",currentUser)
             startActivity( intent)
 

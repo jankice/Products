@@ -1,20 +1,15 @@
 package com.inmy.products.ui.home
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.inmy.products.R
 import com.inmy.products.Resources
 import com.inmy.products.Utils
 import com.inmy.products.data.model.HomeRepository
 import com.inmy.products.data.model.ProductModel
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
@@ -60,7 +55,7 @@ class HomeViewModel : ViewModel() {
     fun fetchAllPosts(page: Int, query: String) {
         viewModelScope.launch {
             async {
-                var result = homeRepository?.fetchAllPosts(page, query )
+                val result = homeRepository?.fetchAllPosts(page, query )
                 postModelListLiveData?.value =result
             }
             postModelListLiveData?.value = Resources.loading()

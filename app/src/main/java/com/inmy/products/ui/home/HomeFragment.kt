@@ -1,6 +1,5 @@
 package com.inmy.products.ui.home
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,11 +10,8 @@ import android.widget.SearchView
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.inmy.products.R
 import com.inmy.products.Resources
 import com.inmy.products.Utils
@@ -40,7 +36,7 @@ class HomeFragment : Fragment(), ProductListAdapter.CellClickListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        var binding: FragmentHomeBinding =
+        val binding: FragmentHomeBinding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
 
         homeViewModel = activity?.run {
@@ -70,7 +66,7 @@ class HomeFragment : Fragment(), ProductListAdapter.CellClickListener {
         productRecycleView.adapter = productListAdapter
 
 
-        homeViewModel.postModelListLiveData?.observe(viewLifecycleOwner, Observer {
+        homeViewModel.postModelListLiveData?.observe(viewLifecycleOwner, {
             when (it.status) {
                 Resources.Status.SUCCESS -> {
 
@@ -133,9 +129,8 @@ class HomeFragment : Fragment(), ProductListAdapter.CellClickListener {
     }
 
     override fun onAddClicked(productId: String): Int {
-      val cart = homeViewModel.addClicked(requireContext(), productId)
 
-        return cart
+        return homeViewModel.addClicked(requireContext(), productId)
     }
 
     override fun onRemoveClicked(productId: String): Int {

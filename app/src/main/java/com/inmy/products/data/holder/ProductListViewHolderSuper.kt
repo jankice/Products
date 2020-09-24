@@ -14,8 +14,6 @@ class ProductListViewHolderSuper(itemView: View, val viewType : Int) : RecyclerV
         itemView.textNumberItem.text =""+ productModel.productCart
 
         Glide.with(itemView.context).load(productModel.productImageUrl!!).into(itemView.imageProduct)
-        if(viewType == 1){
-            
-        }
+
     }
 }

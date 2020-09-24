@@ -1,8 +1,6 @@
 package com.inmy.products.ui.login
 
-import android.text.TextUtils
 import android.text.TextUtils.*
-import android.widget.EditText
 import androidx.lifecycle.ViewModel
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
@@ -11,7 +9,7 @@ import com.google.firebase.auth.PhoneAuthProvider
 
 class LoginViewModel : ViewModel() {
     var mAuth: FirebaseAuth? = null
-    var callbackHolder : callBack? = null
+    var callbackHolder : CallBack? = null
     init {
         mAuth = FirebaseAuth.getInstance()
     }
@@ -25,10 +23,10 @@ class LoginViewModel : ViewModel() {
     }
 
     fun registerValidationCallback(success: (PhoneAuthCredential) -> Unit, failure: (FirebaseException) -> Unit, codeSent: (p0: String, p1: PhoneAuthProvider.ForceResendingToken) -> Unit) {
-        callbackHolder = callBack(success, failure)
+        callbackHolder = CallBack(success, failure)
     }
 
-    class callBack (val success: (PhoneAuthCredential) -> Unit, val failure: (FirebaseException) -> Unit): PhoneAuthProvider.OnVerificationStateChangedCallbacks(){
+    class CallBack (val success: (PhoneAuthCredential) -> Unit, val failure: (FirebaseException) -> Unit): PhoneAuthProvider.OnVerificationStateChangedCallbacks(){
 
         override fun onVerificationCompleted(p0: PhoneAuthCredential) {
             success(p0)
@@ -41,8 +39,7 @@ class LoginViewModel : ViewModel() {
     }
 
      fun verifyPhoneNumberWithCode(verificationId: String?, code: String) : PhoneAuthCredential{
-        val credential = PhoneAuthProvider.getCredential(verificationId!!, code)
 
-         return credential
+         return PhoneAuthProvider.getCredential(verificationId!!, code)
     }
 }
