@@ -15,7 +15,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
-        <activity android:name=".ui.productdetail.ProductDetailActivity"></activity>
+        <activity android:name=".ui.productdetail.ProductDetailActivity" />
         <activity
             android:name=".HomeActivty"
             android:label="@string/title_activity_home_activty"

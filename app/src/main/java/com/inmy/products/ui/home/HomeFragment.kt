@@ -134,9 +134,8 @@ class HomeFragment : Fragment(), ProductListAdapter.CellClickListener {
     }
 
     override fun onRemoveClicked(productId: String): Int {
-       val cart = homeViewModel.removeClicked(requireContext(), productId)
 
-        return cart
+        return homeViewModel.removeClicked(requireContext(), productId)
     }
 }
 
