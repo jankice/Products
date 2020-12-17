@@ -1,5 +1,4 @@
 package com.inmy.products.data.model
-
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
@@ -13,6 +12,7 @@ data class ProductModel  (
     var productCart: Int,
     var productPicture: Int?,
     @SerializedName ("ImageUrl") var productImageUrl: String?,
+    @SerializedName("ImageUrls") var productImageUrls : ArrayList<String>,
     @SerializedName("Description_Long") var productDetailLing : String,
     @SerializedName("Price") var price : Int,
 ) : Parcelable

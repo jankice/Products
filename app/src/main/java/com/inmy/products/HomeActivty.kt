@@ -65,11 +65,7 @@ class HomeActivty : AppCompatActivity() {
 
         setupBadge()
 
-        actionView.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(v: View?) {
-                onOptionsItemSelected(menuItem)
-            }
-        })
+        actionView.setOnClickListener { onOptionsItemSelected(menuItem) }
         return true
     }
 
@@ -90,16 +86,15 @@ class HomeActivty : AppCompatActivity() {
     }
 
     private fun setupBadge() {
-        if (textCartItemCount != null) {
-            if (mCartItemCount === 0) {
-                if (textCartItemCount.visibility !== View.GONE) {
-                    textCartItemCount.visibility = View.GONE
-                }
-            } else {
-                textCartItemCount.text = String.valueOf(Math.min(mCartItemCount, 99))
-                if (textCartItemCount.visibility !== View.VISIBLE) {
-                    textCartItemCount.visibility = View.VISIBLE
-                }
+
+        if (mCartItemCount == 0) {
+            if (textCartItemCount.visibility != View.GONE) {
+                textCartItemCount.visibility = View.GONE
+            }
+        } else {
+            textCartItemCount.text = String.valueOf(Math.min(mCartItemCount, 99))
+            if (textCartItemCount.visibility != View.VISIBLE) {
+                textCartItemCount.visibility = View.VISIBLE
             }
         }
     }

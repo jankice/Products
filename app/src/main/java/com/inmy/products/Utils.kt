@@ -10,7 +10,8 @@ class Utils : Serializable{
 
 
     val REF_PRODUCT_DETAIL = "101"
-    val PREFERENCE_FILE_NAME = "productPreference"
+    val PREFERENCE_FILE_NAME = "productPreferenceFile"
+    val PREFERENCE_KEY_CART_COUNT = "cartCount"
 
 
     fun showToast(msg: String, context: Context?) {
