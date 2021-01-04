@@ -4,9 +4,9 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import com.bumptech.glide.Glide
 import com.inmy.products.R
 import com.inmy.products.Utils
+import com.inmy.products.data.adapter.ImageSliderAdapter
 import com.inmy.products.data.model.ProductModel
 import com.inmy.products.databinding.ActivityProductDetailBinding
 import kotlinx.android.synthetic.main.activity_product_detail.*
@@ -39,7 +39,10 @@ class ProductDetailActivity : AppCompatActivity() {
 
     private fun setValuesforProduct() {
 
-        Glide.with(this).load(product.productImageUrl).into(imageProductDetail)
+        val adapter = ImageSliderAdapter(this,product.productImageUrls)
+        viewpager.adapter = adapter
+//
+//        Glide.with(this).load(product.productImageUrl).into(imageProductDetail)
         textProductTitleDetail.text = product.productTitle
         textProductDetail.text = product.productDetailSort
 
