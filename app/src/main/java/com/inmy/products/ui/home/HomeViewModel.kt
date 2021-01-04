@@ -1,24 +1,19 @@
 package com.inmy.products.ui.home
 
-import android.annotation.SuppressLint
+import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
-import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.inmy.products.R
+import androidx.lifecycle.*
 import com.inmy.products.Resources
 import com.inmy.products.Utils
 import com.inmy.products.data.model.HomeRepository
 import com.inmy.products.data.model.ProductModel
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
-class HomeViewModel : ViewModel() {
+class HomeViewModel(application: Application) : AndroidViewModel(application) {
+    private val context = getApplication<Application>().applicationContext
+
 
     private var homeRepository: HomeRepository?=null
     var postModelListLiveData : MutableLiveData<Resources<List<ProductModel>>>?=null
@@ -26,18 +21,24 @@ class HomeViewModel : ViewModel() {
     var cartVal: Int = 0
     val utils: Utils   = Utils()
     private var _result = MutableLiveData<String>().apply { value = "" }
-    val result: LiveData<String>
-        get() = _result
+
+    var mcartValue : MutableLiveData<Int>? = null
+    private var cartcount = checkValuesFromPreference(context,"cart_Total")
 
     init {
         homeRepository = HomeRepository()
         postModelListLiveData = MutableLiveData()
+        mcartValue = MutableLiveData()
+        updateCart(cartcount)
         pageNo = pagination("0",pageNo)
 
         fetchAllPosts(pageNo,"")
     }
 
 
+    fun updateCart(count: Int){
+        mcartValue!!.value = count
+    }
     fun update(result: String){
         _result.value = result
         fetchAllPosts(pageNo,result)
@@ -109,6 +110,18 @@ class HomeViewModel : ViewModel() {
         utils.valueToPreference(context,productId,cartVal.toString(),"SAVE")
         return cartVal
 
+    }
+
+    fun totalCartValue(context: Context, count: Int): Int{
+        cartcount =  checkValuesFromPreference(context,"cart_Total")
+        if(count == 0 && cartcount > 0){
+            cartcount--
+        }else{
+            cartcount++
+        }
+        mcartValue?.value = cartcount
+        utils.valueToPreference(context,"cart_Total",cartcount.toString(),"SAVE")
+        return cartcount
     }
 
     fun checkValuesFromPreference(context: Context,productId: String): Int{

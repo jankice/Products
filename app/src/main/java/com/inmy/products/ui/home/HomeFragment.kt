@@ -45,10 +45,6 @@ class HomeFragment : Fragment(), ProductListAdapter.CellClickListener {
 
         binding.homeViewModel = homeViewModel
 
-
-
-
-
         return binding.root
     }
 
@@ -129,12 +125,12 @@ class HomeFragment : Fragment(), ProductListAdapter.CellClickListener {
     }
 
     override fun onAddClicked(productId: String): Int {
-
+        homeViewModel.totalCartValue(requireContext(),1)
         return homeViewModel.addClicked(requireContext(), productId)
     }
 
     override fun onRemoveClicked(productId: String): Int {
-
+        homeViewModel.totalCartValue(requireContext(),0)
         return homeViewModel.removeClicked(requireContext(), productId)
     }
 }
