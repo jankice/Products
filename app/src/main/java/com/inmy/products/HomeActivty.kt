@@ -18,6 +18,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.inmy.products.databinding.ActivtyHomeBinding
+
 import com.inmy.products.ui.home.HomeViewModel
 import kotlinx.android.synthetic.main.app_bar_main.*
 import java.lang.String

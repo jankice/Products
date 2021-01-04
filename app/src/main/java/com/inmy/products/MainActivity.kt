@@ -11,6 +11,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         // TODO temp .. redirect to login
+        
 
         val intent = Intent(this, HomeActivty::class.java)
         startActivity(intent)
