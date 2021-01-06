@@ -30,6 +30,7 @@ class HomeActivty : AppCompatActivity() {
     lateinit var textCartItemCount: TextView
     var mCartItemCount = 0
     private lateinit var homeViewModel: HomeViewModel
+    lateinit var token: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +43,10 @@ class HomeActivty : AppCompatActivity() {
             this.run { ViewModelProvider(this).get(HomeViewModel::class.java) }
 
         binding.homeViewModel = homeViewModel
+
+        //Collect cart value
+        val token  = intent.getStringExtra("login_token")
+
 
         //val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)

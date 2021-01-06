@@ -10,14 +10,12 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.inmy.products.HomeActivty
 import com.inmy.products.R
+import com.inmy.products.Utils
 import com.inmy.products.databinding.ActivityLoginBinding
-import com.inmy.products.databinding.ActivityProductDetailBinding
-import com.inmy.products.ui.productdetail.ProductDetailViewModel
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
@@ -25,6 +23,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var loginViewModel: LoginViewModel
     private lateinit var googleSignInClient: GoogleSignInClient
     private lateinit var auth: FirebaseAuth
+    private val utils: Utils = Utils()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +36,16 @@ class LoginActivity : AppCompatActivity() {
 
         binding.loginViewModel = loginViewModel
 
+        authenticationInitialization()
+
+        signInButton.setOnClickListener {
+            signIn()
+        }
+
+    }
+
+
+    private fun authenticationInitialization() {
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
@@ -45,19 +54,17 @@ class LoginActivity : AppCompatActivity() {
         googleSignInClient = GoogleSignIn.getClient(this, gso)
 
         auth = FirebaseAuth.getInstance()
-
-        signInButton.setOnClickListener {
-            signIn()
-        }
-
     }
 
     override fun onStart() {
         super.onStart()
-        // Check if user is signed in (non-null) and update UI accordingly.
+        // Check if user is
+        // in (non-null) and update UI accordingly.
         val currentUser = auth.currentUser
+
         if(currentUser != null){
             val intent = Intent(this, HomeActivty::class.java)
+            intent.putExtra("login_token",""+currentUser.getIdToken(true))
             startActivity(intent)
         }
         //updateUI(currentUser)
@@ -73,9 +80,12 @@ class LoginActivity : AppCompatActivity() {
         auth.signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
+
                     // Sign in success, update UI with the signed-in user's information
                     Log.d("TAG", "signInWithCredential:success")
                     val user = auth.currentUser
+                    Log.d("id_token", ""+user?.getIdToken(false)?.getResult()?.token)
+                    utils.valueToPreference(this,"id_token",""+user?.getIdToken(false)?.getResult()?.token,"SAVE")
                     val intent = Intent(this, HomeActivty::class.java)
                     startActivity(intent)
                 } else {

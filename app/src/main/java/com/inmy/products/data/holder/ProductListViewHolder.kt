@@ -13,8 +13,8 @@ import kotlinx.android.synthetic.main.item_product.view.*
 
 class ProductListViewHolder(var context: Context, itemView: View) : RecyclerView.ViewHolder(itemView){
 
-    val utils: Utils = Utils()
-    var sharedPreferences: SharedPreferences = context.getSharedPreferences(utils.PREFERENCE_FILE_NAME,
+
+    var sharedPreferences: SharedPreferences = context.getSharedPreferences(Utils.PREFERENCE_FILE_NAME,
         Context.MODE_PRIVATE)
 
     fun bindView(productModel: ProductModel, cellClickListener: HomeFragment) {
@@ -24,7 +24,7 @@ class ProductListViewHolder(var context: Context, itemView: View) : RecyclerView
 
         itemView.textViewProductPrice.text = context.getString(R.string.title_price) + ": " + productModel.price
 
-        val cart = utils.getValuesFromPreference(sharedPreferences,productModel.productId)
+        val cart = Utils.getValuesFromPreference(sharedPreferences,productModel.productId)
         itemView.textNumberItem.text = cart
 
         Glide.with(itemView.context).load(productModel.productImageUrl!!).into(itemView.imageProduct)

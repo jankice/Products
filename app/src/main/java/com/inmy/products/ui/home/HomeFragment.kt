@@ -17,6 +17,7 @@ import com.inmy.products.Resources
 import com.inmy.products.Utils
 import com.inmy.products.data.adapter.ProductListAdapter
 import com.inmy.products.data.model.ProductModel
+import com.inmy.products.data.network.RestApiService
 import com.inmy.products.databinding.FragmentHomeBinding
 import com.inmy.products.ui.productdetail.ProductDetailActivity
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -52,6 +53,7 @@ class HomeFragment : Fragment(), ProductListAdapter.CellClickListener {
         super.onActivityCreated(savedInstanceState)
         handleSearchListener()
         initRecycleView()
+        RestApiService.cartAppClient()
     }
 
 
@@ -112,7 +114,7 @@ class HomeFragment : Fragment(), ProductListAdapter.CellClickListener {
         utils.showToast(productModel.productTitle, context)
 
         val intent = Intent(context, ProductDetailActivity::class.java)
-        intent.putExtra(utils.REF_PRODUCT_DETAIL, productModel)
+        intent.putExtra(Utils.REF_PRODUCT_DETAIL, productModel)
         startActivity(intent)
     }
 

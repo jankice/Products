@@ -30,7 +30,7 @@ class ProductDetailActivity : AppCompatActivity() {
         binding.productDetailViewModel = productDetailViewModel
 
 
-         product  = intent.getParcelableExtra(utils.REF_PRODUCT_DETAIL) as ProductModel
+         product  = intent.getParcelableExtra(Utils.REF_PRODUCT_DETAIL) as ProductModel
 
 
         setValuesforProduct()

@@ -67,6 +67,11 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
             postModelListLiveData?.value = Resources.loading()
         }
     }
+    fun requestCart(){
+        viewModelScope.launch {
+
+        }
+    }
     fun pagination(s: String, old: Int): Int {
 
         var page : Int = old
@@ -98,6 +103,7 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
         cartVal = checkValuesFromPreference(context,productId)
         val addCart = utils.count(1,cartVal)
         cartVal = addCart
+
         utils.valueToPreference(context,productId,cartVal.toString(),"SAVE")
         return cartVal
 
@@ -126,9 +132,9 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
 
     fun checkValuesFromPreference(context: Context,productId: String): Int{
 
-        val sharedPreferences: SharedPreferences = context.getSharedPreferences(utils.PREFERENCE_FILE_NAME,
+        val sharedPreferences: SharedPreferences = context.getSharedPreferences(Utils.PREFERENCE_FILE_NAME,
             Context.MODE_PRIVATE)
-        val value = utils.getValuesFromPreference(sharedPreferences,productId)
+        val value = Utils.getValuesFromPreference(sharedPreferences,productId)
 
         return value.toInt()
     }
