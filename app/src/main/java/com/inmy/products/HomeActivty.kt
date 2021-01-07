@@ -27,10 +27,9 @@ import java.lang.String
 class HomeActivty : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
-    lateinit var textCartItemCount: TextView
-    var mCartItemCount = 0
+    private lateinit var textCartItemCount: TextView
+    private var mCartItemCount = 0
     private lateinit var homeViewModel: HomeViewModel
-    lateinit var token: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,18 +43,8 @@ class HomeActivty : AppCompatActivity() {
 
         binding.homeViewModel = homeViewModel
 
-        //Collect cart value
-        val token  = intent.getStringExtra("login_token")
-
-
-        //val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
-       // val fab: FloatingActionButton = findViewById(R.id.fab)
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
-        }
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
         val navController = findNavController(R.id.nav_host_fragment)
@@ -82,7 +71,7 @@ class HomeActivty : AppCompatActivity() {
         val actionView: View = menuItem.actionView
 
         textCartItemCount = actionView.findViewById(R.id.cart_badge) as TextView
-        mCartItemCount = homeViewModel.checkValuesFromPreference(this,"cart_Total")
+        mCartItemCount = homeViewModel.checkValuesFromPreference(this,PREFERENCE_KEY_CART_TOTAL)
         homeViewModel.mcartValue?.observe(this, Observer {
             //tvCartCounter is Toolbar's TextView
             textCartItemCount.text = it.toString()

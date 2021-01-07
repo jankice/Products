@@ -37,9 +37,4 @@
         android:label="@string/menu_contact"
         tools:layout="@layout/contact_us_fragment"/>
 
-    <fragment
-        android:id="@+id/nav_login"
-        android:name="com.inmy.products.ui.login.LoginFragment"
-        android:label="@string/menu_login"
-        tools:layout="@layout/fragment_login"/>
 </navigation>

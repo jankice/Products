@@ -24,9 +24,5 @@
             android:id="@+id/nav_contact_us"
             android:title="@string/menu_contact"/>
 
-        <item
-            android:id="@+id/nav_login"
-            android:visible="false"
-            android:title="@string/menu_login"/>
     </group>
 </menu>

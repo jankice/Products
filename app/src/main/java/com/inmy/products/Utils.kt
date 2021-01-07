@@ -6,8 +6,13 @@ import android.widget.Toast
 
 
 val REF_PRODUCT_DETAIL = "101"
+val REQ_SIGN_IN = 1000
 val PREFERENCE_FILE_NAME = "productPreferenceFile"
-val PREFERENCE_KEY_CART_COUNT = "cartCount"
+val PREFERENCE_KEY_CART_TOTAL = "cart_Total"
+val PREFERENCE_KEY_ID_TOKEN = "id_token"
+
+val CONST_SAVE = "SAVE"
+val CONST_CLEAR = "CLEAR"
 var sharedPreferences: SharedPreferences? = null
 
         fun getValuesFromPreference(sharedPreferences: SharedPreferences, key: String): String{
