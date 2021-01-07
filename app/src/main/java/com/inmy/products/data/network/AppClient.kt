@@ -36,7 +36,7 @@ class AppClient {
             return retrofit!!
         }
 
-        fun postApi(): Retrofit{
+        fun authenticateApiClient(): Retrofit{
             val builder = OkHttpClient().newBuilder()
                 .connectTimeout(30, TimeUnit.SECONDS)
                 .readTimeout(30, TimeUnit.SECONDS)

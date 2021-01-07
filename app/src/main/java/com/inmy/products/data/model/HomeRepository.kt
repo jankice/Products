@@ -9,19 +9,29 @@ class HomeRepository {
 
     init {
         apiInterface = AppClient.getApiClient().create(ApiInterface::class.java)
-        apiInterface = AppClient.postApi().create(ApiInterface::class.java)
+        apiInterface = AppClient.authenticateApiClient().create(ApiInterface::class.java)
+
     }
 
     suspend fun requestCart(cartModel: CartModel){
 
-
         try {
-            val request = apiInterface?.requestCart(cartModel)
-
+            apiInterface?.requestCart(cartModel)
         }catch (e: Exception){
-
             e.printStackTrace()
+        }
+    }
 
+    suspend fun cartResponse(): Resources<List<CartModel>>{
+        try {
+            val response = apiInterface?.cartResponse()
+            if (response?.isSuccessful!!) {
+                val body = response.body()
+                if (body != null) return Resources.success(body)
+            }
+            return error(" ${response.code()} ${response.message()}")
+        } catch (e: Exception) {
+            return error(e.message ?: e.toString())
         }
     }
 

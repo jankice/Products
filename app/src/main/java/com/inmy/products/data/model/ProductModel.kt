@@ -4,7 +4,8 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class ProductModel  (
+data class
+ProductModel  (
 
     @SerializedName("Id")  var productId: String,
     @SerializedName("Name") var productTitle: String,

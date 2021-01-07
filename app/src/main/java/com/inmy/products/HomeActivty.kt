@@ -56,8 +56,7 @@ class HomeActivty : AppCompatActivity() {
                 R.id.nav_order_status,
                 R.id.nav_offer,
                 R.id.nav_feedback,
-                R.id.nav_contact_us,
-                R.id.nav_login
+                R.id.nav_contact_us
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -73,7 +72,7 @@ class HomeActivty : AppCompatActivity() {
         textCartItemCount = actionView.findViewById(R.id.cart_badge) as TextView
         mCartItemCount = homeViewModel.checkValuesFromPreference(this,PREFERENCE_KEY_CART_TOTAL)
         homeViewModel.mcartValue?.observe(this, Observer {
-            //tvCartCounter is Toolbar's TextView
+
             textCartItemCount.text = it.toString()
         })
 

@@ -14,6 +14,9 @@ interface ApiInterface {
     @GET("api/products/")
     suspend fun fetchAllPosts(@Query("page") page: Int, @Query("query") query: String): Response<List<ProductModel>>
 
+    @GET("api/users/cart/")
+    suspend fun cartResponse() : Response<List<CartModel>>
+
     @Headers("Content-Type: application/json")
     @POST("api/users/cart")
     suspend fun requestCart(@Body cartModel: CartModel): Completable
