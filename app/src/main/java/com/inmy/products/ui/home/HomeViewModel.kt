@@ -6,6 +6,7 @@ import android.content.SharedPreferences
 import androidx.lifecycle.*
 import com.inmy.products.Resources
 import com.inmy.products.Utils
+import com.inmy.products.data.model.CartModel
 import com.inmy.products.data.model.HomeRepository
 import com.inmy.products.data.model.ProductModel
 import kotlinx.coroutines.async
@@ -17,11 +18,12 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
 
     private var homeRepository: HomeRepository?=null
     var postModelListLiveData : MutableLiveData<Resources<List<ProductModel>>>?=null
+
     var pageNo : Int = 0
     var cartVal: Int = 0
     val utils: Utils   = Utils()
     private var _result = MutableLiveData<String>().apply { value = "" }
-
+    var cartModel: CartModel? = null
     var mcartValue : MutableLiveData<Int>? = null
     private var cartcount = checkValuesFromPreference(context,"cart_Total")
 
@@ -31,7 +33,7 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
         mcartValue = MutableLiveData()
         updateCart(cartcount)
         pageNo = pagination("0",pageNo)
-
+        requestCart(CartModel(2,5))
         fetchAllPosts(pageNo,"")
     }
 
@@ -67,9 +69,11 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
             postModelListLiveData?.value = Resources.loading()
         }
     }
-    fun requestCart(){
+    fun requestCart(cartModel: CartModel){
         viewModelScope.launch {
-
+                async {
+                    homeRepository?.requestCart(cartModel)
+                }
         }
     }
     fun pagination(s: String, old: Int): Int {

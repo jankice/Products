@@ -17,7 +17,6 @@ import com.inmy.products.Resources
 import com.inmy.products.Utils
 import com.inmy.products.data.adapter.ProductListAdapter
 import com.inmy.products.data.model.ProductModel
-import com.inmy.products.data.network.RestApiService
 import com.inmy.products.databinding.FragmentHomeBinding
 import com.inmy.products.ui.productdetail.ProductDetailActivity
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -53,7 +52,7 @@ class HomeFragment : Fragment(), ProductListAdapter.CellClickListener {
         super.onActivityCreated(savedInstanceState)
         handleSearchListener()
         initRecycleView()
-        RestApiService.cartAppClient()
+
     }
 
 

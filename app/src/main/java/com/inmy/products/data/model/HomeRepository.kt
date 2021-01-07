@@ -3,7 +3,6 @@ package com.inmy.products.data.model
 import com.inmy.products.Resources
 import com.inmy.products.data.network.ApiInterface
 import com.inmy.products.data.network.AppClient
-import com.inmy.products.data.network.RestApiService
 
 class HomeRepository {
 
@@ -11,6 +10,20 @@ class HomeRepository {
 
     init {
         apiInterface = AppClient.getApiClient().create(ApiInterface::class.java)
+        apiInterface = AppClient.postApi().create(ApiInterface::class.java)
+    }
+
+    suspend fun requestCart(cartModel: CartModel){
+
+
+        try {
+            val request = apiInterface?.requestCart(cartModel)
+
+        }catch (e: Exception){
+
+            e.printStackTrace()
+
+        }
     }
 
      suspend fun fetchAllPosts(page: Int, result: String): Resources<List<ProductModel>> {

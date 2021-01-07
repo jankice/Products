@@ -4,9 +4,13 @@ import com.google.gson.GsonBuilder
 import com.inmy.products.BuildConfig
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import okhttp3.OkHttpClient
+import okhttp3.ResponseBody
+import retrofit2.Converter
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.lang.reflect.Type
 import java.util.concurrent.TimeUnit
+
 
 const val BASE_URL = "http://" + BuildConfig.BASE_API +"/"
 
@@ -31,6 +35,25 @@ class AppClient {
             }
             return retrofit!!
         }
+
+        fun postApi(): Retrofit{
+            val builder = OkHttpClient().newBuilder()
+                .connectTimeout(30, TimeUnit.SECONDS)
+                .readTimeout(30, TimeUnit.SECONDS)
+                .followRedirects(true)
+                .followSslRedirects(true)
+                .addInterceptor(ServiceBuilder())
+                .build()
+
+
+            val retrofit = Retrofit.Builder()
+                .baseUrl(BASE_URL) // change this IP for testing by your actual machine IP
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(builder)
+                .build()
+            return retrofit
+        }
     }
+
 
 }
