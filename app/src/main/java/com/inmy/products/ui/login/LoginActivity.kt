@@ -14,8 +14,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.inmy.products.HomeActivty
 import com.inmy.products.R
-import com.inmy.products.Utils
 import com.inmy.products.databinding.ActivityLoginBinding
+import com.inmy.products.valueToPreference
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
@@ -23,7 +23,6 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var loginViewModel: LoginViewModel
     private lateinit var googleSignInClient: GoogleSignInClient
     private lateinit var auth: FirebaseAuth
-    private val utils: Utils = Utils()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -85,7 +84,7 @@ class LoginActivity : AppCompatActivity() {
                     Log.d("TAG", "signInWithCredential:success")
                     val user = auth.currentUser
                     Log.d("id_token", ""+user?.getIdToken(false)?.getResult()?.token)
-                    utils.valueToPreference(this,"id_token",""+user?.getIdToken(false)?.getResult()?.token,"SAVE")
+                    valueToPreference(this,"id_token",""+user?.getIdToken(false)?.getResult()?.token,"SAVE")
                     val intent = Intent(this, HomeActivty::class.java)
                     startActivity(intent)
                 } else {

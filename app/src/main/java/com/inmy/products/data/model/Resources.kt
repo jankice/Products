@@ -1,4 +1,4 @@
-package com.inmy.products
+package com.inmy.products.data.model
 
 data class Resources<out T>(val status: Status, val data: T?, val message: String?){
 

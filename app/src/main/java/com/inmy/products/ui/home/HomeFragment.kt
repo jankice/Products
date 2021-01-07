@@ -13,11 +13,12 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.inmy.products.R
-import com.inmy.products.Resources
-import com.inmy.products.Utils
+import com.inmy.products.REF_PRODUCT_DETAIL
+import com.inmy.products.data.model.Resources
 import com.inmy.products.data.adapter.ProductListAdapter
 import com.inmy.products.data.model.ProductModel
 import com.inmy.products.databinding.FragmentHomeBinding
+import com.inmy.products.showToast
 import com.inmy.products.ui.productdetail.ProductDetailActivity
 import kotlinx.android.synthetic.main.fragment_home.*
 
@@ -29,8 +30,6 @@ class HomeFragment : Fragment(), ProductListAdapter.CellClickListener {
     }
 
     private lateinit var homeViewModel: HomeViewModel
-    private val utils: Utils = Utils()
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -110,10 +109,10 @@ class HomeFragment : Fragment(), ProductListAdapter.CellClickListener {
         })
     }
     override fun onCellClickListener(productModel: ProductModel) {
-        utils.showToast(productModel.productTitle, context)
+        showToast(productModel.productTitle, context)
 
         val intent = Intent(context, ProductDetailActivity::class.java)
-        intent.putExtra(Utils.REF_PRODUCT_DETAIL, productModel)
+        intent.putExtra(REF_PRODUCT_DETAIL, productModel)
         startActivity(intent)
     }
 

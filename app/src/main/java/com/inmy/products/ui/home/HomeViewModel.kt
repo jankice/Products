@@ -4,11 +4,14 @@ import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.lifecycle.*
-import com.inmy.products.Resources
-import com.inmy.products.Utils
+import com.inmy.products.PREFERENCE_FILE_NAME
+import com.inmy.products.count
+import com.inmy.products.data.model.Resources
 import com.inmy.products.data.model.CartModel
 import com.inmy.products.data.model.HomeRepository
 import com.inmy.products.data.model.ProductModel
+import com.inmy.products.getValuesFromPreference
+import com.inmy.products.valueToPreference
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
@@ -21,7 +24,6 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
 
     var pageNo : Int = 0
     var cartVal: Int = 0
-    val utils: Utils   = Utils()
     private var _result = MutableLiveData<String>().apply { value = "" }
     var cartModel: CartModel? = null
     var mcartValue : MutableLiveData<Int>? = null
@@ -46,20 +48,7 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
         fetchAllPosts(pageNo,result)
     }
 
-//    @SuppressLint("CheckResult")
-//    fun<T> fetchAllPosts(page: Int, result: String) : Resources<T>{
-//        homeRepository?.fetchAllPosts(page,result)?.subscribeOn(Schedulers.io())
-//            ?.observeOn(AndroidSchedulers.mainThread())?.subscribe( {
-//                postModelListLiveData?.value = it
-//        },
-//            {
-//                   Log.d("Error",it.message,it)
-//
-//            }
-//        )
-//
-//        return
-//    }
+
     fun fetchAllPosts(page: Int, query: String) {
         viewModelScope.launch {
             async {
@@ -105,19 +94,19 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
     fun addClicked(context: Context,productId: String): Int{
 
         cartVal = checkValuesFromPreference(context,productId)
-        val addCart = utils.count(1,cartVal)
+        val addCart = count(1,cartVal)
         cartVal = addCart
 
-        utils.valueToPreference(context,productId,cartVal.toString(),"SAVE")
+        valueToPreference(context,productId,cartVal.toString(),"SAVE")
         return cartVal
 
     }
 
     fun removeClicked(context: Context,productId: String): Int{
         cartVal = checkValuesFromPreference(context,productId)
-        val removeCart = utils.count(0,cartVal)
+        val removeCart = count(0,cartVal)
         cartVal = removeCart
-        utils.valueToPreference(context,productId,cartVal.toString(),"SAVE")
+        valueToPreference(context,productId,cartVal.toString(),"SAVE")
         return cartVal
 
     }
@@ -130,15 +119,15 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
             cartcount++
         }
         mcartValue?.value = cartcount
-        utils.valueToPreference(context,"cart_Total",cartcount.toString(),"SAVE")
+        valueToPreference(context,"cart_Total",cartcount.toString(),"SAVE")
         return cartcount
     }
 
     fun checkValuesFromPreference(context: Context,productId: String): Int{
 
-        val sharedPreferences: SharedPreferences = context.getSharedPreferences(Utils.PREFERENCE_FILE_NAME,
+        val sharedPreferences: SharedPreferences = context.getSharedPreferences(PREFERENCE_FILE_NAME,
             Context.MODE_PRIVATE)
-        val value = Utils.getValuesFromPreference(sharedPreferences,productId)
+        val value = getValuesFromPreference(sharedPreferences,productId)
 
         return value.toInt()
     }

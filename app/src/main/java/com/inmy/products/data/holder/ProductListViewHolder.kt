@@ -5,16 +5,17 @@ import android.content.SharedPreferences
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.inmy.products.PREFERENCE_FILE_NAME
 import com.inmy.products.R
-import com.inmy.products.Utils
 import com.inmy.products.data.model.ProductModel
+import com.inmy.products.getValuesFromPreference
 import com.inmy.products.ui.home.HomeFragment
 import kotlinx.android.synthetic.main.item_product.view.*
 
 class ProductListViewHolder(var context: Context, itemView: View) : RecyclerView.ViewHolder(itemView){
 
 
-    var sharedPreferences: SharedPreferences = context.getSharedPreferences(Utils.PREFERENCE_FILE_NAME,
+    var sharedPreferences: SharedPreferences = context.getSharedPreferences(PREFERENCE_FILE_NAME,
         Context.MODE_PRIVATE)
 
     fun bindView(productModel: ProductModel, cellClickListener: HomeFragment) {
@@ -24,7 +25,7 @@ class ProductListViewHolder(var context: Context, itemView: View) : RecyclerView
 
         itemView.textViewProductPrice.text = context.getString(R.string.title_price) + ": " + productModel.price
 
-        val cart = Utils.getValuesFromPreference(sharedPreferences,productModel.productId)
+        val cart = getValuesFromPreference(sharedPreferences,productModel.productId)
         itemView.textNumberItem.text = cart
 
         Glide.with(itemView.context).load(productModel.productImageUrl!!).into(itemView.imageProduct)

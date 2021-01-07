@@ -1,6 +1,5 @@
 package com.inmy.products.data.model
 
-import com.inmy.products.Resources
 import com.inmy.products.data.network.ApiInterface
 import com.inmy.products.data.network.AppClient
 

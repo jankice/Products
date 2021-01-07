@@ -1,15 +1,16 @@
 package com.inmy.products.data.network
 
 import android.util.Log
-import com.inmy.products.Utils
+import com.inmy.products.getValuesFromPreference
+import com.inmy.products.sharedPreferences
 import okhttp3.*
 
 class ServiceBuilder : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
         var request = chain.request()
-        request = request.newBuilder().addHeader("Authorization", "Bearer "+ Utils.sharedPreferences?.let {
-            Utils.getValuesFromPreference(
+        request = request.newBuilder().addHeader("Authorization", "Bearer "+ sharedPreferences?.let {
+           getValuesFromPreference(
                 it,"id_token")
         }).build()
 

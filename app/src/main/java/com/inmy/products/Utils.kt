@@ -4,15 +4,11 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.widget.Toast
 
-import java.io.Serializable
 
-class Utils : Serializable{
-
-    companion object{
-        val REF_PRODUCT_DETAIL = "101"
-        val PREFERENCE_FILE_NAME = "productPreferenceFile"
-        val PREFERENCE_KEY_CART_COUNT = "cartCount"
-        var sharedPreferences: SharedPreferences? = null
+val REF_PRODUCT_DETAIL = "101"
+val PREFERENCE_FILE_NAME = "productPreferenceFile"
+val PREFERENCE_KEY_CART_COUNT = "cartCount"
+var sharedPreferences: SharedPreferences? = null
 
         fun getValuesFromPreference(sharedPreferences: SharedPreferences, key: String): String{
 
@@ -20,14 +16,10 @@ class Utils : Serializable{
             value = sharedPreferences.getString(key,value)!!
             return value
         }
-    }
 
-
-
-
-    fun showToast(msg: String, context: Context?) {
+        fun showToast(msg: String, context: Context?) {
         Toast.makeText(context,msg, Toast.LENGTH_LONG).show()
-    }
+         }
 
     fun count(trigger: Int, value: Int): Int{
         var curValue  = value
@@ -56,10 +48,3 @@ class Utils : Serializable{
     }
 
 
-
-
-
-
-
-
-}
