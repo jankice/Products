@@ -1,14 +1,12 @@
 package com.inmy.products.data.network
 
+import android.content.Context
 import com.google.gson.GsonBuilder
 import com.inmy.products.BuildConfig
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import okhttp3.OkHttpClient
-import okhttp3.ResponseBody
-import retrofit2.Converter
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.lang.reflect.Type
 import java.util.concurrent.TimeUnit
 
 
@@ -36,13 +34,13 @@ class AppClient {
             return retrofit!!
         }
 
-        fun authenticateApiClient(): Retrofit{
+        fun authenticateApiClient(context: Context): Retrofit{
             val builder = OkHttpClient().newBuilder()
                 .connectTimeout(30, TimeUnit.SECONDS)
                 .readTimeout(30, TimeUnit.SECONDS)
                 .followRedirects(true)
                 .followSslRedirects(true)
-                .addInterceptor(ServiceBuilder())
+                .addInterceptor(ServiceBuilder(context))
                 .build()
 
 

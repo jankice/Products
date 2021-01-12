@@ -10,12 +10,11 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.inmy.products.*
 import com.inmy.products.databinding.ActivityLoginBinding
+import com.inmy.products.ui.home.HomeActivty
 import kotlinx.android.synthetic.main.activity_login.*
-import kotlin.math.log
 
 class LoginActivity : AppCompatActivity() {
 

@@ -1,20 +1,27 @@
 package com.inmy.products.data.network
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.util.Log
+import com.inmy.products.PREFERENCE_FILE_NAME
+import com.inmy.products.PREFERENCE_KEY_ID_TOKEN
 import com.inmy.products.getValuesFromPreference
 import com.inmy.products.sharedPreferences
 import okhttp3.*
 
-class ServiceBuilder : Interceptor {
-
+class ServiceBuilder(context: Context) : Interceptor {
+    var context: Context? = context
     override fun intercept(chain: Interceptor.Chain): Response {
+
         var request = chain.request()
+        val sharedPreferences: SharedPreferences = context?.getSharedPreferences(
+            PREFERENCE_FILE_NAME,
+            Context.MODE_PRIVATE)!!
         request = request.newBuilder().addHeader("Authorization", "Bearer "+ sharedPreferences?.let {
-           getValuesFromPreference(
-                it,"id_token")
+           getValuesFromPreference(it,PREFERENCE_KEY_ID_TOKEN)
         }).build()
 
-        val response = chain.proceed(request)
+                                                                                                                                                                                         val response = chain.proceed(request)
         Log.d("aa",""+response.code())
         Log.d("aa",""+response.body())
         when (response.code()) {

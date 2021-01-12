@@ -1,9 +1,10 @@
 package com.inmy
 
 import android.app.Application
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.inmy.products.R
 
 class Products : Application(){
-
+    override fun onCreate() {
+        super.onCreate()
+        //Cache.initialize(context = applicationContext)
+    }
 }

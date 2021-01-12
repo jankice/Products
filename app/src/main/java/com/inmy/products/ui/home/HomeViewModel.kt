@@ -18,7 +18,7 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
 
     private var homeRepository: HomeRepository?=null
     var postModelListLiveData : MutableLiveData<Resources<List<ProductModel>>>?=null
-    private var cartModelListLiveData : MutableLiveData<Resources<List<CartModel>>>? = null
+    var cartModelListLiveData : MutableLiveData<Resources<List<CartModel>>>? = null
     private var pageNo : Int = 0
     private var cartVal: Int = 0
     private var _result = MutableLiveData<String>().apply { value = "" }
@@ -27,7 +27,7 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
     private var cartcount = checkValuesFromPreference(context, PREFERENCE_KEY_CART_TOTAL)
 
     init {
-        homeRepository = HomeRepository()
+        homeRepository = HomeRepository(context)
         postModelListLiveData = MutableLiveData()
         cartModelListLiveData = MutableLiveData()
         mcartValue = MutableLiveData()
@@ -104,7 +104,7 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
         cartVal = checkValuesFromPreference(context,productId)
         val addCart = count(1,cartVal)
         cartVal = addCart
-        requestCart(CartModel(productId.toInt() ,cartVal))
+        //requestCart(CartModel(productId.toInt() ,cartVal))
         valueToPreference(context,productId,cartVal.toString(), CONST_SAVE)
         return cartVal
 
@@ -114,7 +114,7 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
         cartVal = checkValuesFromPreference(context,productId)
         val removeCart = count(0,cartVal)
         cartVal = removeCart
-        requestCart(CartModel(productId.toInt() ,cartVal))
+        //requestCart(CartModel(productId.toInt() ,cartVal))
         valueToPreference(context,productId,cartVal.toString(), CONST_SAVE)
         return cartVal
 

@@ -1,15 +1,16 @@
 package com.inmy.products.data.model
 
+import android.content.Context
 import com.inmy.products.data.network.ApiInterface
 import com.inmy.products.data.network.AppClient
 
-class HomeRepository {
+class HomeRepository(context: Context) {
 
     private var apiInterface:ApiInterface?=null
 
     init {
         apiInterface = AppClient.getApiClient().create(ApiInterface::class.java)
-        apiInterface = AppClient.authenticateApiClient().create(ApiInterface::class.java)
+        apiInterface = AppClient.authenticateApiClient(context).create(ApiInterface::class.java)
 
     }
 

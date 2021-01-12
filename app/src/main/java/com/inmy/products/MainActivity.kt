@@ -3,6 +3,7 @@ package com.inmy.products
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.inmy.products.ui.home.HomeActivty
 
 
 class MainActivity : AppCompatActivity() {

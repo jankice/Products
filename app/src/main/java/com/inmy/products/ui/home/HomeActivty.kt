@@ -1,10 +1,12 @@
-package com.inmy.products
+package com.inmy.products.ui.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
@@ -16,10 +18,17 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationView
-import com.google.android.material.snackbar.Snackbar
+import com.inmy.products.PREFERENCE_KEY_CART_TOTAL
+import com.inmy.products.R
+import com.inmy.products.REF_CART_DETAIL
+import com.inmy.products.REF_PRODUCT_DETAIL
+import com.inmy.products.data.model.CartModel
+import com.inmy.products.data.model.ProductModel
+import com.inmy.products.data.model.Resources
 import com.inmy.products.databinding.ActivtyHomeBinding
+import com.inmy.products.ui.cart.CartActivity
+import com.inmy.products.ui.productdetail.ProductDetailActivity
 
-import com.inmy.products.ui.home.HomeViewModel
 import kotlinx.android.synthetic.main.app_bar_main.*
 import java.lang.String
 
@@ -85,6 +94,26 @@ class HomeActivty : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
            R.id.action_cart -> {
+
+               homeViewModel.cartModelListLiveData?.observe(this, {
+                   when (it.status) {
+                       Resources.Status.SUCCESS -> {
+                           if (!it.data.isNullOrEmpty()){
+                              var list :ArrayList<CartModel> = it.data as ArrayList<CartModel>
+                               val intent = Intent(this, CartActivity::class.java)
+                               intent.putParcelableArrayListExtra(REF_CART_DETAIL,list)
+                               startActivity(intent)
+
+                           }
+                       }
+                       Resources.Status.FAILURE ->
+                           Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
+
+                       Resources.Status.LOADING ->
+                           Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
+                   }
+
+               })
 
                 // Do something
                 return true

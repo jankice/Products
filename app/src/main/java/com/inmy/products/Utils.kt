@@ -2,10 +2,13 @@ package com.inmy.products
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import android.widget.Toast
 
 
 val REF_PRODUCT_DETAIL = "101"
+val REF_CART_DETAIL = "102"
 val REQ_SIGN_IN = 1000
 val PREFERENCE_FILE_NAME = "productPreferenceFile"
 val PREFERENCE_KEY_CART_TOTAL = "cart_Total"
@@ -15,7 +18,7 @@ val CONST_SAVE = "SAVE"
 val CONST_CLEAR = "CLEAR"
 var sharedPreferences: SharedPreferences? = null
 
-        fun getValuesFromPreference(sharedPreferences: SharedPreferences, key: String): String{
+       fun getValuesFromPreference(sharedPreferences: SharedPreferences, key: String): String{
 
             var value = "0"
             value = sharedPreferences.getString(key,value)!!
@@ -51,5 +54,14 @@ var sharedPreferences: SharedPreferences? = null
             editor?.apply()
         }
     }
+
+fun hasNetwork(context: Context): Boolean? {
+    var isConnected: Boolean? = false // Initial Value
+    val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    val activeNetwork: NetworkInfo? = connectivityManager.activeNetworkInfo
+    if (activeNetwork != null && activeNetwork.isConnected)
+        isConnected = true
+    return isConnected
+}
 
 
