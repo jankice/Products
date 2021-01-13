@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.OnAttachStateChangeListener
+import android.view.View.*
 import android.view.ViewGroup
 import android.widget.SearchView
 import android.widget.Toast
@@ -35,7 +35,7 @@ class HomeFragment : Fragment(), ProductListAdapter.CellClickListener {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val binding: FragmentHomeBinding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
 
@@ -66,6 +66,7 @@ class HomeFragment : Fragment(), ProductListAdapter.CellClickListener {
         homeViewModel.postModelListLiveData?.observe(viewLifecycleOwner, {
             when (it.status) {
                 Resources.Status.SUCCESS -> {
+                    progressbarLoadingProduct.visibility = GONE
                     if (!it.data.isNullOrEmpty()){
                         productListAdapter.setProductList(it.data as ArrayList<ProductModel>)
                     }
@@ -73,8 +74,10 @@ class HomeFragment : Fragment(), ProductListAdapter.CellClickListener {
                 Resources.Status.FAILURE ->
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG).show()
 
-                Resources.Status.LOADING ->
-                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG).show()
+                Resources.Status.LOADING ->{
+                    progressbarLoadingProduct.visibility = VISIBLE
+                }
+
             }
 
         })
@@ -126,11 +129,13 @@ class HomeFragment : Fragment(), ProductListAdapter.CellClickListener {
 
     override fun onAddClicked(productId: String): Int {
         homeViewModel.totalCartValue(requireContext(),1)
+
         return homeViewModel.addClicked(requireContext(), productId)
     }
 
     override fun onRemoveClicked(productId: String): Int {
         homeViewModel.totalCartValue(requireContext(),0)
+
         return homeViewModel.removeClicked(requireContext(), productId)
     }
 }

@@ -9,17 +9,17 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.observe
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationView
-import com.inmy.products.PREFERENCE_KEY_CART_TOTAL
-import com.inmy.products.R
+import com.inmy.products.*
+import com.inmy.products.data.model.Resources
 import com.inmy.products.databinding.ActivtyHomeBinding
 import com.inmy.products.ui.cart.CartActivity
 
@@ -68,24 +68,24 @@ class HomeActivty : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.home_activty, menu)
+
         val menuItem: MenuItem = menu.findItem(R.id.action_cart)
         val actionView: View = menuItem.actionView
 
         textCartItemCount = actionView.findViewById(R.id.cart_badge) as TextView
 
         mCartItemCount = homeViewModel.checkValuesFromPreference(this,PREFERENCE_KEY_CART_TOTAL)
-        if(mCartItemCount == 0){
-            mCartItemCount = homeViewModel.getPreviousSavedCartValue(this)
-        }
 
-        textCartItemCount.text = mCartItemCount.toString()
+        homeViewModel.mcartValue?.observe(this, Observer {
 
+            textCartItemCount.text = it.toString()
+        })
 
         setupBadge()
 
         actionView.setOnClickListener { onOptionsItemSelected(menuItem) }
+
         return true
     }
 
@@ -107,15 +107,34 @@ class HomeActivty : AppCompatActivity() {
 
     private fun setupBadge() {
 
-        if (mCartItemCount == 0) {
-            if (textCartItemCount.visibility != View.GONE) {
-                textCartItemCount.visibility = View.GONE
+        homeViewModel.cartResponseModelListLiveData?.observe(this, {
+            when (it.status) {
+                Resources.Status.SUCCESS -> {
+                    if (!it.data.isNullOrEmpty()){
+                        mCartItemCount = homeViewModel.getPreviousSavedCartValue(it.data)
+                        textCartItemCount.text = mCartItemCount.toString()
+
+                    }
+                }
+                Resources.Status.FAILURE ->{
+                    textCartItemCount.text = mCartItemCount.toString()
+                }
+                Resources.Status.LOADING ->{
+                    textCartItemCount.text = mCartItemCount.toString()
+                }
+
             }
-        } else {
-            textCartItemCount.text = String.valueOf(Math.min(mCartItemCount, 99))
-            if (textCartItemCount.visibility != View.VISIBLE) {
-                textCartItemCount.visibility = View.VISIBLE
-            }
-        }
+        })
+
+//        if (mCartItemCount == 0) {
+//            if (textCartItemCount.visibility != View.GONE) {
+//                textCartItemCount.visibility = View.GONE
+//            }
+//        } else {
+//            textCartItemCount.text = String.valueOf(Math.min(mCartItemCount, 99))
+//            if (textCartItemCount.visibility != View.VISIBLE) {
+//                textCartItemCount.visibility = View.VISIBLE
+//            }
+//        }
     }
 }

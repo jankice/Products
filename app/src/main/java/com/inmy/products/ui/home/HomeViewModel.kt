@@ -19,17 +19,25 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
     private var cartVal: Int = 0
     private var _result = MutableLiveData<String>().apply { value = "" }
 
+    var mcartValue : MutableLiveData<Int>? = null
+    private var cartcount = checkValuesFromPreference(context, PREFERENCE_KEY_CART_TOTAL)
+
     init {
         homeRepository = HomeRepository(context)
         postModelListLiveData = MutableLiveData()
         cartResponseModelListLiveData = MutableLiveData()
+        mcartValue = MutableLiveData()
 
+        updateCart(cartcount)
         pageNo = pagination("0",pageNo)
 
         cartResponse()
         fetchAllPosts(pageNo,"")
     }
 
+    fun updateCart(count: Int){
+        mcartValue!!.value = count
+    }
 
     fun update(result: String){
         _result.value = result
@@ -52,7 +60,7 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
     fun cartResponse(){
         viewModelScope.launch {
             async {
-                var result = homeRepository?.cartResponse()
+                val result = homeRepository?.cartResponse()
                 cartResponseModelListLiveData?.value = result
             }
             cartResponseModelListLiveData?.value = Resources.loading()
@@ -91,59 +99,49 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
         _result.value?.let { fetchAllPosts(pageCurr, it) }
     }
 
+
     fun addClicked(context: Context,productId: String): Int{
         cartVal = checkValuesFromPreference(context,productId)
-        val addCart = count(1,cartVal)
-        cartVal = addCart
+        cartVal += 1
         valueToPreference(context,productId,cartVal.toString(), CONST_SAVE)
-        requestCart(CartRequestModel(productId.toInt() ,cartVal))
 
+        requestCart(CartRequestModel(productId.toInt() ,cartVal))
+        cartResponse()
+        //todo after completing request get response cart data and update cart value
         return cartVal
 
     }
 
     fun removeClicked(context: Context,productId: String): Int{
         cartVal = checkValuesFromPreference(context,productId)
-        val removeCart = count(0,cartVal)
-        cartVal = removeCart
+        if(cartVal > 0){
+            cartVal -=1
+        }
         valueToPreference(context,productId,cartVal.toString(), CONST_SAVE)
-        requestCart(CartRequestModel(productId.toInt() ,cartVal))
-        return cartVal
 
+        requestCart(CartRequestModel(productId.toInt() ,cartVal))
+        cartResponse()
+        //todo after completing request get response cart data and update cart value
+        return cartVal
     }
 
-    fun getPreviousSavedCartValue(context: LifecycleOwner): Int{
+    fun getPreviousSavedCartValue(data: List<CartResponseModel>?): Int{
         var count: Int = 0
-        cartResponseModelListLiveData?.observe(context, {
-            when (it.status) {
-                Resources.Status.SUCCESS -> {
-                    if (!it.data.isNullOrEmpty()){
-                           for(quantity in it.data){
-                               count = quantity.quantity?.plus(count) ?: 0
-                           }
-                    }
-                }
-                Resources.Status.FAILURE ->{
-
-                }
-                Resources.Status.LOADING ->{
-
-                }
-
-            }
-        })
-
+        for(quantity in data!!){
+            count = quantity.quantity?.plus(count) ?: 0
+        }
+        valueToPreference(context, PREFERENCE_KEY_CART_TOTAL,count.toString(), CONST_SAVE)
         return count
     }
 
-    fun totalCartValue(context: Context, count: Int): Int{
-        var cartcount =  checkValuesFromPreference(context, PREFERENCE_KEY_CART_TOTAL)
-        if(count == 0 && cartcount > 0){
+    fun totalCartValue(context: Context, trigger: Int): Int{
+        cartcount =  checkValuesFromPreference(context, PREFERENCE_KEY_CART_TOTAL)
+        if(trigger == 0 && cartcount > 0){
             cartcount--
         }else{
             cartcount++
         }
-
+        mcartValue?.value = cartcount
         valueToPreference(context, PREFERENCE_KEY_CART_TOTAL,cartcount.toString(), CONST_SAVE)
         return cartcount
     }
