@@ -28,6 +28,8 @@
         android:layout_height="wrap_content"
         android:textColor="@android:color/black"
         android:textSize="@dimen/title_textSize"
+        android:minLines="2"
+        android:maxLines="2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/imageProduct"
         tools:text="TubeLight" />

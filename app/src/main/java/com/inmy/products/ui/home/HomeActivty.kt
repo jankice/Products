@@ -21,6 +21,7 @@ import com.google.android.material.navigation.NavigationView
 import com.inmy.products.*
 import com.inmy.products.data.model.Resources
 import com.inmy.products.databinding.ActivtyHomeBinding
+
 import com.inmy.products.ui.cart.CartActivity
 
 import kotlinx.android.synthetic.main.app_bar_main.*
