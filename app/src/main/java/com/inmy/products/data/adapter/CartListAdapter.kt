@@ -6,12 +6,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.inmy.products.R
 import com.inmy.products.data.holder.CartListViewHolder
-import com.inmy.products.data.model.CartModel
+import com.inmy.products.data.model.CartResponseModel
 import com.inmy.products.ui.cart.CartActivity
 
-class CartListAdapter(cartActivity: CartActivity, cartList: List<CartModel>) : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+class CartListAdapter(cartActivity: CartActivity, cartResponseList: List<CartResponseModel>) : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
 
-    private var listOfCartItem = cartList
+    private var listOfCartItem = cartResponseList
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val v: View

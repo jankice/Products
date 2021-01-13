@@ -5,34 +5,25 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.lifecycle.*
 import com.inmy.products.*
-import com.inmy.products.data.model.Resources
-import com.inmy.products.data.model.CartModel
-import com.inmy.products.data.model.HomeRepository
-import com.inmy.products.data.model.ProductModel
+import com.inmy.products.data.model.*
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 class HomeViewModel(application: Application) : AndroidViewModel(application) {
     private val context = getApplication<Application>().applicationContext
 
-
     private var homeRepository: HomeRepository?=null
     var postModelListLiveData : MutableLiveData<Resources<List<ProductModel>>>?=null
-    var cartModelListLiveData : MutableLiveData<Resources<List<CartModel>>>? = null
+    var cartResponseModelListLiveData : MutableLiveData<Resources<List<CartResponseModel>>>? = null
     private var pageNo : Int = 0
     private var cartVal: Int = 0
     private var _result = MutableLiveData<String>().apply { value = "" }
 
-    var mcartValue : MutableLiveData<Int>? = null
-    private var cartcount = checkValuesFromPreference(context, PREFERENCE_KEY_CART_TOTAL)
-
     init {
         homeRepository = HomeRepository(context)
         postModelListLiveData = MutableLiveData()
-        cartModelListLiveData = MutableLiveData()
-        mcartValue = MutableLiveData()
+        cartResponseModelListLiveData = MutableLiveData()
 
-        updateCart(cartcount)
         pageNo = pagination("0",pageNo)
 
         cartResponse()
@@ -40,9 +31,6 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
     }
 
 
-    fun updateCart(count: Int){
-        mcartValue!!.value = count
-    }
     fun update(result: String){
         _result.value = result
         fetchAllPosts(pageNo,result)
@@ -58,16 +46,19 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
             postModelListLiveData?.value = Resources.loading()
         }
     }
+
+
+
     fun cartResponse(){
         viewModelScope.launch {
             async {
                 var result = homeRepository?.cartResponse()
-                cartModelListLiveData?.value = result
+                cartResponseModelListLiveData?.value = result
             }
-            cartModelListLiveData?.value = Resources.loading()
+            cartResponseModelListLiveData?.value = Resources.loading()
         }
     }
-    fun requestCart(cartModel: CartModel){
+    fun requestCart(cartModel: CartRequestModel){
         viewModelScope.launch {
                 async {
                     homeRepository?.requestCart(cartModel)
@@ -104,8 +95,9 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
         cartVal = checkValuesFromPreference(context,productId)
         val addCart = count(1,cartVal)
         cartVal = addCart
-        //requestCart(CartModel(productId.toInt() ,cartVal))
         valueToPreference(context,productId,cartVal.toString(), CONST_SAVE)
+        requestCart(CartRequestModel(productId.toInt() ,cartVal))
+
         return cartVal
 
     }
@@ -114,20 +106,44 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
         cartVal = checkValuesFromPreference(context,productId)
         val removeCart = count(0,cartVal)
         cartVal = removeCart
-        //requestCart(CartModel(productId.toInt() ,cartVal))
         valueToPreference(context,productId,cartVal.toString(), CONST_SAVE)
+        requestCart(CartRequestModel(productId.toInt() ,cartVal))
         return cartVal
 
     }
 
+    fun getPreviousSavedCartValue(context: LifecycleOwner): Int{
+        var count: Int = 0
+        cartResponseModelListLiveData?.observe(context, {
+            when (it.status) {
+                Resources.Status.SUCCESS -> {
+                    if (!it.data.isNullOrEmpty()){
+                           for(quantity in it.data){
+                               count = quantity.quantity?.plus(count) ?: 0
+                           }
+                    }
+                }
+                Resources.Status.FAILURE ->{
+
+                }
+                Resources.Status.LOADING ->{
+
+                }
+
+            }
+        })
+
+        return count
+    }
+
     fun totalCartValue(context: Context, count: Int): Int{
-        cartcount =  checkValuesFromPreference(context, PREFERENCE_KEY_CART_TOTAL)
+        var cartcount =  checkValuesFromPreference(context, PREFERENCE_KEY_CART_TOTAL)
         if(count == 0 && cartcount > 0){
             cartcount--
         }else{
             cartcount++
         }
-        mcartValue?.value = cartcount
+
         valueToPreference(context, PREFERENCE_KEY_CART_TOTAL,cartcount.toString(), CONST_SAVE)
         return cartcount
     }

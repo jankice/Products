@@ -14,16 +14,16 @@ class HomeRepository(context: Context) {
 
     }
 
-    suspend fun requestCart(cartModel: CartModel){
+    suspend fun requestCart(cartRequestModel: CartRequestModel){
 
         try {
-            apiInterface?.requestCart(cartModel)
+            apiInterface?.requestCart(cartRequestModel)
         }catch (e: Exception){
             e.printStackTrace()
         }
     }
 
-    suspend fun cartResponse(): Resources<List<CartModel>>{
+    suspend fun cartResponse(): Resources<List<CartResponseModel>>{
         try {
             val response = apiInterface?.cartResponse()
             if (response?.isSuccessful!!) {

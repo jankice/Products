@@ -6,10 +6,10 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -20,14 +20,8 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationView
 import com.inmy.products.PREFERENCE_KEY_CART_TOTAL
 import com.inmy.products.R
-import com.inmy.products.REF_CART_DETAIL
-import com.inmy.products.REF_PRODUCT_DETAIL
-import com.inmy.products.data.model.CartModel
-import com.inmy.products.data.model.ProductModel
-import com.inmy.products.data.model.Resources
 import com.inmy.products.databinding.ActivtyHomeBinding
 import com.inmy.products.ui.cart.CartActivity
-import com.inmy.products.ui.productdetail.ProductDetailActivity
 
 import kotlinx.android.synthetic.main.app_bar_main.*
 import java.lang.String
@@ -38,6 +32,7 @@ class HomeActivty : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var textCartItemCount: TextView
     private var mCartItemCount = 0
+
     private lateinit var homeViewModel: HomeViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -79,11 +74,14 @@ class HomeActivty : AppCompatActivity() {
         val actionView: View = menuItem.actionView
 
         textCartItemCount = actionView.findViewById(R.id.cart_badge) as TextView
-        mCartItemCount = homeViewModel.checkValuesFromPreference(this,PREFERENCE_KEY_CART_TOTAL)
-        homeViewModel.mcartValue?.observe(this, Observer {
 
-            textCartItemCount.text = it.toString()
-        })
+        mCartItemCount = homeViewModel.checkValuesFromPreference(this,PREFERENCE_KEY_CART_TOTAL)
+        if(mCartItemCount == 0){
+            mCartItemCount = homeViewModel.getPreviousSavedCartValue(this)
+        }
+
+        textCartItemCount.text = mCartItemCount.toString()
+
 
         setupBadge()
 
@@ -94,28 +92,8 @@ class HomeActivty : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
            R.id.action_cart -> {
-
-               homeViewModel.cartModelListLiveData?.observe(this, {
-                   when (it.status) {
-                       Resources.Status.SUCCESS -> {
-                           if (!it.data.isNullOrEmpty()){
-                              var list :ArrayList<CartModel> = it.data as ArrayList<CartModel>
-                               val intent = Intent(this, CartActivity::class.java)
-                               intent.putParcelableArrayListExtra(REF_CART_DETAIL,list)
-                               startActivity(intent)
-
-                           }
-                       }
-                       Resources.Status.FAILURE ->
-                           Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
-
-                       Resources.Status.LOADING ->
-                           Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
-                   }
-
-               })
-
-                // Do something
+               val intent = Intent(this, CartActivity::class.java)
+               startActivity(intent)
                 return true
             }
         }
