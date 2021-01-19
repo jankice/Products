@@ -23,7 +23,7 @@ class ProductListViewHolder(var context: Context, itemView: View) : RecyclerView
         itemView.textProductDetailSort.text = productModel.productDetailSort
 
 
-        itemView.textViewProductPrice.text = context.getString(R.string.title_price) + ": " + productModel.price
+        itemView.textViewProductPrice.text = context.resources.getString(R.string.rs) + ". " + productModel.price
 
         val cart = getValuesFromPreference(sharedPreferences,productModel.productId)
         itemView.textNumberItem.text = cart

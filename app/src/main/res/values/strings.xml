@@ -24,6 +24,13 @@
     <string name="title_price">Price</string>
     <string name="title_search">Search</string>
 
+    <string name="text_price_detail">PRICE DETAILS</string>
+    <string name="text_price">Price</string>
+    <string name="text_discount">Discount</string>
+    <string name="text_delivery_charges">Delivery Charge</string>
+    <string name="text_total_amount">Total Amount</string>
+    <string name="text_place_order">Place Order</string>
+
     <string name="hint_phone">Enter Phone here</string>
     <string name="hint_verification">Verification code</string>
 
@@ -45,10 +52,13 @@
     <string name="cart_item_price">CartItemPrice</string>
     <string name="cart_item_quantity">Qty.</string>
 
+
     <string name="welcome">"Welcome !"</string>
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
+
+    <string name="rs">\u20B9</string>
 
 
 </resources>

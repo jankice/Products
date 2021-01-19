@@ -3,6 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="@dimen/item_padding"
+    android:layout_margin="@dimen/item_margin_2"
+    android:background="@drawable/item_border"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
@@ -38,25 +40,26 @@
         android:layout_width="150dp"
         android:layout_height="150dp"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/cartItemName"
         app:layout_constraintEnd_toEndOf="parent"
         />
 
-    <androidx.appcompat.widget.AppCompatSpinner
-        android:id="@+id/cartItemQtySpinner"
+    <TextView
+        android:id="@+id/cartItemQty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/cartItemImage"
-        app:layout_constraintStart_toEndOf="@+id/cartItemName"
-        app:layout_constraintEnd_toEndOf="parent"
-        />
+        android:background="@drawable/item_border"
+        app:layout_constraintTop_toBottomOf="@+id/cartItemPrice"
+        android:layout_marginTop="@dimen/item_margin"
+        app:layout_constraintStart_toStartOf="parent"
+
+         />
 
     <Button
         android:id="@+id/cartButtonSaveForLater"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/button_save_later"
-        app:layout_constraintTop_toBottomOf="@+id/cartItemQtySpinner"
+        app:layout_constraintTop_toBottomOf="@+id/cartItemImage"
         app:layout_constraintStart_toStartOf="parent"/>
 
     <Button
@@ -64,8 +67,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/button_remove"
-        app:layout_constraintTop_toBottomOf="@+id/cartItemQtySpinner"
-        app:layout_constraintStart_toEndOf="@+id/cartButtonSaveForLater"
+        app:layout_constraintTop_toBottomOf="@+id/cartItemImage"
         app:layout_constraintEnd_toEndOf="parent"/>
 
 
