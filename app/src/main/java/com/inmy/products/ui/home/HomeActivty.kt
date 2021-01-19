@@ -25,7 +25,6 @@ import com.inmy.products.databinding.ActivtyHomeBinding
 import com.inmy.products.ui.cart.CartActivity
 
 import kotlinx.android.synthetic.main.app_bar_main.*
-import java.lang.String
 
 
 class HomeActivty : AppCompatActivity() {
@@ -59,7 +58,7 @@ class HomeActivty : AppCompatActivity() {
             setOf(
                 R.id.nav_home,
                 R.id.nav_order_status,
-                R.id.nav_offer,
+                R.id.nav_address,
                 R.id.nav_feedback,
                 R.id.nav_contact_us
             ), drawerLayout

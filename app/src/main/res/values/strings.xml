@@ -8,7 +8,7 @@
     <string name="nav_header_desc">Navigation header</string>
 
     <string name="menu_order_status">Order Status</string>
-    <string name="menu_offer">Offer</string>
+    <string name="menu_address">Address</string>
     <string name="menu_feedback">Feedback</string>
     <string name="menu_contact">Contact us</string>
     <string name="menu_login">Login</string>

@@ -12,9 +12,9 @@
             android:icon="@drawable/ic_menu_camera"
             android:title="@string/menu_order_status" />
         <item
-            android:id="@+id/nav_offer"
+            android:id="@+id/nav_address"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="@string/menu_offer" />
+            android:title="@string/menu_address" />
         <item
             android:id="@+id/nav_feedback"
             android:icon="@drawable/ic_menu_slideshow"

@@ -1,10 +1,10 @@
-package com.inmy.products.ui.offer
+package com.inmy.products.ui.address
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class OfferViewModel : ViewModel() {
+class AddressViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
         value = "This is gallery Fragment"

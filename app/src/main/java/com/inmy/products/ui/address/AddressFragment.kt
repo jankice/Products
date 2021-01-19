@@ -1,4 +1,4 @@
-package com.inmy.products.ui.offer
+package com.inmy.products.ui.address
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,20 +9,20 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.inmy.products.R
 
-class OfferFragment : Fragment() {
+class AddressFragment : Fragment() {
 
-    private lateinit var offerViewModel: OfferViewModel
+    private lateinit var addressViewModel: AddressViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        offerViewModel =
-            ViewModelProvider(this).get(OfferViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_offer, container, false)
-        val textView: TextView = root.findViewById(R.id.text_offer)
-        offerViewModel.text.observe(viewLifecycleOwner, {
+        addressViewModel =
+            ViewModelProvider(this).get(AddressViewModel::class.java)
+        val root = inflater.inflate(R.layout.fragment_address, container, false)
+        val textView: TextView = root.findViewById(R.id.text_address)
+        addressViewModel.text.observe(viewLifecycleOwner, {
             textView.text = it
         })
         return root
