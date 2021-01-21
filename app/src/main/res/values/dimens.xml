@@ -11,6 +11,7 @@
     <dimen name="item_margin_2">5dp</dimen>
     <dimen name="item_margin_3">2dp</dimen>
 
+    <dimen name="title_textSize_large">22sp</dimen>
     <dimen name="title_textSize">18sp</dimen>
     <dimen name="detail_textSize">14sp</dimen>
     <dimen name="detail_small_textSize">12sp</dimen>

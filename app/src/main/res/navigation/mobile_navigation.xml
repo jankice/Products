@@ -37,4 +37,10 @@
         android:label="@string/menu_contact"
         tools:layout="@layout/contact_us_fragment"/>
 
+    <fragment
+        android:id="@+id/nav_add_edit"
+        android:name="com.inmy.products.ui.address.AddEditAddressActivity"
+        android:label="@string/menu_address"
+        tools:layout="@layout/activity_add_edit_address"/>
+
 </navigation>

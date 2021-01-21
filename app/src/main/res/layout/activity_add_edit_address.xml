@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="addEditAddressViewModel"
+            type="com.inmy.products.ui.address.AddEditAddressViewModel" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/item_padding"
+        android:layout_margin="@dimen/item_margin"
+        android:layout_marginTop="@dimen/item_margin"
+     >
+
+            <Button
+                android:id="@+id/getCurrentLocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/item_border"
+                android:drawableLeft="@drawable/ic_baseline_my_location_24"
+                android:text="@string/button_get_location"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_margin="@dimen/item_margin"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/editTextName"
+                android:hint="@string/hint_name"
+                android:layout_margin="@dimen/item_margin"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:background="@drawable/item_border"
+                app:layout_constraintTop_toBottomOf="@+id/getCurrentLocation"
+                 />
+
+            <EditText
+
+                android:id="@+id/editTextMobile"
+                android:hint="@string/hint_mobile"
+                android:layout_margin="@dimen/item_margin"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:background="@drawable/item_border"
+                app:layout_constraintTop_toBottomOf="@+id/editTextName"/>
+
+        <Button
+            android:id="@+id/buttonSaveAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/editTextMobile"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="@string/button_save"
+            android:background="@drawable/item_border"/>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
