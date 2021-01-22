@@ -35,7 +35,9 @@ class AddEditAddressActivity : AppCompatActivity() {
 
         buttonSaveAddress.setOnClickListener {
             val addressIntent = Intent()
-            val address = Address(name = editTextName.text.toString(),mobile = editTextMobile.text.toString())
+            val address = Address(name = editTextName.text.toString(),mobile = editTextMobile.text.toString(),
+                pincode = editTextPincode.text.toString(), address = editTextAddress.text.toString(),
+                city = editTextCity.text.toString(), state = editTextState.text.toString())
             addressIntent.putExtra(EXTRA_ADDRESS,address)
             setResult(Activity.RESULT_OK, addressIntent)
 

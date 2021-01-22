@@ -4,13 +4,14 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.inmy.products.data.room.dao.AddressDAO
 import com.inmy.products.data.room.data.Address
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@Database(entities = arrayOf(Address::class), version = 1, exportSchema = false)
+@Database(entities = arrayOf(Address::class), version = 2, exportSchema = false)
 public abstract class AddressRoomDatabase : RoomDatabase() {
     abstract fun addressDao(): AddressDAO
 
@@ -24,8 +25,8 @@ public abstract class AddressRoomDatabase : RoomDatabase() {
                     addressDAO.deleteAll()
 
                     //adding sample
-                    var address = Address(name = "janki", mobile = "7045215979")
-                    addressDAO.insert(address)
+                   // var address = Address(name = "janki", mobile = "7045215979")
+                    //addressDAO.insert(address)
                 }
             }
         }
@@ -36,11 +37,21 @@ public abstract class AddressRoomDatabase : RoomDatabase() {
 
         fun getDatabase(context: Context,
         scope: CoroutineScope): AddressRoomDatabase{
+            var migration12 = object : Migration(1, 2) {
+                override fun migrate(database: SupportSQLiteDatabase) {
+                    database.execSQL("ALTER TABLE address_table ADD COLUMN pincode TEXT")
+                    database.execSQL("ALTER TABLE address_table ADD COLUMN address TEXT")
+                    database.execSQL("ALTER TABLE address_table ADD COLUMN city TEXT")
+                    database.execSQL("ALTER TABLE address_table ADD COLUMN state TEXT")
 
+                }
+            }
             return INSTANCE?: synchronized(this){
                 val instance = Room.databaseBuilder(context.applicationContext,
                 AddressRoomDatabase::class.java,
-                "address_database").build()
+                "address_database")
+                    .addMigrations(migration12)
+                    .build()
                 INSTANCE = instance
                 // return instance
                 instance

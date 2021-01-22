@@ -1,5 +1,6 @@
 package com.inmy.products.data.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +17,7 @@ class AddressListAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         val v: View
         v = LayoutInflater.from(parent.context).inflate(R.layout.item_address, parent, false)
         return AddressViewHolder(v)
+
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {

@@ -36,6 +36,11 @@
     <string name="hint_verification">Verification code</string>
     <string name="hint_name">Name</string>
     <string name="hint_mobile">Enter 10 digit mobile</string>
+    <string name="hint_pincode">Pincode</string>
+    <string name="hint_address">Address (Area and Street)</string>
+    <string name="hint_city">City/District/Town</string>
+    <string name="hint_state">State</string>
+
 
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>

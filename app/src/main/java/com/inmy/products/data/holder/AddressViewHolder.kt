@@ -7,7 +7,9 @@ import kotlinx.android.synthetic.main.item_address.view.*
 
 class AddressViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     fun bindView(address: Address) {
-        itemView.textViewDisplayAddress.text = address.name
+        val addressText = address.name + " " + address.address + " ,Pincode- " +
+                address.pincode + ", " + address.city + ", " + address.state + ", Mo. " + address.mobile
+        itemView.textViewDisplayAddress.text = addressText
     }
 
 
