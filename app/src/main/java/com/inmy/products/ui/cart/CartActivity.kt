@@ -2,6 +2,7 @@ package com.inmy.products.ui.cart
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -35,6 +36,7 @@ class CartActivity : AppCompatActivity(), CartListAdapter.ClickListener  {
             when (it.status) {
                 Resources.Status.SUCCESS -> {
                     if (!it.data.isNullOrEmpty()){
+                        progressbarCart.visibility = View.GONE
                         var list :ArrayList<CartResponseModel> = it.data as ArrayList<CartResponseModel>
                         initRecyclerView(list)
                     }
@@ -42,10 +44,29 @@ class CartActivity : AppCompatActivity(), CartListAdapter.ClickListener  {
                 Resources.Status.FAILURE ->
                     Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
 
-                Resources.Status.LOADING ->
+                Resources.Status.LOADING ->{
+                    progressbarCart.visibility = View.VISIBLE
                     Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
+                }
+
             }
 
+        })
+
+        cartViewModel.placeOrderResponseModelListLiveData?.observe(this,{
+            when(it.status){
+                Resources.Status.SUCCESS -> {
+                    progressbarCart.visibility = View.GONE
+                }
+                Resources.Status.FAILURE ->
+                    Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
+
+                Resources.Status.LOADING ->{
+                    progressbarCart.visibility = View.VISIBLE
+                    Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
+                }
+
+            }
         })
 
     }
