@@ -4,9 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.inmy.products.data.model.CartResponseModel
-import com.inmy.products.data.model.HomeRepository
-import com.inmy.products.data.model.Resources
+import com.inmy.products.data.model.*
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
@@ -16,10 +14,12 @@ class CartViewModel(application: Application): AndroidViewModel(application) {
 
     private var homeRepository: HomeRepository?=null
     var cartResponseModelListLiveData : MutableLiveData<Resources<List<CartResponseModel>>>? = null
+    var placeOrderResponseModelListLiveData : MutableLiveData<Resources<PlaceOrderResponseModel>>? = null
     init {
 
         homeRepository = HomeRepository(context)
         cartResponseModelListLiveData = MutableLiveData()
+        placeOrderResponseModelListLiveData = MutableLiveData()
         cartResponse()
     }
 
@@ -30,6 +30,16 @@ class CartViewModel(application: Application): AndroidViewModel(application) {
                 cartResponseModelListLiveData?.value = result
             }
             cartResponseModelListLiveData?.value = Resources.loading()
+        }
+    }
+
+    fun placeOrderRequest(placeOrderRequestModel: PlaceOrderRequestModel){
+        viewModelScope.launch {
+            async {
+                var result = homeRepository?.requestOrders(placeOrderRequestModel)
+                placeOrderResponseModelListLiveData?.value = result
+            }
+            placeOrderResponseModelListLiveData?.value = Resources.loading()
         }
     }
 }

@@ -9,12 +9,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.inmy.products.R
 import com.inmy.products.data.adapter.CartListAdapter
 import com.inmy.products.data.model.CartResponseModel
+import com.inmy.products.data.model.PlaceOrderRequestModel
 import com.inmy.products.data.model.Resources
 import com.inmy.products.databinding.ActivityCartBinding
 import kotlinx.android.synthetic.main.activity_cart.*
+import kotlinx.android.synthetic.main.item_cart_footer.*
 
 
-class CartActivity : AppCompatActivity() {
+class CartActivity : AppCompatActivity(), CartListAdapter.ClickListener  {
     private lateinit var cartViewModel: CartViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,16 +48,20 @@ class CartActivity : AppCompatActivity() {
 
         })
 
-
     }
 
     private fun initRecyclerView(list: ArrayList<CartResponseModel>) {
         cartRecycleView.layoutManager = LinearLayoutManager(this)
 
-        val cartListAdapter = CartListAdapter(this, list)
+        val cartListAdapter = CartListAdapter(this, list,this)
         cartRecycleView.adapter = cartListAdapter
 
 
 
+    }
+
+    override fun onPlaceOrderClicked() {
+
+        cartViewModel.placeOrderRequest(PlaceOrderRequestModel("",1,"560048"))
     }
 }

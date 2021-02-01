@@ -14,6 +14,19 @@ class HomeRepository(context: Context) {
 
     }
 
+    suspend fun requestOrders(placeOrderRequestModel: PlaceOrderRequestModel) : Resources<PlaceOrderResponseModel>{
+        try {
+            val response = apiInterface?.requestOrders(placeOrderRequestModel)
+            if (response?.isSuccessful!!) {
+                val body = response.body()
+                if (body != null) return Resources.success(body)
+            }
+            return error(" ${response.code()} ${response.message()}")
+        } catch (e: Exception) {
+            return error(e.message ?: e.toString())
+        }
+    }
+
     suspend fun requestCart(cartRequestModel: CartRequestModel){
 
         try {

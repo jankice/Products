@@ -19,30 +19,47 @@ class ProductListViewHolder(var context: Context, itemView: View) : RecyclerView
         Context.MODE_PRIVATE)
 
     fun bindView(productModel: ProductModel, cellClickListener: HomeFragment) {
-        itemView.textProductTitle.text = productModel.productTitle
-        itemView.textProductDetailSort.text = productModel.productDetailSort
-
-
-        itemView.textViewProductPrice.text = context.resources.getString(R.string.rs) + ". " + productModel.price
+//        itemView.textProductTitle.text = productModel.productTitle
+//        itemView.textProductDetailSort.text = productModel.productDetailSort
+//        itemView.textViewProductPrice.text = context.resources.getString(R.string.rs) + ". " + productModel.price
 
         val cart = getValuesFromPreference(sharedPreferences,productModel.productId)
-        itemView.textNumberItem.text = cart
+        //itemView.textNumberItem.text = cart
+
+        itemView.apply {
+            textProductTitle.text = productModel.productTitle
+            textProductDetailSort.text = productModel.productDetailSort
+            textViewProductPrice.text = context.resources.getString(R.string.rs) + ". " + productModel.price
+            textNumberItem.text = cart
+            imageProduct.setOnClickListener{
+                cellClickListener.onCellClickListener(productModel)
+            }
+            buttonRemove.setOnClickListener {
+                val cart = cellClickListener.onRemoveClicked(productModel.productId)
+                itemView.textNumberItem.text = cart.toString()
+            }
+            buttonAdd.setOnClickListener {
+                val cart = cellClickListener.onAddClicked(productModel.productId)
+                itemView.textNumberItem.text = cart.toString()
+            }
+        }
+
 
         Glide.with(itemView.context).load(productModel.productImageUrl!!).into(itemView.imageProduct)
 
-         itemView.imageProduct.setOnClickListener{
-             cellClickListener.onCellClickListener(productModel)
-         }
-
-         itemView.buttonRemove.setOnClickListener {
-             val cart = cellClickListener.onRemoveClicked(productModel.productId)
-             itemView.textNumberItem.text = cart.toString()
-         }
-
-         itemView.buttonAdd.setOnClickListener {
-             val cart = cellClickListener.onAddClicked(productModel.productId)
-             itemView.textNumberItem.text = cart.toString()
-         }
+//         itemView.imageProduct.setOnClickListener{
+//             cellClickListener.onCellClickListener(productModel)
+//         }
+//
+//         itemView.buttonRemove.setOnClickListener {
+//             val cart = cellClickListener.onRemoveClicked(productModel.productId)
+//             itemView.textNumberItem.text = cart.toString()
+//         }
+//
+//         itemView.buttonAdd.setOnClickListener {
+//             val cart = cellClickListener.onAddClicked(productModel.productId)
+//             itemView.textNumberItem.text = cart.toString()
+//         }
 
 
     }

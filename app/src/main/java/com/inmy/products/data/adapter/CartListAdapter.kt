@@ -7,12 +7,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.inmy.products.R
 import com.inmy.products.data.holder.CartListViewHolder
 import com.inmy.products.data.holder.CartListViewHolderFooter
-import com.inmy.products.data.holder.ProductListViewHolderFooter
 import com.inmy.products.data.model.CartResponseModel
 import com.inmy.products.ui.cart.CartActivity
 
-class CartListAdapter(cartActivity: CartActivity, cartResponseList: List<CartResponseModel>) : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+class CartListAdapter(cartActivity: CartActivity, cartResponseList: List<CartResponseModel>,
+private val cartClickListener: CartActivity) : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
 
+    interface ClickListener{
+            fun onPlaceOrderClicked()
+    }
     private var listOfCartItem = cartResponseList
     val FOOTER_TYPE : Int = 1
 
@@ -35,14 +38,13 @@ class CartListAdapter(cartActivity: CartActivity, cartResponseList: List<CartRes
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         try {
             if (holder is CartListViewHolder) {
-                val vh: CartListViewHolder = holder as CartListViewHolder
+                val vh: CartListViewHolder = holder
                 vh.bindView(listOfCartItem.get(position))
-            } else {
-                if (holder is CartListViewHolderFooter) {
+            } else if (holder is CartListViewHolderFooter) {
                     val vh: CartListViewHolderFooter = holder
-                    vh.bindViewFooter(listOfCartItem)
-                }
+                    vh.bindViewFooter(listOfCartItem,cartClickListener)
             }
+
         } catch (e: Exception) {
             e.printStackTrace()
         }

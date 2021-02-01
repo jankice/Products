@@ -11,6 +11,7 @@ val REF_PRODUCT_DETAIL = "101"
 val REF_CART_DETAIL = "102"
 val REQ_SIGN_IN = 1000
 val PREFERENCE_FILE_NAME = "productPreferenceFile"
+val PREFERENCE_FILE_CART = "cartPreferenceFile"
 val PREFERENCE_KEY_CART_TOTAL = "cart_Total"
 val PREFERENCE_KEY_ID_TOKEN = "id_token"
 

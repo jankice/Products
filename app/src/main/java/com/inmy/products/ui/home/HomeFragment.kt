@@ -43,6 +43,7 @@ class HomeFragment : Fragment(), ProductListAdapter.CellClickListener {
             ViewModelProvider(this)[HomeViewModel::class.java]
         } ?: throw Exception("Invalid Activity")
 
+
         binding.homeViewModel = homeViewModel
 
         return binding.root

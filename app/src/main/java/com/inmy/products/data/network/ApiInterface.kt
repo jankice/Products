@@ -1,8 +1,6 @@
 package com.inmy.products.data.network
 
-import com.inmy.products.data.model.CartResponseModel
-import com.inmy.products.data.model.CartRequestModel
-import com.inmy.products.data.model.ProductModel
+import com.inmy.products.data.model.*
 import io.reactivex.Completable
 import retrofit2.Response
 import retrofit2.http.*
@@ -18,4 +16,7 @@ interface ApiInterface {
     @Headers("Content-Type: application/json")
     @POST("api/users/cart")
     suspend fun requestCart(@Body cartModel: CartRequestModel): Completable
+
+    @POST("api/orders")
+    suspend fun requestOrders(@Body orderRequestModel: PlaceOrderRequestModel) : Response<PlaceOrderResponseModel>
 }
