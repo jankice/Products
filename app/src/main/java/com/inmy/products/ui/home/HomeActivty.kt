@@ -20,6 +20,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationView
 import com.inmy.products.*
 import com.inmy.products.data.adapter.CartListAdapter
+import com.inmy.products.data.model.Preference
 import com.inmy.products.data.model.Resources
 import com.inmy.products.databinding.ActivtyHomeBinding
 
@@ -76,7 +77,9 @@ class HomeActivty : AppCompatActivity(){
 
         textCartItemCount = actionView.findViewById(R.id.cart_badge) as TextView
 
-        mCartItemCount = homeViewModel.checkValuesFromPreference(this,PREFERENCE_KEY_CART_TOTAL)
+        var cartCount = Preference(this, PREFERENCE_FILE_CART).getValueFromPReference(PREFERENCE_KEY_CART_TOTAL,"0")
+        mCartItemCount = cartCount.toInt()
+      //  mCartItemCount = homeViewModel.checkValuesFromPreference(this,PREFERENCE_KEY_CART_TOTAL)
 
         homeViewModel.mcartValue?.observe(this, Observer {
 

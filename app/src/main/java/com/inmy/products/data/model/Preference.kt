@@ -1,49 +1,45 @@
 package com.inmy.products.data.model
 
+import android.content.Context
 import android.content.SharedPreferences
 
-class Preference : SharedPreferences {
-    override fun getAll(): MutableMap<String, *> {
-        TODO("Not yet implemented")
-    }
+ class Preference(context: Context, fileName : String) {
 
-    override fun getString(key: String?, defValue: String?): String? {
-        TODO("Not yet implemented")
-    }
+    // val instance = Preference.create()
+//     lateinit var context: Context
+//     lateinit var fileName: String
+//
+//     companion object Factory {
+//         fun create(): Preference = Preference()
+//     }
 
-    override fun getStringSet(key: String?, defValues: MutableSet<String>?): MutableSet<String> {
-        TODO("Not yet implemented")
-    }
+//        constructor(context: Context, fileName : String) : this(){
+//            this.context = context
+//            this.fileName = fileName
+//         }
 
-    override fun getInt(key: String?, defValue: Int): Int {
-        TODO("Not yet implemented")
-    }
 
-    override fun getLong(key: String?, defValue: Long): Long {
-        TODO("Not yet implemented")
-    }
+        var sharedPreferences: SharedPreferences? = context.getSharedPreferences(
+         fileName, Context.MODE_PRIVATE)
 
-    override fun getFloat(key: String?, defValue: Float): Float {
-        TODO("Not yet implemented")
-    }
+        fun saveValueToPreference(key: String, value: String){
+             val editor: SharedPreferences.Editor? =  sharedPreferences?.edit()
 
-    override fun getBoolean(key: String?, defValue: Boolean): Boolean {
-        TODO("Not yet implemented")
-    }
+             editor?.putString(key,value)
+             editor?.apply()
+         }
 
-    override fun contains(key: String?): Boolean {
-        TODO("Not yet implemented")
-    }
+         fun clearValueFromPreference(){
+             val editor = sharedPreferences?.edit()
+             editor?.clear()
+             editor?.apply()
+         }
 
-    override fun edit(): SharedPreferences.Editor {
-        TODO("Not yet implemented")
-    }
+         fun getValueFromPReference(key: String, defValue : String): String{
+             var value = sharedPreferences?.getString(key,defValue)!!
+             return value
+         }
+     }
 
-    override fun registerOnSharedPreferenceChangeListener(listener: SharedPreferences.OnSharedPreferenceChangeListener?) {
-        TODO("Not yet implemented")
-    }
 
-    override fun unregisterOnSharedPreferenceChangeListener(listener: SharedPreferences.OnSharedPreferenceChangeListener?) {
-        TODO("Not yet implemented")
-    }
-}
+

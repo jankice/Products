@@ -12,6 +12,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.GoogleAuthProvider
 import com.inmy.products.*
+import com.inmy.products.data.model.Preference
 import com.inmy.products.databinding.ActivityLoginBinding
 import com.inmy.products.ui.home.HomeActivty
 import kotlinx.android.synthetic.main.activity_login.*
@@ -76,8 +77,10 @@ class LoginActivity : AppCompatActivity() {
                     Log.d("TAG", "signInWithCredential:success")
                     val user = loginViewModel.mAuth?.currentUser
                     Log.d("id_token", ""+user?.getIdToken(false)?.getResult()?.token)
-                    valueToPreference(this,PREFERENCE_KEY_ID_TOKEN,
-                        ""+user?.getIdToken(false)?.getResult()?.token,CONST_SAVE)
+                    Preference(this, PREFERENCE_FILE_NAME).saveValueToPreference(
+                        PREFERENCE_KEY_ID_TOKEN,""+user?.getIdToken(false)?.getResult()?.token)
+//                    valueToPreference(this,PREFERENCE_KEY_ID_TOKEN,
+//                        ""+user?.getIdToken(false)?.getResult()?.token,CONST_SAVE)
                     val intent = Intent(this, HomeActivty::class.java)
                     startActivity(intent)
                 } else {

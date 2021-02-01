@@ -20,14 +20,15 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
     private var _result = MutableLiveData<String>().apply { value = "" }
 
     var mcartValue : MutableLiveData<Int>? = null
-    private var cartcount = checkValuesFromPreference(context, PREFERENCE_KEY_CART_TOTAL)
+    private var cartcount: Int
+    // = checkValuesFromPreference(context, PREFERENCE_KEY_CART_TOTAL)
 
     init {
         homeRepository = HomeRepository(context)
         postModelListLiveData = MutableLiveData()
         cartResponseModelListLiveData = MutableLiveData()
         mcartValue = MutableLiveData()
-
+        cartcount = Preference(context, PREFERENCE_FILE_CART).getValueFromPReference(PREFERENCE_KEY_CART_TOTAL,"0").toInt()
         updateCart(cartcount)
         pageNo = pagination("0",pageNo)
 
@@ -44,7 +45,6 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
         fetchAllPosts(pageNo,result)
     }
 
-
     fun fetchAllPosts(page: Int, query: String) {
         viewModelScope.launch {
             async {
@@ -54,8 +54,6 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
             postModelListLiveData?.value = Resources.loading()
         }
     }
-
-
 
     fun cartResponse(){
         viewModelScope.launch {
@@ -101,9 +99,11 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
 
 
     fun addClicked(context: Context,productId: String): Int{
-        cartVal = checkValuesFromPreference(context,productId)
+        cartVal = Preference(context, PREFERENCE_FILE_CART).getValueFromPReference(productId,"0").toInt()
+        //cartVal = checkValuesFromPreference(context,productId)
         cartVal += 1
-        valueToPreference(context,productId,cartVal.toString(), CONST_SAVE)
+        Preference(context, PREFERENCE_FILE_CART).saveValueToPreference(productId,cartVal.toString())
+        //valueToPreference(context,productId,cartVal.toString(), CONST_SAVE)
 
         requestCart(CartRequestModel(productId.toInt() ,cartVal))
         cartResponse()
@@ -113,11 +113,13 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun removeClicked(context: Context,productId: String): Int{
-        cartVal = checkValuesFromPreference(context,productId)
+        cartVal = Preference(context, PREFERENCE_FILE_CART).getValueFromPReference(productId,"0").toInt()
+        //cartVal = checkValuesFromPreference(context,productId)
         if(cartVal > 0){
             cartVal -=1
         }
-        valueToPreference(context,productId,cartVal.toString(), CONST_SAVE)
+        Preference(context, PREFERENCE_FILE_CART).saveValueToPreference(productId,cartVal.toString())
+       // valueToPreference(context,productId,cartVal.toString(), CONST_SAVE)
 
         requestCart(CartRequestModel(productId.toInt() ,cartVal))
         cartResponse()
@@ -130,29 +132,23 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
         for(quantity in data!!){
             count = quantity.quantity?.plus(count) ?: 0
         }
-        valueToPreference(context, PREFERENCE_KEY_CART_TOTAL,count.toString(), CONST_SAVE)
+        Preference(context, PREFERENCE_FILE_CART).saveValueToPreference(PREFERENCE_KEY_CART_TOTAL,count.toString())
+        //valueToPreference(context, PREFERENCE_KEY_CART_TOTAL,count.toString(), CONST_SAVE)
         return count
     }
 
     fun totalCartValue(context: Context, trigger: Int): Int{
-        cartcount =  checkValuesFromPreference(context, PREFERENCE_KEY_CART_TOTAL)
+        cartcount = Preference(context, PREFERENCE_FILE_CART).getValueFromPReference(PREFERENCE_KEY_CART_TOTAL,"0").toInt()
+        //cartcount =  checkValuesFromPreference(context, PREFERENCE_KEY_CART_TOTAL)
         if(trigger == 0 && cartcount > 0){
             cartcount--
         }else{
             cartcount++
         }
         mcartValue?.value = cartcount
-        valueToPreference(context, PREFERENCE_KEY_CART_TOTAL,cartcount.toString(), CONST_SAVE)
+        Preference(context, PREFERENCE_FILE_CART).saveValueToPreference(PREFERENCE_KEY_CART_TOTAL,cartcount.toString())
+        //valueToPreference(context, PREFERENCE_KEY_CART_TOTAL,cartcount.toString(), CONST_SAVE)
         return cartcount
-    }
-
-    fun checkValuesFromPreference(context: Context,productId: String): Int{
-
-        val sharedPreferences: SharedPreferences = context.getSharedPreferences(PREFERENCE_FILE_NAME,
-            Context.MODE_PRIVATE)
-        val value = getValuesFromPreference(sharedPreferences,productId)
-
-        return value.toInt()
     }
 
 }

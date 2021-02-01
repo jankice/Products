@@ -5,7 +5,8 @@ import android.content.SharedPreferences
 import android.util.Log
 import com.inmy.products.PREFERENCE_FILE_NAME
 import com.inmy.products.PREFERENCE_KEY_ID_TOKEN
-import com.inmy.products.getValuesFromPreference
+import com.inmy.products.data.model.Preference
+
 import com.inmy.products.sharedPreferences
 import okhttp3.*
 
@@ -14,12 +15,15 @@ class ServiceBuilder(context: Context) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
 
         var request = chain.request()
-        val sharedPreferences: SharedPreferences = context?.getSharedPreferences(
-            PREFERENCE_FILE_NAME,
-            Context.MODE_PRIVATE)!!
-        request = request.newBuilder().addHeader("Authorization", "Bearer "+ sharedPreferences?.let {
-           getValuesFromPreference(it,PREFERENCE_KEY_ID_TOKEN)
-        }).build()
+        var token = context?.let {
+            Preference(it, PREFERENCE_FILE_NAME).getValueFromPReference(
+                PREFERENCE_KEY_ID_TOKEN,"")
+        }
+
+        request = request.newBuilder().addHeader("Authorization","Bearer "+token ).build()
+//        request = request.newBuilder().addHeader("Authorization", "Bearer "+ sharedPreferences?.let {
+//           token
+//        }).build()
 
                                                                                                                                                                                          val response = chain.proceed(request)
         Log.d("aa",""+response.code())
