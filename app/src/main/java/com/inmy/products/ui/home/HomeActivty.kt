@@ -141,7 +141,5 @@ class HomeActivty : AppCompatActivity(){
 //            }
 //        }
     }
-    fun DoSomething(): Triple<Int, Int, Int> {
-        return Triple(1,1, 1)
-    }
+
 }

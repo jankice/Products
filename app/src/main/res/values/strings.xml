@@ -24,6 +24,7 @@
     <string name="title_price">Price</string>
     <string name="title_search">Search</string>
 
+    <string name="text_start_auth">Start Auth</string>
     <string name="text_price_detail">PRICE DETAILS</string>
     <string name="text_price">Price</string>
     <string name="text_discount">Discount</string>

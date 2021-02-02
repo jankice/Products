@@ -14,7 +14,6 @@ ext {
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
-    //buildConfigField "String", "BASE_API", "192.168.1.3:8000"
     defaultConfig {
         applicationId "com.inmy.products"
         minSdkVersion 21
@@ -69,10 +68,10 @@ dependencies {
     implementation 'com.google.android.material:material:1.2.1'
 
     //navigation
-    implementation 'androidx.navigation:navigation-fragment:2.3.2'
-    implementation 'androidx.navigation:navigation-ui:2.3.2'
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.2'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.3.2'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.3'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.3.3'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.3'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.3.3'
 
     implementation 'androidx.annotation:annotation:1.1.0'
 
@@ -97,7 +96,7 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
 
     //Test
-    testImplementation 'junit:junit:4.13'
+    testImplementation 'junit:junit:4.13.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
@@ -115,7 +114,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-simplexml:2.1.0'
 
     //coroutines
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.7'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.8'
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.7"
 
     // Room components

@@ -41,9 +41,6 @@ class AddressFragment : Fragment() {
         val binding: FragmentAddressBinding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_address, container, false)
 
-//        addressViewModel = activity?.run {
-//            ViewModelProvider(this)[AddressViewModel::class.java]
-//        } ?: throw Exception("Invalid Activity")
 
         binding.addressViewModel = addressViewModel
 
@@ -67,10 +64,6 @@ class AddressFragment : Fragment() {
         }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-    }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 

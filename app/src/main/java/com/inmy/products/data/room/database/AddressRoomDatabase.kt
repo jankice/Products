@@ -12,7 +12,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @Database(entities = arrayOf(Address::class), version = 2, exportSchema = false)
-public abstract class AddressRoomDatabase : RoomDatabase() {
+ abstract class AddressRoomDatabase : RoomDatabase() {
     abstract fun addressDao(): AddressDAO
 
     private class WordDatabaseCallback(private val scope:CoroutineScope
@@ -24,9 +24,6 @@ public abstract class AddressRoomDatabase : RoomDatabase() {
                     var addressDAO = database.addressDao()
                     addressDAO.deleteAll()
 
-                    //adding sample
-                   // var address = Address(name = "janki", mobile = "7045215979")
-                    //addressDAO.insert(address)
                 }
             }
         }
@@ -53,7 +50,7 @@ public abstract class AddressRoomDatabase : RoomDatabase() {
                     .addMigrations(migration12)
                     .build()
                 INSTANCE = instance
-                // return instance
+
                 instance
             }
         }

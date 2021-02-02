@@ -100,7 +100,7 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
 
     fun addClicked(context: Context,productId: String): Int{
         cartVal = Preference(context, PREFERENCE_FILE_CART).getValueFromPReference(productId,"0").toInt()
-        //cartVal = checkValuesFromPreference(context,productId)
+
         cartVal += 1
         Preference(context, PREFERENCE_FILE_CART).saveValueToPreference(productId,cartVal.toString())
         //valueToPreference(context,productId,cartVal.toString(), CONST_SAVE)
@@ -128,7 +128,7 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun getPreviousSavedCartValue(data: List<CartResponseModel>?): Int{
-        var count: Int = 0
+        var count = 0
         for(quantity in data!!){
             count = quantity.quantity?.plus(count) ?: 0
         }

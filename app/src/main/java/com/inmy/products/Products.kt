@@ -11,8 +11,4 @@ class Products : Application(){
     val database by lazy { AddressRoomDatabase.getDatabase(this,applicationScope) }
     val repository by lazy { AddressRepository(database.addressDao()) }
 
-    override fun onCreate() {
-        super.onCreate()
-        //Cache.initialize(context = applicationContext)
-    }
 }

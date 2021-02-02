@@ -31,7 +31,7 @@
             <TextView
                 android:id="@+id/cartPrice"
                 android:text="000"
-                android:gravity="right"
+                android:gravity="end"
                 android:padding="3dip" />
         </TableRow>
 
@@ -43,7 +43,7 @@
             <TextView
                 android:id="@+id/cartDiscount"
                 android:text="000"
-                android:gravity="right"
+                android:gravity="end"
                 android:padding="3dip" />
         </TableRow>
 
@@ -58,7 +58,7 @@
             <TextView
                 android:id="@+id/cartDeliveryCharge"
                 android:text="000"
-                android:gravity="right"
+                android:gravity="end"
                 android:padding="3dip" />
         </TableRow>
 
@@ -74,7 +74,7 @@
             <TextView
                 android:id="@+id/cartTotalAmount"
                 android:text="000"
-                android:gravity="right"
+                android:gravity="end"
                 android:padding="3dip" />
         </TableRow>
         <View

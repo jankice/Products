@@ -21,7 +21,7 @@ class ProductListAdapter(private val cellClickListener: HomeFragment) : Recycler
         fun onRemoveClicked(productId: String): Int
     }
 
-    val FOOTER_TYPE : Int = 1
+    private val FOOTER_TYPE : Int = 1
     val HEADER_TYPE : Int = 2
 
     private var listOfProducts = listOf<ProductModel>()

@@ -65,7 +65,6 @@ class CartActivity : AppCompatActivity(), CartListAdapter.ClickListener  {
                     progressbarCart.visibility = View.VISIBLE
                     Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
                 }
-
             }
         })
 

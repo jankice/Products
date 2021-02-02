@@ -18,7 +18,9 @@ import android.content.SharedPreferences
 //            this.fileName = fileName
 //         }
 
-
+        companion object {
+            fun create(context: Context, fileName: String) = Preference(context, fileName)
+        }
         var sharedPreferences: SharedPreferences? = context.getSharedPreferences(
          fileName, Context.MODE_PRIVATE)
 
@@ -42,4 +44,7 @@ import android.content.SharedPreferences
      }
 
 
+fun Context?.getMyPreference(fileName: String) : Preference? {
+    return this?.let { Preference.create(it, fileName) }
+}
 

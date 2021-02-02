@@ -17,7 +17,7 @@ private val cartClickListener: CartActivity) : RecyclerView.Adapter<RecyclerView
             fun onPlaceOrderClicked()
     }
     private var listOfCartItem = cartResponseList
-    val FOOTER_TYPE : Int = 1
+    private val FOOTER_TYPE : Int = 1
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val v: View
