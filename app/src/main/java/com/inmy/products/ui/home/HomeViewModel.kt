@@ -3,9 +3,12 @@ package com.inmy.products.ui.home
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
+import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.*
 import com.inmy.products.*
 import com.inmy.products.data.model.*
+import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
@@ -20,24 +23,26 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
     private var _result = MutableLiveData<String>().apply { value = "" }
 
     var mcartValue : MutableLiveData<Int>? = null
-    private var cartcount: Int
-    // = checkValuesFromPreference(context, PREFERENCE_KEY_CART_TOTAL)
+    private var cartcount: Int = 0
 
     init {
         homeRepository = HomeRepository(context)
+
         postModelListLiveData = MutableLiveData()
         cartResponseModelListLiveData = MutableLiveData()
         mcartValue = MutableLiveData()
-        cartcount = Preference(context, PREFERENCE_FILE_CART).getValueFromPReference(PREFERENCE_KEY_CART_TOTAL,"0").toInt()
-        updateCart(cartcount)
+
+        updateCart()
         pageNo = pagination("0",pageNo)
 
         cartResponse()
         fetchAllPosts(pageNo,"")
     }
 
-    fun updateCart(count: Int){
-        mcartValue!!.value = count
+    fun updateCart(){
+
+        mcartValue!!.value = Preference(context, PREFERENCE_FILE_CART).getValueFromPReference(
+            PREFERENCE_KEY_CART_TOTAL,"0").toInt()
     }
 
     fun update(result: String){
@@ -102,53 +107,42 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
         cartVal = Preference(context, PREFERENCE_FILE_CART).getValueFromPReference(productId,"0").toInt()
 
         cartVal += 1
+
         Preference(context, PREFERENCE_FILE_CART).saveValueToPreference(productId,cartVal.toString())
-        //valueToPreference(context,productId,cartVal.toString(), CONST_SAVE)
 
         requestCart(CartRequestModel(productId.toInt() ,cartVal))
+
         cartResponse()
-        //todo after completing request get response cart data and update cart value
+
         return cartVal
 
     }
 
     fun removeClicked(context: Context,productId: String): Int{
         cartVal = Preference(context, PREFERENCE_FILE_CART).getValueFromPReference(productId,"0").toInt()
-        //cartVal = checkValuesFromPreference(context,productId)
+
         if(cartVal > 0){
             cartVal -=1
         }
         Preference(context, PREFERENCE_FILE_CART).saveValueToPreference(productId,cartVal.toString())
-       // valueToPreference(context,productId,cartVal.toString(), CONST_SAVE)
+
 
         requestCart(CartRequestModel(productId.toInt() ,cartVal))
+
         cartResponse()
-        //todo after completing request get response cart data and update cart value
+
         return cartVal
     }
 
-    fun getPreviousSavedCartValue(data: List<CartResponseModel>?): Int{
+    fun getTotalCartValueFromResponse(data: List<CartResponseModel>?): Int{
         var count = 0
         for(quantity in data!!){
             count = quantity.quantity?.plus(count) ?: 0
         }
+        mcartValue?.value = count
         Preference(context, PREFERENCE_FILE_CART).saveValueToPreference(PREFERENCE_KEY_CART_TOTAL,count.toString())
-        //valueToPreference(context, PREFERENCE_KEY_CART_TOTAL,count.toString(), CONST_SAVE)
-        return count
-    }
 
-    fun totalCartValue(context: Context, trigger: Int): Int{
-        cartcount = Preference(context, PREFERENCE_FILE_CART).getValueFromPReference(PREFERENCE_KEY_CART_TOTAL,"0").toInt()
-        //cartcount =  checkValuesFromPreference(context, PREFERENCE_KEY_CART_TOTAL)
-        if(trigger == 0 && cartcount > 0){
-            cartcount--
-        }else{
-            cartcount++
-        }
-        mcartValue?.value = cartcount
-        Preference(context, PREFERENCE_FILE_CART).saveValueToPreference(PREFERENCE_KEY_CART_TOTAL,cartcount.toString())
-        //valueToPreference(context, PREFERENCE_KEY_CART_TOTAL,cartcount.toString(), CONST_SAVE)
-        return cartcount
+        return count
     }
 
 }

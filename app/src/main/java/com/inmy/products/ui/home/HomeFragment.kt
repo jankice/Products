@@ -2,7 +2,6 @@ package com.inmy.products.ui.home
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.*
@@ -19,7 +18,6 @@ import com.inmy.products.data.model.Resources
 import com.inmy.products.data.adapter.ProductListAdapter
 import com.inmy.products.data.model.ProductModel
 import com.inmy.products.databinding.FragmentHomeBinding
-import com.inmy.products.showToast
 import com.inmy.products.ui.productdetail.ProductDetailActivity
 import kotlinx.android.synthetic.main.fragment_home.*
 
@@ -53,15 +51,15 @@ class HomeFragment : Fragment(), ProductListAdapter.CellClickListener {
         super.onActivityCreated(savedInstanceState)
         handleSearchListener()
         initRecycleView()
-
     }
 
 
     private fun initRecycleView() {
         productRecycleView.layoutManager = GridLayoutManager(context, 2)
 
-        val productListAdapter = ProductListAdapter(this)
+        val productListAdapter = ProductListAdapter(this,homeViewModel)
         productRecycleView.adapter = productListAdapter
+
 
 
         homeViewModel.postModelListLiveData?.observe(viewLifecycleOwner, {
@@ -111,33 +109,16 @@ class HomeFragment : Fragment(), ProductListAdapter.CellClickListener {
                 // search was opened
             }
         })
-    }
-    override fun onCellClickListener(productModel: ProductModel) {
-        showToast(productModel.productTitle, context)
 
+
+    }
+
+    // Functions from ProductListAdapter
+    override fun onCellClickListener(productModel: ProductModel) {
         val intent = Intent(context, ProductDetailActivity::class.java)
         intent.putExtra(REF_PRODUCT_DETAIL, productModel)
         startActivity(intent)
     }
 
-    override fun onNextClicked() {
-        homeViewModel.nextClicked()
-    }
-
-    override fun onPrevClicked() {
-        homeViewModel.prevClicked()
-    }
-
-    override fun onAddClicked(productId: String): Int {
-        homeViewModel.totalCartValue(requireContext(),1)
-
-        return homeViewModel.addClicked(requireContext(), productId)
-    }
-
-    override fun onRemoveClicked(productId: String): Int {
-        homeViewModel.totalCartValue(requireContext(),0)
-
-        return homeViewModel.removeClicked(requireContext(), productId)
-    }
 }
 

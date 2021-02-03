@@ -19,7 +19,6 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationView
 import com.inmy.products.*
-import com.inmy.products.data.adapter.CartListAdapter
 import com.inmy.products.data.model.Preference
 import com.inmy.products.data.model.Resources
 import com.inmy.products.databinding.ActivtyHomeBinding
@@ -77,10 +76,6 @@ class HomeActivty : AppCompatActivity(){
 
         textCartItemCount = actionView.findViewById(R.id.cart_badge) as TextView
 
-        var cartCount = Preference(this, PREFERENCE_FILE_CART).getValueFromPReference(PREFERENCE_KEY_CART_TOTAL,"0")
-        mCartItemCount = cartCount.toInt()
-      //  mCartItemCount = homeViewModel.checkValuesFromPreference(this,PREFERENCE_KEY_CART_TOTAL)
-
         homeViewModel.mcartValue?.observe(this, Observer {
 
             textCartItemCount.text = it.toString()
@@ -115,7 +110,7 @@ class HomeActivty : AppCompatActivity(){
             when (it.status) {
                 Resources.Status.SUCCESS -> {
                     if (!it.data.isNullOrEmpty()){
-                        mCartItemCount = homeViewModel.getPreviousSavedCartValue(it.data)
+                        mCartItemCount = homeViewModel.getTotalCartValueFromResponse(it.data)
                         textCartItemCount.text = mCartItemCount.toString()
 
                     }
@@ -130,16 +125,6 @@ class HomeActivty : AppCompatActivity(){
             }
         })
 
-//        if (mCartItemCount == 0) {
-//            if (textCartItemCount.visibility != View.GONE) {
-//                textCartItemCount.visibility = View.GONE
-//            }
-//        } else {
-//            textCartItemCount.text = String.valueOf(Math.min(mCartItemCount, 99))
-//            if (textCartItemCount.visibility != View.VISIBLE) {
-//                textCartItemCount.visibility = View.VISIBLE
-//            }
-//        }
     }
 
 }

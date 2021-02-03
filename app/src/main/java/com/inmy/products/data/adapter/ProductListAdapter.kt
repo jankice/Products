@@ -9,20 +9,17 @@ import com.inmy.products.data.holder.ProductListViewHolder
 import com.inmy.products.data.holder.ProductListViewHolderFooter
 import com.inmy.products.data.model.ProductModel
 import com.inmy.products.ui.home.HomeFragment
+import com.inmy.products.ui.home.HomeViewModel
 
 
-class ProductListAdapter(private val cellClickListener: HomeFragment) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ProductListAdapter(private val cellClickListener: HomeFragment, homeViewModel: HomeViewModel) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     interface CellClickListener {
         fun onCellClickListener(productModel: ProductModel)
-        fun onNextClicked()
-        fun onPrevClicked()
-        fun onAddClicked(productId: String): Int
-        fun onRemoveClicked(productId: String): Int
     }
 
+    private val  homeViewModel = homeViewModel
     private val FOOTER_TYPE : Int = 1
-    val HEADER_TYPE : Int = 2
 
     private var listOfProducts = listOf<ProductModel>()
 
@@ -72,10 +69,10 @@ class ProductListAdapter(private val cellClickListener: HomeFragment) : Recycler
         try {
             if (viewHolder is ProductListViewHolder) {
                 val vh: ProductListViewHolder = viewHolder
-                vh.bindView(listOfProducts[position],cellClickListener)
+                vh.bindView(listOfProducts[position],cellClickListener,homeViewModel)
             } else if (viewHolder is ProductListViewHolderFooter) {
                 val vh: ProductListViewHolderFooter = viewHolder
-                vh.bindViewFooter(cellClickListener)
+                vh.bindViewFooter(homeViewModel)
             }
         } catch (e: Exception) {
             e.printStackTrace()

@@ -28,8 +28,8 @@
         android:layout_height="wrap_content"
         android:textColor="@android:color/black"
         android:textSize="@dimen/title_textSize"
-        android:minLines="2"
-        android:maxLines="2"
+        android:ellipsize="end"
+        android:maxLines="1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/imageProduct"
         tools:text="TubeLight" />
@@ -66,12 +66,20 @@
             android:id="@+id/textNumberItem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
             android:textSize="@dimen/detail_textSize"
             android:padding="@dimen/item_padding_small"
             android:textColor="@color/black"
             android:layout_margin="@dimen/item_margin_2"
             android:text="0"/>
+
+        <ProgressBar
+            android:id="@+id/progressBarCartItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/item_padding_small"
+            android:layout_margin="@dimen/item_margin_2"
+            android:visibility="gone"
+            />
 
         <ImageButton
             android:id="@+id/buttonAdd"
