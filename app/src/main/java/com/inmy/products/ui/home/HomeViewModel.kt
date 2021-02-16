@@ -1,29 +1,29 @@
 package com.inmy.products.ui.home
 
+import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
-import android.content.SharedPreferences
-import android.view.View
-import android.widget.Toast
 import androidx.lifecycle.*
 import com.inmy.products.*
 import com.inmy.products.data.model.*
-import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 class HomeViewModel(application: Application) : AndroidViewModel(application) {
+    @SuppressLint("StaticFieldLeak")
     private val context = getApplication<Application>().applicationContext
 
     private var homeRepository: HomeRepository?=null
     var postModelListLiveData : MutableLiveData<Resources<List<ProductModel>>>?=null
     var cartResponseModelListLiveData : MutableLiveData<Resources<List<CartResponseModel>>>? = null
+
     private var pageNo : Int = 0
     private var cartVal: Int = 0
     private var _result = MutableLiveData<String>().apply { value = "" }
 
     var mcartValue : MutableLiveData<Int>? = null
-    private var cartcount: Int = 0
+    var addCartResponse: Boolean? = false
+
 
     init {
         homeRepository = HomeRepository(context)
@@ -35,7 +35,7 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
         updateCart()
         pageNo = pagination("0",pageNo)
 
-        cartResponse()
+        getFromDataCart()
         fetchAllPosts(pageNo,"")
     }
 
@@ -60,7 +60,7 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    fun cartResponse(){
+    fun getFromDataCart(){
         viewModelScope.launch {
             async {
                 val result = homeRepository?.cartResponse()
@@ -69,17 +69,18 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
             cartResponseModelListLiveData?.value = Resources.loading()
         }
     }
-    fun requestCart(cartModel: CartRequestModel){
+    fun addToCart(cartModel: CartRequestModel) : Boolean? {
         viewModelScope.launch {
                 async {
-                    homeRepository?.requestCart(cartModel)
+                   val result = homeRepository?.requestCart(cartModel)
+                   addCartResponse = result
                 }
+
         }
+        return addCartResponse
     }
     fun pagination(s: String, old: Int): Int {
-
         var page : Int = old
-
         if(s.equals("NEXT")){
             page ++
         }else if(s.equals("PREV") && page > 0){
@@ -102,34 +103,35 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
         _result.value?.let { fetchAllPosts(pageCurr, it) }
     }
 
-
-    fun addClicked(context: Context,productId: String): Int{
+    fun addClicked(context: Context, productId: String): Int{
         cartVal = Preference(context, PREFERENCE_FILE_CART).getValueFromPReference(productId,"0").toInt()
-
         cartVal += 1
+        val add: Boolean? = addToCart(CartRequestModel(productId.toInt() ,cartVal))
+        // todo handle async await
+        if(add == true){
 
-        Preference(context, PREFERENCE_FILE_CART).saveValueToPreference(productId,cartVal.toString())
-
-        requestCart(CartRequestModel(productId.toInt() ,cartVal))
-
-        cartResponse()
-
+            Preference(context, PREFERENCE_FILE_CART).saveValueToPreference(productId,cartVal.toString())
+            getFromDataCart()
+        }else{
+            showToast("Something went wrong!!!",context)
+        }
         return cartVal
-
     }
 
-    fun removeClicked(context: Context,productId: String): Int{
+    fun removeClicked(context: Context, productId: String): Int{
         cartVal = Preference(context, PREFERENCE_FILE_CART).getValueFromPReference(productId,"0").toInt()
-
         if(cartVal > 0){
             cartVal -=1
         }
-        Preference(context, PREFERENCE_FILE_CART).saveValueToPreference(productId,cartVal.toString())
+        val remove: Boolean? = addToCart(CartRequestModel(productId.toInt() ,cartVal))
+        // Todo handle async await
+        if(remove == true){
 
-
-        requestCart(CartRequestModel(productId.toInt() ,cartVal))
-
-        cartResponse()
+            Preference(context, PREFERENCE_FILE_CART).saveValueToPreference(productId,cartVal.toString())
+            getFromDataCart()
+        }else{
+            showToast("Something went wrong!!!",context)
+        }
 
         return cartVal
     }

@@ -32,6 +32,9 @@
     <string name="text_total_amount">Total Amount</string>
     <string name="text_place_order">Place Order</string>
     <string name="text_add_address"> + ADD A NEW ADDRESS </string>
+    <string name="text_order_status_product_name">Ordered Product Name</string>
+    <string name="text_order_status_product_status">Product Status</string>
+    <string name="text_order_status_product_date">Ordered Date</string>
 
     <string name="hint_phone">Enter Phone here</string>
     <string name="hint_verification">Verification code</string>

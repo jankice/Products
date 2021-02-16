@@ -1,8 +1,11 @@
 package com.inmy.products.data.model
 
 import android.content.Context
+import android.util.Log
 import com.inmy.products.data.network.ApiInterface
 import com.inmy.products.data.network.AppClient
+import retrofit2.HttpException
+
 
 class HomeRepository(context: Context) {
 
@@ -14,6 +17,18 @@ class HomeRepository(context: Context) {
 
     }
 
+    suspend fun responseOrderStatus(): Resources<List<OrderStatusResponseModel>>{
+        try {
+            val response = apiInterface?.orderStatusResponse()
+            if (response?.isSuccessful!!) {
+                val body = response.body()
+                if (body != null) return Resources.success(body)
+            }
+            return error(" ${response.code()} ${response.message()}")
+        } catch (e: Exception) {
+            return error(e.message ?: e.toString())
+        }
+    }
     suspend fun requestOrders(placeOrderRequestModel: PlaceOrderRequestModel) : Resources<PlaceOrderResponseModel>{
         try {
             val response = apiInterface?.requestOrders(placeOrderRequestModel)
@@ -27,12 +42,16 @@ class HomeRepository(context: Context) {
         }
     }
 
-    suspend fun requestCart(cartRequestModel: CartRequestModel){
-
+    suspend fun requestCart(cartRequestModel: CartRequestModel) : Boolean {
         try {
-            apiInterface?.requestCart(cartRequestModel)
+           val response = apiInterface?.requestCart(cartRequestModel)
+            if(response?.isSuccessful!!){
+                return true
+            }
+            return false
         }catch (e: Exception){
             e.printStackTrace()
+           return false
         }
     }
 
@@ -53,7 +72,7 @@ class HomeRepository(context: Context) {
 
 
          try {
-             val response = apiInterface?.fetchAllPosts(page,result)
+             val response = apiInterface?.fetchAllPosts(page, result)
              if (response?.isSuccessful!!) {
                  val body = response.body()
                  if (body != null) return Resources.success(body)
@@ -65,7 +84,7 @@ class HomeRepository(context: Context) {
 
     }
     private fun <T> error(message: String): Resources<T> {
-       // Timber.d(message)r
+
         return Resources.error("Network call has failed for a following reason: $message")
     }
 

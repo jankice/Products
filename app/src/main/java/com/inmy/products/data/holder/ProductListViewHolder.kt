@@ -2,15 +2,23 @@ package com.inmy.products.data.holder
 
 import android.content.Context
 import android.view.View
+import android.widget.Toast
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.inmy.products.PREFERENCE_FILE_CART
 import com.inmy.products.R
+import com.inmy.products.data.model.CartResponseModel
 import com.inmy.products.data.model.Preference
 import com.inmy.products.data.model.ProductModel
+import com.inmy.products.data.model.Resources
+import com.inmy.products.hasNetwork
+import com.inmy.products.showToast
 
 import com.inmy.products.ui.home.HomeFragment
 import com.inmy.products.ui.home.HomeViewModel
+import kotlinx.android.synthetic.main.activity_cart.*
 import kotlinx.android.synthetic.main.item_product.view.*
 
 class ProductListViewHolder(var context: Context, itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener{
@@ -54,14 +62,17 @@ class ProductListViewHolder(var context: Context, itemView: View) : RecyclerView
             R.id.buttonAdd ->{
                 val cart = homeViewModel.addClicked(context,productModel.productId)
                 itemView.textNumberItem.text = cart.toString()
+
             }
             R.id.buttonRemove ->{
-                val cart = homeViewModel.removeClicked(context,productModel.productId)
+                val cart = homeViewModel.removeClicked(context, productModel.productId)
                 itemView.textNumberItem.text = cart.toString()
+
             }
         }
 
     }
 }
+
 
 

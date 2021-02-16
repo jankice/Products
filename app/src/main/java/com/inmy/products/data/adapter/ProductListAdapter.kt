@@ -12,7 +12,8 @@ import com.inmy.products.ui.home.HomeFragment
 import com.inmy.products.ui.home.HomeViewModel
 
 
-class ProductListAdapter(private val cellClickListener: HomeFragment, homeViewModel: HomeViewModel) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ProductListAdapter(private val cellClickListener: HomeFragment, homeViewModel: HomeViewModel) :
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     interface CellClickListener {
         fun onCellClickListener(productModel: ProductModel)

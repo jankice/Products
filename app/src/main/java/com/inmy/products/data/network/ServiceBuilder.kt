@@ -1,13 +1,10 @@
 package com.inmy.products.data.network
 
 import android.content.Context
-import android.content.SharedPreferences
 import android.util.Log
 import com.inmy.products.PREFERENCE_FILE_NAME
 import com.inmy.products.PREFERENCE_KEY_ID_TOKEN
 import com.inmy.products.data.model.Preference
-
-import com.inmy.products.sharedPreferences
 import okhttp3.*
 
 class ServiceBuilder(context: Context) : Interceptor {
