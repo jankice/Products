@@ -26,6 +26,7 @@ import com.inmy.products.databinding.ActivtyHomeBinding
 import com.inmy.products.ui.cart.CartActivity
 
 import kotlinx.android.synthetic.main.app_bar_main.*
+import kotlinx.android.synthetic.main.fragment_home.*
 
 
 class HomeActivty : AppCompatActivity(){
@@ -72,6 +73,7 @@ class HomeActivty : AppCompatActivity(){
         menuInflater.inflate(R.menu.home_activty, menu)
 
         val menuItem: MenuItem = menu.findItem(R.id.action_cart)
+
         val actionView: View = menuItem.actionView
 
         textCartItemCount = actionView.findViewById(R.id.cart_badge) as TextView
@@ -94,6 +96,9 @@ class HomeActivty : AppCompatActivity(){
                val intent = Intent(this, CartActivity::class.java)
                startActivity(intent)
                 return true
+            }
+            R.id.action_search -> {
+                searchViewHome.visibility = View.VISIBLE
             }
         }
         return super.onOptionsItemSelected(item)

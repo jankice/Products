@@ -6,18 +6,19 @@
         android:orderInCategory="100"
         android:title="@string/action_settings"
         android:icon="@drawable/ic_baseline_settings_24"
+        android:visible="false"
         app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_search"
+        android:title="@string/action_search"
+        android:icon="@drawable/ic_baseline_search_24"
+        app:showAsAction="ifRoom"
+        />
     <item
         android:id="@+id/action_cart"
         android:title="@string/action_add_to_cart"
-        app:actionLayout="@layout/custom_action_item_layout"
+        app:actionLayout="@layout/custom_cart"
         app:showAsAction="ifRoom"
         />
-<!--    <item-->
-<!--        android:id="@+id/action_cart"-->
-<!--        android:title="@string/action_add_to_cart"-->
-<!--        app:actionLayout="@layout/custom_action_item_layout"-->
 
-<!--        app:showAsAction="always"-->
-<!--        />-->
 </menu>

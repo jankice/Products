@@ -6,14 +6,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@drawable/item_border"
-    android:layout_margin="@dimen/item_margin_2">
+    android:layout_margin="@dimen/item_margin_3">
     <ImageView
         android:id="@+id/imageProduct"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:contentDescription="@string/app_name"
         android:scaleType="centerInside"
         android:adjustViewBounds="true"
+        android:maxHeight="100dp"
+        android:maxWidth="100dp"
         app:layout_constrainedHeight="true"
         app:layout_constraintDimensionRatio="1:1"
         android:src="@drawable/ic_launcher_foreground"
@@ -27,9 +29,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@android:color/black"
-        android:textSize="@dimen/title_textSize"
+        android:textSize="@dimen/detail_textSize"
         android:ellipsize="end"
         android:maxLines="1"
+        android:typeface="sans"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/imageProduct"
         tools:text="TubeLight" />
@@ -40,7 +43,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:textColor="@android:color/black"
-        android:textSize="@dimen/detail_textSize"
+        android:textSize="@dimen/detail_small_textSize"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textProductTitle"
         tools:text="warranty: 100 days" />
@@ -66,7 +69,7 @@
             android:id="@+id/textNumberItem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/detail_textSize"
+            android:textSize="@dimen/detail_small_textSize"
             android:padding="@dimen/item_padding_small"
             android:textColor="@color/black"
             android:layout_margin="@dimen/item_margin_2"
@@ -99,7 +102,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/linerCartItem"
         app:layout_constraintBottom_toBottomOf="parent"
-
+        android:textSize="@dimen/detail_small_textSize"
+        android:textColor="@android:color/holo_red_dark"
         android:text="@string/title_price"/>
 
 

@@ -35,6 +35,7 @@
     <string name="text_order_status_product_name">Ordered Product Name</string>
     <string name="text_order_status_product_status">Product Status</string>
     <string name="text_order_status_product_date">Ordered Date</string>
+    <string name="text_recommendation">For You</string>
 
     <string name="hint_phone">Enter Phone here</string>
     <string name="hint_verification">Verification code</string>
@@ -44,6 +45,7 @@
     <string name="hint_address">Address (Area and Street)</string>
     <string name="hint_city">City/District/Town</string>
     <string name="hint_state">State</string>
+    <string name="hint_search">Search for products</string>
 
 
     <string name="prompt_email">Email</string>
@@ -55,6 +57,7 @@
     <string name="action_add_to_cart">Add to cart</string>
     <string name="action_verify_otp">Verify Phone No.</string>
     <string name="action_resend">Resend</string>
+    <string name="action_search">Search</string>
 
     <string name="button_save_later">Save for later</string>
     <string name="button_remove">Remove</string>

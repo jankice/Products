@@ -55,7 +55,7 @@ class HomeFragment : Fragment(), ProductListAdapter.CellClickListener {
 
 
     private fun initRecycleView() {
-        productRecycleView.layoutManager = GridLayoutManager(context, 2)
+        productRecycleView.layoutManager = GridLayoutManager(context, 3)
 
         val productListAdapter = ProductListAdapter(this,homeViewModel)
         productRecycleView.adapter = productListAdapter
@@ -94,7 +94,7 @@ class HomeFragment : Fragment(), ProductListAdapter.CellClickListener {
             }
 
             override fun onQueryTextChange(text: String): Boolean {
-                // Toast.makeText(context, "Result: $text", Toast.LENGTH_LONG).show()
+
                 return false
             }
         })
@@ -102,6 +102,7 @@ class HomeFragment : Fragment(), ProductListAdapter.CellClickListener {
         searchViewHome.addOnAttachStateChangeListener(object : OnAttachStateChangeListener {
             override fun onViewDetachedFromWindow(arg0: View) {
                 // search was detached/closed
+                searchViewHome.visibility = GONE
                 homeViewModel.update("")
             }
 
