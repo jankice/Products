@@ -59,6 +59,8 @@ android {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation 'androidx.navigation:navigation-fragment:2.3.3'
+    implementation 'androidx.navigation:navigation-ui:2.3.3'
     //implementation 'com.google.firebase:firebase-ads:19.6.0'
 
     kapt "com.android.databinding:compiler:$gradle_version"
