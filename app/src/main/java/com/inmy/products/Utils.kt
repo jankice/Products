@@ -7,7 +7,10 @@ import android.widget.Toast
 
 val REF_PRODUCT_DETAIL = "101"
 val REF_CART_DETAIL = "102"
+
 val REQ_SIGN_IN = 1000
+val REQ_IMAGE_FROM_GALLARY = 1001
+val REQ_IMAGE_FROM_CAMERA = 1002
 val PREFERENCE_FILE_NAME = "productPreferenceFile"
 val PREFERENCE_FILE_CART = "cartPreferenceFile"
 val PREFERENCE_KEY_CART_TOTAL = "cart_Total"

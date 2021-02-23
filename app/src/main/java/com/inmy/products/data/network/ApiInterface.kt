@@ -14,6 +14,9 @@ interface ApiInterface {
     @GET("api/users/cart/")
     suspend fun cartResponse() : Response<List<CartResponseModel>>
 
+    @GET("api/orders")
+    suspend fun orderStatusResponse() : Response<List<OrderStatusResponseModel>>
+
     @Headers("Content-Type: application/json")
     @POST("api/users/cart")
     suspend fun requestCart(@Body cartModel: CartRequestModel): Response<Void>
@@ -21,6 +24,10 @@ interface ApiInterface {
     @POST("api/orders")
     suspend fun requestOrders(@Body orderRequestModel: PlaceOrderRequestModel) : Response<PlaceOrderResponseModel>
 
-    @GET("api/orders")
-    suspend fun orderStatusResponse() : Response<List<OrderStatusResponseModel>>
+    @Headers("Content-Type: application/json")
+    @POST("api/product//")
+    suspend fun requestSubmitProduct(@Body productRequestModel: ProductRequestModel): Response<Void>
+
+
+
 }

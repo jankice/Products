@@ -55,6 +55,19 @@ class HomeRepository(context: Context) {
         }
     }
 
+    suspend fun requestSubmitProduct(productRequestModel: ProductRequestModel): Boolean{
+        try {
+            val response = apiInterface?.requestSubmitProduct(productRequestModel)
+            if(response?.isSuccessful!!){
+                return true
+            }
+            return false
+        }catch (e: Exception){
+            e.printStackTrace()
+            return false
+        }
+    }
+
     suspend fun cartResponse(): Resources<List<CartResponseModel>>{
         try {
             val response = apiInterface?.cartResponse()

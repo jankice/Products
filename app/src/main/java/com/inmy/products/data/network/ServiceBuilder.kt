@@ -18,36 +18,33 @@ class ServiceBuilder(context: Context) : Interceptor {
         }
 
         request = request.newBuilder().addHeader("Authorization","Bearer "+token ).build()
-//        request = request.newBuilder().addHeader("Authorization", "Bearer "+ sharedPreferences?.let {
-//           token
-//        }).build()
-
-                                                                                                                                                                                         val response = chain.proceed(request)
+                                                                                                                                                                                 val response = chain.proceed(request)
         Log.d("aa",""+response.code())
         Log.d("aa",""+response.body())
+
         when (response.code()) {
 
             400 -> {
                 Log.d("aa","Bad Request")
-                //Show Bad Request Error Message
+
             }
             401 -> {
                 Log.d("aa","UnauthorizedError")
-                //Show UnauthorizedError Message
+
             }
 
             403 -> {
                 Log.d("aa","Forbidden")
-                //Show Forbidden Message
+
             }
 
             404 -> {
                 Log.d("aa","NotFound")
-                //Show NotFound Message
+
             }
 
 
-            // ... and so on
+
 
         }
         return response

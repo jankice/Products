@@ -1,13 +1,36 @@
 package com.inmy.products.ui.admin.productUpload
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import android.app.Application
+import android.view.View
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.inmy.products.data.model.Dimen
+import com.inmy.products.data.model.HomeRepository
+import com.inmy.products.data.model.ProductRequestModel
+import kotlinx.android.synthetic.main.fragment_admin_product_upload.view.*
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 
-class AdminProductUploadViewModel : ViewModel() {
+class AdminProductUploadViewModel(application: Application) : AndroidViewModel(application) {
+    private val context = getApplication<Application>().applicationContext
+    private var homeRepository: HomeRepository?=null
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is home Fragment"
+    var submitCartRequest: Boolean? = false
+
+    init {
+        homeRepository = HomeRepository(context)
     }
-    val text: LiveData<String> = _text
+
+
+    fun submitProduct(productRequestModel: ProductRequestModel) : Boolean?{
+        viewModelScope.launch {
+            async {
+                val result = homeRepository?.requestSubmitProduct(productRequestModel)
+                submitCartRequest = result
+            }
+
+        }
+        return submitCartRequest
+    }
 }
