@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.snackbar.Snackbar
 import com.inmy.products.R
 import com.inmy.products.REQ_IMAGE_FROM_CAMERA
 import com.inmy.products.REQ_IMAGE_FROM_GALLARY
@@ -18,13 +19,13 @@ import com.inmy.products.databinding.FragmentAdminProductUploadBinding
 import com.inmy.products.ui.admin.ImageDialog
 import kotlinx.android.synthetic.main.dialog_select_image.view.*
 import kotlinx.android.synthetic.main.fragment_admin_product_upload.*
-import kotlinx.android.synthetic.main.fragment_admin_product_upload.view.*
 
 
 class AdminProductUploadFragment : Fragment() , View.OnClickListener{
 
     private lateinit var adminProductUploadViewModel: AdminProductUploadViewModel
     private lateinit var imageUri: String
+    private lateinit var imageType: String
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,27 +48,58 @@ class AdminProductUploadFragment : Fragment() , View.OnClickListener{
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        imageButtonUploadProduct.setOnClickListener(this)
+        imageButtonUploadProductImage.setOnClickListener(this)
         buttonProductSubmit.setOnClickListener(this)
+        imageButtonDeleteProductImage.setOnClickListener(this)
+        addProductImage.setOnClickListener(this)
+        addColorOption.setOnClickListener(this)
+        productImageInfo.setOnClickListener(this)
     }
 
 
     override fun onClick(v: View?) {
         when(v?.id){
-            R.id.imageButtonUploadProduct -> {
+            R.id.imageButtonUploadProductImage -> {
+                imageType = "Default"
                openImageSelectionDialog()
             }
             R.id.buttonProductSubmit ->{
 
-                val length  =  Integer.parseInt(productLength.text.toString())
-                val width = Integer.parseInt(productHeight.text.toString())
-                val height = Integer.parseInt(productHeight.text.toString())
+                if(adminProductUploadViewModel.checkProductDetailValidations()){
 
-                val productRequestModel = ProductRequestModel(imageUri,editTextProductItemName.text.toString(),editTextProductItemDetail.text.toString(),"",
-                    Dimen(length,width,height),editTextProductItemCategory.text.toString(),editTextProductItemSubCategory.text.toString(),
-                    Integer.parseInt(editTextProductItemPriceDetail.text.toString()))
+                    val length  =  Integer.parseInt(productLength.text.toString())
+                    val width = Integer.parseInt(productHeight.text.toString())
+                    val height = Integer.parseInt(productHeight.text.toString())
 
-                adminProductUploadViewModel.submitProduct(productRequestModel)
+                    val productRequestModel = ProductRequestModel(imageUri,editTextProductItemName.text.toString(),editTextProductItemDetail.text.toString(),"",
+                        Dimen(length,width,height),editTextProductItemCategory.text.toString(),editTextProductItemSubCategory.text.toString(),
+                        Integer.parseInt(editTextProductItemPriceDetail.text.toString()))
+                    adminProductUploadViewModel.submitProduct(productRequestModel)
+                } else{
+                    Snackbar.make(v, "Please enter correct information for product.", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null)
+                        .show()
+                }
+
+
+            }
+            R.id.imageButtonDeleteProductImage ->{
+                imageViewUploadProductImage.setImageURI(null)
+                imageButtonUploadProductImage.visibility = View.VISIBLE
+                imageButtonDeleteProductImage.visibility = View.GONE
+            }
+
+            R.id.addProductImage -> {
+                imageType = "Multiple"
+                openImageSelectionDialog()
+            }
+            R.id.addColorOption -> {
+
+            }
+            R.id.productImageInfo ->{
+                Snackbar.make(v, "Add default photo for selected Product.", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null)
+                    .show()
             }
         }
     }
@@ -77,7 +109,15 @@ class AdminProductUploadFragment : Fragment() , View.OnClickListener{
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK && requestCode == REQ_IMAGE_FROM_GALLARY){
-            var uri = imageViewUploadProduct.setImageURI(data?.data)
+            val uri = data?.data
+            if(imageType.equals("Default")){
+                imageViewUploadProductImage.setImageURI(uri)
+                imageButtonUploadProductImage.visibility = View.GONE
+                imageButtonDeleteProductImage.visibility = View.VISIBLE
+            }else{
+                var imageView = adminProductUploadViewModel.addImageViewForImage(requireContext())
+                imageView.setImageURI(uri)
+            }
             imageUri = uri.toString()
         } else if(resultCode == RESULT_OK && requestCode  == REQ_IMAGE_FROM_CAMERA){
 

@@ -37,6 +37,10 @@
     <string name="text_order_status_product_date">Ordered Date</string>
     <string name="text_recommendation">For You</string>
     <string name="text_product_dimension">Dimension</string>
+    <string name="text_advance_option">Advance upload options</string>
+    <string name="text_add_image">Add images</string>
+    <string name="text_add_color">Add colors</string>
+    <string name="text_product_image">Product Image</string>
 
     <string name="hint_phone">Enter Phone here</string>
     <string name="hint_verification">Verification code</string>
@@ -66,7 +70,7 @@
     <string name="action_verify_otp">Verify Phone No.</string>
     <string name="action_resend">Resend</string>
     <string name="action_search">Search</string>
-    <string name="action_submit">Submit</string>
+    <string name="action_submit_product">Submit product</string>
 
     <string name="button_save_later">Save for later</string>
     <string name="button_remove">Remove</string>

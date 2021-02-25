@@ -1,7 +1,9 @@
 package com.inmy.products.ui.admin.productUpload
 
 import android.app.Application
+import android.content.Context
 import android.view.View
+import android.widget.ImageView
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -32,5 +34,17 @@ class AdminProductUploadViewModel(application: Application) : AndroidViewModel(a
 
         }
         return submitCartRequest
+    }
+
+    fun addImageViewForImage(context: Context) : ImageView {
+        val imageView = ImageView(context)
+
+
+       return imageView
+    }
+
+    fun checkProductDetailValidations() : Boolean{
+
+        return false
     }
 }
