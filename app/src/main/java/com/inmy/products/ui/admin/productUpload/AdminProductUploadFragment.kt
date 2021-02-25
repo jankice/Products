@@ -31,7 +31,7 @@ class AdminProductUploadFragment : Fragment() , View.OnClickListener{
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val binding: FragmentAdminProductUploadBinding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_admin_product_upload, container, false)
 
@@ -115,7 +115,7 @@ class AdminProductUploadFragment : Fragment() , View.OnClickListener{
                 imageButtonUploadProductImage.visibility = View.GONE
                 imageButtonDeleteProductImage.visibility = View.VISIBLE
             }else{
-                var imageView = adminProductUploadViewModel.addImageViewForImage(requireContext())
+                val imageView = adminProductUploadViewModel.addImageViewForImage(requireContext())
                 imageView.setImageURI(uri)
             }
             imageUri = uri.toString()
