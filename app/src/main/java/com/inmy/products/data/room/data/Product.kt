@@ -18,4 +18,4 @@ class Product (@PrimaryKey(autoGenerate = true) val id: Int = 0,
                @ColumnInfo(name = "product_length") val P_length: Int?,
                @ColumnInfo(name = "product_width") val P_width: Int?,
                @ColumnInfo(name = "product_height") val P_height: Int?,
-               @ColumnInfo(name = "product_images") val P_images: Int?) : Parcelable
+               @ColumnInfo(name = "product_images") val P_images: String?) : Parcelable

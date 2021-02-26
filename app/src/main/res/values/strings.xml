@@ -71,6 +71,7 @@
     <string name="action_resend">Resend</string>
     <string name="action_search">Search</string>
     <string name="action_submit_product">Submit product</string>
+    <string name="action_save_product">Save product</string>
 
     <string name="button_save_later">Save for later</string>
     <string name="button_remove">Remove</string>

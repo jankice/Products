@@ -57,9 +57,9 @@ class AddressFragment : Fragment() {
 
 
         activity?.let {
-            addressViewModel.allAddress.observe(it) { words ->
+            addressViewModel.allAddress.observe(it) { address ->
                 // Update the cached copy of the words in the adapter.
-                words.let { adapter.submitList(it) }
+                address.let { adapter.submitList(it) }
             }
         }
     }

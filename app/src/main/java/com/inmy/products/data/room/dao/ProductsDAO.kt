@@ -15,7 +15,7 @@ interface ProductsDAO {
     fun getProducts(): Flow<List<Product>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insert(name: Products)
+    suspend fun insert(name: Product)
 
     @Query("DELETE FROM products_table")
     suspend fun deleteAll()

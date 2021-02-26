@@ -308,7 +308,7 @@
         android:elevation="@dimen/item_margin_2"
         android:padding="@dimen/item_padding_small"
         android:background="@color/colorPrimary"
-        android:text="@string/action_submit_product"
+        android:text="@string/action_save_product"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/addColorOption" />

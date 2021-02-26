@@ -10,11 +10,15 @@ import androidx.lifecycle.viewModelScope
 import com.inmy.products.data.model.Dimen
 import com.inmy.products.data.model.HomeRepository
 import com.inmy.products.data.model.ProductRequestModel
+import com.inmy.products.data.room.data.Address
+import com.inmy.products.data.room.data.Product
+import com.inmy.products.data.room.data.ProductRepository
 import kotlinx.android.synthetic.main.fragment_admin_product_upload.view.*
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 class AdminProductUploadViewModel(application: Application) : AndroidViewModel(application) {
+
     private val context = getApplication<Application>().applicationContext
     private var homeRepository: HomeRepository?=null
 
@@ -46,5 +50,9 @@ class AdminProductUploadViewModel(application: Application) : AndroidViewModel(a
     fun checkProductDetailValidations() : Boolean{
 
         return false
+    }
+
+    fun insert(product: Product, productRepository: ProductRepository) = viewModelScope.launch {
+        productRepository.insert(product)
     }
 }
