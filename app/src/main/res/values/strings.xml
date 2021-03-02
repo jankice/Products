@@ -41,6 +41,8 @@
     <string name="text_add_image">Add images</string>
     <string name="text_add_color">Add colors</string>
     <string name="text_product_image">Product Image</string>
+    <string name="text_product_name">Product name</string>
+    <string name="text_product_detail">Product detail</string>
 
     <string name="hint_phone">Enter Phone here</string>
     <string name="hint_verification">Verification code</string>
@@ -72,6 +74,8 @@
     <string name="action_search">Search</string>
     <string name="action_submit_product">Submit product</string>
     <string name="action_save_product">Save product</string>
+    <string name="action_detail">Detail</string>
+    <string name="action_publish">Publish</string>
 
     <string name="button_save_later">Save for later</string>
     <string name="button_remove">Remove</string>

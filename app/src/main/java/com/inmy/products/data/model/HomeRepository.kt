@@ -1,10 +1,8 @@
 package com.inmy.products.data.model
 
 import android.content.Context
-import android.util.Log
 import com.inmy.products.data.network.ApiInterface
 import com.inmy.products.data.network.AppClient
-import retrofit2.HttpException
 
 
 class HomeRepository(context: Context) {
@@ -55,16 +53,17 @@ class HomeRepository(context: Context) {
         }
     }
 
-    suspend fun requestSubmitProduct(productRequestModel: ProductRequestModel): Boolean{
+    suspend fun requestSubmitProduct(productPublishRequestModel: ProductPublishRequestModel): Resources<PublishResponse>{
         try {
-            val response = apiInterface?.requestSubmitProduct(productRequestModel)
+            val response = apiInterface?.requestSubmitProduct(productPublishRequestModel)
             if(response?.isSuccessful!!){
-                return true
+                val body = response.body()
+                if (body != null) return Resources.success(body)
             }
-            return false
+            return error(" ${response.code()} ${response.message()}")
         }catch (e: Exception){
             e.printStackTrace()
-            return false
+            return error(e.message ?: e.toString())
         }
     }
 

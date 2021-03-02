@@ -1,8 +1,6 @@
 package com.inmy.products.data.network
 
 import com.inmy.products.data.model.*
-import io.reactivex.Completable
-import io.reactivex.Single
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -26,7 +24,7 @@ interface ApiInterface {
 
     @Headers("Content-Type: application/json")
     @POST("api/product//")
-    suspend fun requestSubmitProduct(@Body productRequestModel: ProductRequestModel): Response<Void>
+    suspend fun requestSubmitProduct(@Body productPublishRequestModel: ProductPublishRequestModel): Response<PublishResponse>
 
 
 

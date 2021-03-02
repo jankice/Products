@@ -1,9 +1,13 @@
 package com.inmy.products
 
 import android.content.Context
+import android.database.Cursor
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
+import android.net.Uri
+import android.provider.MediaStore
 import android.widget.Toast
+
 
 val REF_PRODUCT_DETAIL = "101"
 val REF_CART_DETAIL = "102"
@@ -17,7 +21,7 @@ val PREFERENCE_KEY_CART_TOTAL = "cart_Total"
 val PREFERENCE_KEY_ID_TOKEN = "id_token"
 
 fun showToast(msg: String, context: Context?) {
-        Toast.makeText(context,msg, Toast.LENGTH_LONG).show()
+        Toast.makeText(context, msg, Toast.LENGTH_LONG).show()
 }
 
 fun hasNetwork(context: Context): Boolean? {
@@ -27,6 +31,20 @@ fun hasNetwork(context: Context): Boolean? {
     if (activeNetwork != null && activeNetwork.isConnected)
         isConnected = true
     return isConnected
+}
+
+fun getRealPathFromUri(context: Context, contentUri: Uri?): String? {
+    var cursor: Cursor? = null
+    return try {
+        val proj = arrayOf(MediaStore.Images.Media.DATA)
+        cursor = contentUri?.let { context.contentResolver.query(it, proj, null, null, null) }
+        val column_index: Int = (cursor?.getColumnIndexOrThrow(MediaStore.Images.Media.DATA) ?: cursor?.moveToFirst()) as Int
+        cursor?.getString(column_index)
+    } finally {
+        if (cursor != null) {
+            cursor.close()
+        }
+    }
 }
 
 

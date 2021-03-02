@@ -8,19 +8,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
 import com.inmy.products.Products
 import com.inmy.products.R
 import com.inmy.products.REQ_IMAGE_FROM_CAMERA
 import com.inmy.products.REQ_IMAGE_FROM_GALLARY
-import com.inmy.products.data.model.Dimen
-import com.inmy.products.data.model.ProductRequestModel
 import com.inmy.products.data.room.data.Product
 import com.inmy.products.data.room.data.ProductRepository
 import com.inmy.products.databinding.FragmentAdminProductUploadBinding
-import com.inmy.products.ui.address.AddressViewModelFactory
 import com.inmy.products.ui.admin.ImageDialog
 import kotlinx.android.synthetic.main.dialog_select_image.view.*
 import kotlinx.android.synthetic.main.fragment_admin_product_upload.*
@@ -76,16 +72,7 @@ class AdminProductUploadFragment : Fragment() , View.OnClickListener{
             R.id.buttonProductSubmit ->{
 
                 if(adminProductUploadViewModel.checkProductDetailValidations()){
-                    //Todo commented code move to publish products
 
-//                    val length  =  Integer.parseInt(productLength.text.toString())
-//                    val width = Integer.parseInt(productHeight.text.toString())
-//                    val height = Integer.parseInt(productHeight.text.toString())
-//
-//                    val productRequestModel = ProductRequestModel(imageUri,editTextProductItemName.text.toString(),editTextProductItemDetail.text.toString(),"",
-//                        Dimen(length,width,height),editTextProductItemCategory.text.toString(),editTextProductItemSubCategory.text.toString(),
-//                        Integer.parseInt(editTextProductItemPriceDetail.text.toString()))
-//                          adminProductUploadViewModel.submitProduct(productRequestModel)
 
                    val product = Product(P_image = imageUri,P_name = editTextProductItemName.text.toString(),P_detail =editTextProductItemDetail.text.toString()
                         ,P_category = editTextProductItemCategory.text.toString(),P_subCategory = editTextProductItemSubCategory.text.toString()

@@ -36,11 +36,10 @@ abstract class ProductRoomDatabase : RoomDatabase(){
                         scope: CoroutineScope
         ): ProductRoomDatabase{
 
-            return INSTANCE?: synchronized(this){
+            return INSTANCE?: synchronized(this) {
                 val instance = Room.databaseBuilder(context.applicationContext,
                     ProductRoomDatabase::class.java,
-                    "products_database")
-
+                    "product_database")
                     .build()
                 INSTANCE = instance
 

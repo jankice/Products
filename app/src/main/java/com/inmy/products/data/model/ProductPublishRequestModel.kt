@@ -2,7 +2,7 @@ package com.inmy.products.data.model
 
 import com.google.gson.annotations.SerializedName
 
-class ProductRequestModel(
+class ProductPublishRequestModel(
     @SerializedName("ImageUrl") var productImageUrl: String?,
     @SerializedName("Name") var productTitle: String?,
     @SerializedName("Description") var productDetailSort: String?,
