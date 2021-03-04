@@ -8,13 +8,15 @@
 
     <ImageView
         android:id="@+id/imageViewProductDefaultImage"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:maxHeight="150dp"
         android:maxWidth="150dp"
         android:src="@mipmap/ic_launcher"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/linearLayoutProductList"
+
         android:layout_margin="@dimen/item_margin"/>
 
     <ImageButton
@@ -63,7 +65,7 @@
         android:orientation="horizontal"
         android:layout_margin="@dimen/item_margin"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayoutProductList">
+        app:layout_constraintTop_toBottomOf="@+id/imageViewProductDefaultImage">
 
         <Button
             android:id="@+id/productButtonDetail"

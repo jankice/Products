@@ -1,4 +1,4 @@
-package com.inmy.products.ui.admin
+package com.inmy.products.ui.dialogs
 
 import android.app.Dialog
 import android.content.Context
@@ -8,7 +8,7 @@ import android.view.LayoutInflater
 import androidx.appcompat.app.AlertDialog
 import com.inmy.products.R
 
-class ImageDialog(context: Context) : Dialog(context) {
+class ImageSelectionDialog(context: Context) : Dialog(context) {
     val mDialogView = LayoutInflater.from(context).inflate(R.layout.dialog_select_image, null)
 
     val mBuilder = AlertDialog.Builder(context)
@@ -16,5 +16,7 @@ class ImageDialog(context: Context) : Dialog(context) {
         .setTitle("Select Image")
 
     val  mAlertDialog = mBuilder.show()
+
+
 
 }

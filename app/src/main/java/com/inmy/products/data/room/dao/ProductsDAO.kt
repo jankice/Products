@@ -4,8 +4,6 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.inmy.products.Products
-import com.inmy.products.data.room.data.Address
 import com.inmy.products.data.room.data.Product
 import kotlinx.coroutines.flow.Flow
 

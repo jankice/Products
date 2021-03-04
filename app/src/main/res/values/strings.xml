@@ -76,6 +76,7 @@
     <string name="action_save_product">Save product</string>
     <string name="action_detail">Detail</string>
     <string name="action_publish">Publish</string>
+    <string name="action_ok">OK</string>
 
     <string name="button_save_later">Save for later</string>
     <string name="button_remove">Remove</string>
